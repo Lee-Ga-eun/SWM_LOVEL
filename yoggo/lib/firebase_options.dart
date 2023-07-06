@@ -68,7 +68,7 @@ class DefaultFirebaseOptions {
     projectId: 'yoggo-52562',
     storageBucket: 'yoggo-52562.appspot.com',
     iosClientId: '319250424761-8egfk3m4cld29b3is7bc7l3od1i30e5p.apps.googleusercontent.com',
-    iosBundleId: 'com.example.yoggo',
+    iosBundleId: 'com.sayit.yoggo',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -78,6 +78,6 @@ class DefaultFirebaseOptions {
     projectId: 'yoggo-52562',
     storageBucket: 'yoggo-52562.appspot.com',
     iosClientId: '319250424761-umudl2ujikcrapno02bvdu5dlkuoes70.apps.googleusercontent.com',
-    iosBundleId: 'com.example.yoggo.RunnerTests',
+    iosBundleId: 'com.sayit.yoggo.RunnerTests',
   );
 }

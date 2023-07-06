@@ -1,4 +1,4 @@
-package com.example.yoggo
+package com.sayit.yoggo
 
 import io.flutter.embedding.android.FlutterActivity
 
