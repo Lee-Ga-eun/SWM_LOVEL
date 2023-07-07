@@ -29,8 +29,8 @@ class _DetailScreensState extends State<DetailScreens> {
   int voiceId = 10;
   //String voices='';
   List<dynamic> voices = [];
-  int cvi = 0;
-  bool canChanged = false;
+  int cvi = 1;
+  bool canChanged = true;
   int lastPage = 0;
   int contentId = 1;
 
@@ -49,9 +49,10 @@ class _DetailScreensState extends State<DetailScreens> {
         voices = data['voice'];
         lastPage = data['last'];
         contentId = data['contentId'];
-        print(voices);
         for (var voice in voices) {
-          print(voice['voiceName']);
+          if (voice['voiceId'] == 1) {
+            cvi = voice['contentVoiceId'];
+          }
         }
         setState(() {
           text = contentText;
@@ -77,11 +78,11 @@ class _DetailScreensState extends State<DetailScreens> {
 
   String _getImageForVoice(String voiceName) {
     switch (voiceName) {
-      case 'Jolly':
+      case 'jolly':
         return 'https://media.discordapp.net/attachments/1114865651312508958/1115512272987623484/actor_kelly.png?width=75&height=110';
-      case 'Morgan':
+      case 'morgan':
         return 'https://media.discordapp.net/attachments/1114865651312508958/1115512273297997884/actor_ethan.png?width=112&height=110';
-      case 'Eric':
+      case 'eric':
         return 'https://media.discordapp.net/attachments/1114865651312508958/1115512273604186202/actor_liam.png?width=119&height=108';
       default:
         return '';
@@ -202,8 +203,6 @@ class _DetailScreensState extends State<DetailScreens> {
                                   children: [
                                     Image.network(
                                       _getImageForVoice(voice['voiceName']),
-                                      //Icons.person, // Icons.person은 기본 제공되는 아이콘이다. 이걸 그림으로 바꾸려면 Icon()을 지우고
-                                      //Image.network('https://media.discordapp.net/attachments/1114865651312508958/1115512272987623484/actor_kelly.png',) 이렇게 처리를 해줘야 한다
                                       color: isClicked
                                           ? null
                                           : const Color.fromARGB(
@@ -257,8 +256,7 @@ class _DetailScreensState extends State<DetailScreens> {
                   Expanded(
                       // 썸네일 사진
                       flex: 1,
-                      child: Container()
-                      ),
+                      child: Container()),
                   Expanded(
                     // 제목과 책 내용 요약
                     flex: 1,
@@ -271,6 +269,8 @@ class _DetailScreensState extends State<DetailScreens> {
                                   builder: (context) => FairytalePage(
                                     // 다음 화면으로 contetnVoiceId를 가지고 이동
                                     voiceId: cvi,
+                                    lastPage: lastPage,
+                                    isSelected: true,
                                   ),
                                 ),
                               )
