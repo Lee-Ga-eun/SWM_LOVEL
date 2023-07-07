@@ -252,25 +252,25 @@ class _FairyTalePageState extends State<FairytalePage> {
             ),
           ),
           // 중간 스탑 버튼
-          Align(
-              alignment: Alignment.bottomCenter,
-              child: IconButton(
-                icon: isPlaying
-                    ? const Icon(Icons.pause)
-                    : const Icon(Icons.play_arrow),
-                onPressed: () {
-                  pauseFunction = true;
-                  if (isPlaying) {
-                    pauseAudio();
-                    //audioPlayer.stop();
-                  } else {
-                    resumeAudio();
-                  }
-                  setState(() {
-                    isPlaying = !isPlaying;
-                  });
-                },
-              ))
+          // Align(
+          //     alignment: Alignment.bottomCenter,
+          //     child: IconButton(
+          //       icon: isPlaying
+          //           ? const Icon(Icons.pause)
+          //           : const Icon(Icons.play_arrow),
+          //       onPressed: () {
+          //         pauseFunction = true;
+          //         if (isPlaying) {
+          //           pauseAudio();
+          //           //audioPlayer.stop();
+          //         } else {
+          //           resumeAudio();
+          //         }
+          //         setState(() {
+          //           isPlaying = !isPlaying;
+          //         });
+          //       },
+          //     ))
         ],
       ),
     );
