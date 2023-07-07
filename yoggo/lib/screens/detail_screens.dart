@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:yoggo/main.dart';
 import '../screens/reader.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:yoggo/size_config.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class DetailScreens extends StatefulWidget {
   final String title, thumb, summary;
@@ -29,7 +27,7 @@ class _DetailScreensState extends State<DetailScreens> {
   int voiceId = 10;
   //String voices='';
   List<dynamic> voices = [];
-  int cvi = 1;
+  int cvi = 0;
   bool canChanged = true;
   int lastPage = 0;
   int contentId = 1;
@@ -40,20 +38,17 @@ class _DetailScreensState extends State<DetailScreens> {
     if (mounted) {
       if (response.statusCode == 200) {
         List<dynamic> responseData = jsonDecode(response.body);
-        print(responseData);
+        // print(responseData);
         Map<String, dynamic> data = responseData[0];
-
-        final contentText = data['voice'][0]['voiceName'];
-        print('voiceName');
-        //print(contentText);
         voices = data['voice'];
-        lastPage = data['last'];
-        contentId = data['contentId'];
         for (var voice in voices) {
           if (voice['voiceId'] == 1) {
             cvi = voice['contentVoiceId'];
           }
         }
+        final contentText = data['voice'][0]['voiceName'];
+        lastPage = data['last'];
+        contentId = data['contentId'];
         setState(() {
           text = contentText;
           voiceId = data['voice'][0]['contentVoiceId'];
@@ -62,13 +57,24 @@ class _DetailScreensState extends State<DetailScreens> {
     }
   }
 
-  Future<void> precacheImages(BuildContext context) async {
-    for (int i = 1; i <= lastPage; i++) {
-      final imageUrl = '$contentUrl$contentId-${i.toString()}.png';
-      await precacheImage(CachedNetworkImageProvider(imageUrl), context);
-      print(imageUrl);
-    }
-  }
+  // Future<void> precacheImages(BuildContext context) async {
+  //   final precacheFutures =
+  //       List<Future<void>>.generate(lastPage, (index) async {
+  //     final imageUrl = '$contentId-${(index + 1).toString()}.png';
+  //     await precacheImage(CachedNetworkImageProvider(imageUrl), context);
+  //     print(imageUrl);
+  //   });
+
+  //   await Future.wait(precacheFutures);
+  // }
+
+  // Future<void> precacheImages(BuildContext context) async {
+  //   for (int i = 1; i <= lastPage; i++) {
+  //     final imageUrl = '$contentId-${i.toString()}.png';
+  //     await precacheImage(CachedNetworkImageProvider(imageUrl), context);
+  //     print(imageUrl);
+  //   }
+  // }
 
   @override
   void initState() {
@@ -91,8 +97,37 @@ class _DetailScreensState extends State<DetailScreens> {
 
   @override
   Widget build(BuildContext context) {
-    precacheImages(context);
+    // precacheImages(context);
     SizeConfig().init(context);
+    if (cvi == 0) {
+      return Scaffold(
+        //backgroundColor: Colors.yellow, // 노란색 배경 설정
+        body: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('lib/images/bkground.png'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.white,
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.yellow),
+                  strokeWidth: 5, // 동그라미 로딩의 크기 조정
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text('Loading a book'),
+            ],
+          ),
+        ),
+      );
+    }
     return Scaffold(
       backgroundColor: const Color(0xFFF1ECC9).withOpacity(1),
       body: Container(
