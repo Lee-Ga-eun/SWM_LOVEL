@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
-import '../main.dart';
 import 'package:yoggo/size_config.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class FairytalePage extends StatefulWidget {
   final int voiceId; //detail_screen에서 받아오는 것들
@@ -48,7 +48,6 @@ class _FairyTalePageState extends State<FairytalePage> {
       if (jsonData is List<dynamic>) {
         setState(() {
           pages = List<Map<String, dynamic>>.from(jsonData);
-          // print(pages);
         });
       }
     } else {
@@ -57,6 +56,9 @@ class _FairyTalePageState extends State<FairytalePage> {
   }
 
   void nextPage() {
+    print("nextPage호출");
+    print(currentPageIndex);
+    print(widget.lastPage);
     setState(() {
       isPlaying = true;
       stopAudio();
@@ -113,10 +115,34 @@ class _FairyTalePageState extends State<FairytalePage> {
 
   @override
   Widget build(BuildContext context) {
-    print(currentPageIndex);
-    print(widget.lastPage);
     if (pages.isEmpty) {
-      return const CircularProgressIndicator();
+      return Scaffold(
+        //backgroundColor: Colors.yellow, // 노란색 배경 설정
+        body: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('lib/images/bkground.png'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.white,
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.yellow),
+                  strokeWidth: 5, // 동그라미 로딩의 크기 조정
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text('Loading a book'),
+            ],
+          ),
+        ),
+      );
     }
     return Scaffold(
       body: Stack(
@@ -128,35 +154,43 @@ class _FairyTalePageState extends State<FairytalePage> {
               page: currentPageIndex < widget.lastPage
                   ? pages[currentPageIndex]
                   : pages[widget.lastPage - 1],
-              audioUrl: supabaseAudioUrl + pages[currentPageIndex]['audioUrl'],
+              audioUrl: pages[currentPageIndex]['audioUrl'],
+              realCurrent: true,
               currentPage: currentPageIndex,
               audioPlayer: audioPlayer,
               pauseFunction: pauseFunction,
             ),
           ),
           // 다음 페이지 위젯
-          Visibility(
-            visible: false,
+          Offstage(
+            offstage: true, // 화면에 보이지 않도록 설정
             child: PageWidget(
               page: currentPageIndex < widget.lastPage
                   ? currentPageIndex == widget.lastPage - 1
                       ? pages[currentPageIndex]
                       : pages[currentPageIndex + 1]
                   : pages[widget.lastPage - 1],
-              audioUrl: supabaseAudioUrl + pages[currentPageIndex]['audioUrl'],
-              currentPage: currentPageIndex,
+              realCurrent: false,
+              audioUrl: currentPageIndex != widget.lastPage - 1
+                  ? pages[currentPageIndex + 1]['audioUrl']
+                  : pages[currentPageIndex]['audioUrl'],
+              currentPage: currentPageIndex != widget.lastPage - 1
+                  ? currentPageIndex + 1
+                  : currentPageIndex,
               audioPlayer: audioPlayer,
               pauseFunction: pauseFunction,
             ),
           ),
-          // 이전 페이지 위젯
-          Visibility(
-            visible: false,
+          Offstage(
+            offstage: true, // 화면에 보이지 않도록 설정
             child: PageWidget(
               page: currentPageIndex != 0
                   ? pages[currentPageIndex - 1]
                   : pages[0],
-              audioUrl: supabaseAudioUrl + pages[currentPageIndex]['audioUrl'],
+              realCurrent: false,
+              audioUrl: currentPageIndex != 0
+                  ? pages[currentPageIndex - 1]['audioUrl']
+                  : pages[0]['audioUrl'],
               currentPage: currentPageIndex,
               audioPlayer: audioPlayer,
               pauseFunction: pauseFunction,
@@ -245,18 +279,20 @@ class _FairyTalePageState extends State<FairytalePage> {
 
 class PageWidget extends StatefulWidget {
   final Map<String, dynamic> page;
-  final String audioUrl;
+  final String? audioUrl;
   final int currentPage;
   final AudioPlayer audioPlayer;
   final bool pauseFunction;
+  final bool realCurrent;
 
   const PageWidget({
     Key? key,
     required this.page,
-    required this.audioUrl,
+    this.audioUrl,
     required this.currentPage,
     required this.audioPlayer,
     required this.pauseFunction,
+    required this.realCurrent,
   }) : super(key: key);
 
   @override
@@ -268,18 +304,32 @@ class _PageWidgetState extends State<PageWidget> {
   Widget build(BuildContext context) {
     //   final pageNum = widget.page['pageNum'] as int;
     final text = widget.page['text'] as String;
-    final imageUrl = contentUrl + widget.page['imageUrl'];
+    final imageUrl = widget.page['imageUrl'];
     final imagePostion = widget.page['position'];
 
-    widget.audioPlayer.stop();
+    CachedNetworkImage(
+      imageUrl: imageUrl,
+    );
+    print('iamgeUrl');
+    print(imageUrl);
 
+    // void playAudio(String audioUrl) async {
+    //   await widget.audioPlayer.play(UrlSource(audioUrl));
+    // }
     void playAudio(String audioUrl) async {
-      await widget.audioPlayer.play(UrlSource(audioUrl));
+      if (widget.realCurrent) {
+        await widget.audioPlayer.stop();
+        await widget.audioPlayer.play(UrlSource(audioUrl));
+      }
     }
 
     if (widget.pauseFunction != true) {
       // 일시정지 버튼이 아닐 때만
-      playAudio(widget.audioUrl);
+      playAudio(widget.audioUrl!);
+    }
+
+    if (widget.pauseFunction == true) {
+      print("stop 호출");
     }
 
     return Scaffold(
