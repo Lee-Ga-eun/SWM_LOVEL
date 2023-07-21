@@ -8,15 +8,16 @@ import 'package:yoggo/component/purchase.dart';
 class ReaderEnd extends StatefulWidget {
   final int voiceId; //detail_screen에서 받아오는 것들
   final bool isSelected;
-  bool? purchase, record;
+  final record = true;
+  final purchase = true;
   final int lastPage;
-  ReaderEnd({
+  const ReaderEnd({
     super.key,
     required this.voiceId, // detail_screen에서 받아오는 것들 초기화
     required this.isSelected,
     required this.lastPage,
-    this.record,
-    this.purchase,
+    // this.record,
+    // this.purchase,
   });
 
   @override
@@ -94,8 +95,8 @@ class _ReaderEndState extends State<ReaderEnd> {
                             voiceId: widget.voiceId,
                             lastPage: widget.lastPage,
                             isSelected: widget.isSelected,
-                            record: widget.record,
-                            purchase: widget.purchase,
+                            // record: widget.record,
+                            // purchase: widget.purchase,
                           ),
                         ),
                       );
