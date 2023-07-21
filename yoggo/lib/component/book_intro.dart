@@ -10,18 +10,18 @@ import 'package:yoggo/size_config.dart';
 class BookIntro extends StatefulWidget {
   final String title, thumb, summary;
   final int id;
-  bool? record;
-  bool? purchase;
+//  bool? record;
+  // bool? purchase;
 
-  BookIntro({
+  const BookIntro({
     // super.key,
     Key? key,
     required this.title,
     required this.thumb,
     required this.id,
     required this.summary,
-    this.purchase,
-    this.record,
+    //  this.purchase,
+    // this.record,
   }) : super(key: key);
 
   @override
@@ -290,40 +290,40 @@ class _BookIntroState extends State<BookIntro> {
                                                 isClicked2 = false;
                                                 canChanged = true;
                                               });
-                                              widget.record!
-                                                  ? inferenceId == 0
-                                                      ? {
-                                                          startInference(token),
-                                                          setState(() {
-                                                            canChanged = false;
-                                                            completeInference =
-                                                                false;
-                                                          }),
-                                                        } //인퍼런스 요청 보내기
-                                                      : cvi = inferenceId
-                                                  : setState(() {
-                                                      goRecord = true;
-                                                    });
+                                              // widget.record!
+                                              //     ? inferenceId == 0
+                                              //         ? {
+                                              //             startInference(token),
+                                              //             setState(() {
+                                              //               canChanged = false;
+                                              //               completeInference =
+                                              //                   false;
+                                              //             }),
+                                              //           } //인퍼런스 요청 보내기
+                                              //         : cvi = inferenceId
+                                              //     : setState(() {
+                                              //         goRecord = true;
+                                              //       });
                                             },
-                                            child: Column(
+                                            child: const Column(
                                               children: [
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                      right: 0.8 *
-                                                          SizeConfig
-                                                              .defaultSize!),
-                                                  child: Image.asset(
-                                                    'lib/images/mine.png',
-                                                    height: SizeConfig
-                                                            .defaultSize! *
-                                                        6.5,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                    height: SizeConfig
-                                                            .defaultSize! *
-                                                        0.3),
-                                                const Text('mine'),
+                                                // Padding(
+                                                //   padding: EdgeInsets.only(
+                                                //       right: 0.8 *
+                                                //           SizeConfig
+                                                //               .defaultSize!),
+                                                //   child: Image.asset(
+                                                //     'lib/images/mine.png',
+                                                //     height: SizeConfig
+                                                //             .defaultSize! *
+                                                //         6.5,
+                                                //   ),
+                                                // ),
+                                                // SizedBox(
+                                                //     height: SizeConfig
+                                                //             .defaultSize! *
+                                                //         0.3),
+                                                // const Text('mine'),
                                               ],
                                             ),
                                           )
@@ -369,23 +369,50 @@ class _BookIntroState extends State<BookIntro> {
                                       child: Column(
                                         children: [
                                           Padding(
-                                            padding: EdgeInsets.only(
-                                                right: 0.8 *
-                                                    SizeConfig.defaultSize!),
-                                            child: Image.asset(
-                                              'lib/images/jolly.png',
-                                              color: isClicked0
-                                                  ? null
-                                                  : const Color.fromARGB(
-                                                      // 선택하면 색이 바껴야 하는데 전부 다 바껴서 문제
-                                                      255,
-                                                      255,
-                                                      66,
-                                                      129),
-                                              height:
-                                                  SizeConfig.defaultSize! * 6.5,
-                                            ),
-                                          ),
+                                              padding: EdgeInsets.only(
+                                                  right: 0.8 *
+                                                      SizeConfig.defaultSize!),
+                                              child: isClicked0
+                                                  ? Container(
+                                                      height: SizeConfig
+                                                              .defaultSize! *
+                                                          6.6,
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        border: Border.all(
+                                                          color: const Color
+                                                                  .fromARGB(255,
+                                                              77, 252, 255),
+                                                          width: 3.0,
+                                                        ),
+                                                      ),
+                                                      child: Image.asset(
+                                                        'lib/images/jolly.png',
+                                                        height: SizeConfig
+                                                                .defaultSize! *
+                                                            6.5,
+                                                      ),
+                                                    )
+                                                  : Image.asset(
+                                                      'lib/images/jolly.png',
+                                                      height: SizeConfig
+                                                              .defaultSize! *
+                                                          6.5,
+                                                    )
+                                              // Image.asset(
+                                              //   'lib/images/jolly.png',
+                                              //   color: isClicked0
+                                              //       ? null
+                                              //       : const Color.fromARGB(
+                                              //           // 선택하면 색이 바껴야 하는데 전부 다 바껴서 문제
+                                              //           255,
+                                              //           255,
+                                              //           66,
+                                              //           129),
+                                              //   height:
+                                              //       SizeConfig.defaultSize! * 6.5,
+                                              // ),
+                                              ),
                                           SizedBox(
                                               height: SizeConfig.defaultSize! *
                                                   0.3),
@@ -407,23 +434,36 @@ class _BookIntroState extends State<BookIntro> {
                                       child: Column(
                                         children: [
                                           Padding(
-                                            padding: EdgeInsets.only(
-                                                right: 0.8 *
-                                                    SizeConfig.defaultSize!),
-                                            child: Image.asset(
-                                              'lib/images/morgan.png',
-                                              color: isClicked1
-                                                  ? null
-                                                  : const Color.fromARGB(
-                                                      // 선택하면 색이 바껴야 하는데 전부 다 바껴서 문제
-                                                      255,
-                                                      255,
-                                                      66,
-                                                      129),
-                                              height:
-                                                  SizeConfig.defaultSize! * 6.5,
-                                            ),
-                                          ),
+                                              padding: EdgeInsets.only(
+                                                  right: 0.8 *
+                                                      SizeConfig.defaultSize!),
+                                              child: isClicked1
+                                                  ? Container(
+                                                      height: SizeConfig
+                                                              .defaultSize! *
+                                                          6.6,
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        border: Border.all(
+                                                          color: const Color
+                                                                  .fromARGB(255,
+                                                              77, 252, 255),
+                                                          width: 3.0,
+                                                        ),
+                                                      ),
+                                                      child: Image.asset(
+                                                        'lib/images/morgan.png',
+                                                        height: SizeConfig
+                                                                .defaultSize! *
+                                                            6.5,
+                                                      ),
+                                                    )
+                                                  : Image.asset(
+                                                      'lib/images/morgan.png',
+                                                      height: SizeConfig
+                                                              .defaultSize! *
+                                                          6.5,
+                                                    )),
                                           SizedBox(
                                               height: SizeConfig.defaultSize! *
                                                   0.3),
@@ -445,23 +485,36 @@ class _BookIntroState extends State<BookIntro> {
                                       child: Column(
                                         children: [
                                           Padding(
-                                            padding: EdgeInsets.only(
-                                                right: 0.8 *
-                                                    SizeConfig.defaultSize!),
-                                            child: Image.asset(
-                                              'lib/images/eric.png',
-                                              color: isClicked2
-                                                  ? null
-                                                  : const Color.fromARGB(
-                                                      // 선택하면 색이 바껴야 하는데 전부 다 바껴서 문제
-                                                      255,
-                                                      255,
-                                                      66,
-                                                      129),
-                                              height:
-                                                  SizeConfig.defaultSize! * 6.5,
-                                            ),
-                                          ),
+                                              padding: EdgeInsets.only(
+                                                  right: 0.8 *
+                                                      SizeConfig.defaultSize!),
+                                              child: isClicked2
+                                                  ? Container(
+                                                      height: SizeConfig
+                                                              .defaultSize! *
+                                                          6.6,
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        border: Border.all(
+                                                          color: const Color
+                                                                  .fromARGB(255,
+                                                              77, 252, 255),
+                                                          width: 3.0,
+                                                        ),
+                                                      ),
+                                                      child: Image.asset(
+                                                        'lib/images/eric.png',
+                                                        height: SizeConfig
+                                                                .defaultSize! *
+                                                            6.5,
+                                                      ),
+                                                    )
+                                                  : Image.asset(
+                                                      'lib/images/eric.png',
+                                                      height: SizeConfig
+                                                              .defaultSize! *
+                                                          6.5,
+                                                    )),
                                           SizedBox(
                                               height: SizeConfig.defaultSize! *
                                                   0.3),
@@ -535,8 +588,8 @@ class _BookIntroState extends State<BookIntro> {
                                           builder: (context) => FairytalePage(
                                             // 다음 화면으로 contetnVoiceId를 가지고 이동
 
-                                            record: widget.record!,
-                                            purchase: widget.purchase!,
+                                            //  record: widget.record!,
+                                            // purchase: widget.purchase!,
                                             voiceId: cvi,
                                             lastPage: lastPage,
                                             isSelected: true,
