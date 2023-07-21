@@ -150,7 +150,7 @@ class _FairyTalePageState extends State<FairytalePage>
               SizedBox(
                 height: 1 * SizeConfig.defaultSize!,
               ),
-              Text('Loading a book'),
+              const Text('Loading a book'),
             ],
           ),
         ),
@@ -465,8 +465,8 @@ class _PageWidgetState extends State<PageWidget> {
                                             voiceId: widget.voiceId,
                                             lastPage: widget.lastPage,
                                             isSelected: widget.isSelected,
-                                            record: widget.record,
-                                            purchase: widget.purchase,
+                                            //          record: widget.record,
+                                            //        purchase: widget.purchase,
                                           ),
                                         ),
                                       );
@@ -479,8 +479,8 @@ class _PageWidgetState extends State<PageWidget> {
                                             voiceId: widget.voiceId,
                                             lastPage: widget.lastPage,
                                             isSelected: widget.isSelected,
-                                            record: widget.record,
-                                            purchase: widget.purchase,
+                                            //           record: widget.record,
+                                            //           purchase: widget.purchase,
                                           ),
                                         ),
                                       );
