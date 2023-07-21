@@ -30,7 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  bloc: ^8.0.0
+  flutter_bloc: ^8.0.0
   animated_background: ^2.0.0
   flutter_native_splash: ^2.3.0
   animated_text_kit: ^4.2.2

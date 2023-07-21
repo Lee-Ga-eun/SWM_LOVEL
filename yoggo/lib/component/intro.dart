@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:yoggo/component/home_screen.dart';
+import 'package:yoggo/component/home/view/home_screen.dart';
 import 'package:yoggo/component/login_screen.dart';
 
 // class SplashScreen extends StatelessWidget {
@@ -28,11 +28,11 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future navigateToHome() async {
-    await Future.delayed(Duration(seconds: 2)); // Delay for 2 seconds
+    await Future.delayed(const Duration(seconds: 2)); // Delay for 2 seconds
     Navigator.pushReplacement(
       // Replace the current screen with the home screen
       context,
-      MaterialPageRoute(builder: (context) => HomeScreen()),
+      MaterialPageRoute(builder: (context) => const HomeScreen()),
     );
   }
 
@@ -55,11 +55,11 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
         ),
         child: Builder(builder: (BuildContext context) {
-          if (token != null) {
-            return HomeScreen();
-          } else {
-            return LoginScreen();
-          }
+          // if (token != null) {
+          return const HomeScreen();
+          // } else {
+          //   return LoginScreen();
+          // }
         }
             // return StreamBuilder<firebase_auth.User?>(
             //   stream: firebase_auth.FirebaseAuth.instance.authStateChanges(),

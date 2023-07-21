@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yoggo/component/home_screen.dart';
+import 'package:yoggo/component/home/view/home_screen.dart';
 import 'package:yoggo/size_config.dart';
 import './record_page2.dart';
 
@@ -69,7 +69,7 @@ class _RecordInfoState extends State<RecordInfo> {
                           context,
                           // 설득 & 광고 페이지로 가야하는데 일단은 홈으로 빠지게 하겠음
                           MaterialPageRoute(
-                            builder: (context) => const HomeScreen(),
+                            builder: (context) => HomeScreen(),
                           ),
                         );
                       },

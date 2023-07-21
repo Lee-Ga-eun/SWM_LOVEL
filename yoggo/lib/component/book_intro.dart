@@ -333,25 +333,25 @@ class _BookIntroState extends State<BookIntro> {
                                                 wantPurchase = true;
                                               });
                                             },
-                                            child: Column(
+                                            child: const Column(
                                               children: [
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                      right: 0.8 *
-                                                          SizeConfig
-                                                              .defaultSize!),
-                                                  child: Image.asset(
-                                                    'lib/images/lock.png',
-                                                    height: SizeConfig
-                                                            .defaultSize! *
-                                                        6.5,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                    height: SizeConfig
-                                                            .defaultSize! *
-                                                        0.3),
-                                                const Text('mine'),
+                                                // Padding(
+                                                //   padding: EdgeInsets.only(
+                                                //       right: 0.8 *
+                                                //           SizeConfig
+                                                //               .defaultSize!),
+                                                //   child: Image.asset(
+                                                //     'lib/images/lock.png',
+                                                //     height: SizeConfig
+                                                //             .defaultSize! *
+                                                //         6.5,
+                                                //   ),
+                                                // ),
+                                                // SizedBox(
+                                                //     height: SizeConfig
+                                                //             .defaultSize! *
+                                                //         0.3),
+                                                // const Text('mine'),
                                               ],
                                             ),
                                           ),
@@ -566,7 +566,7 @@ class _BookIntroState extends State<BookIntro> {
                         flex: 1,
                         child: GestureDetector(
                           onTap: () async {
-                            (cvi == inferenceId)
+                            (cvi == 100000)
                                 ? await checkInference(token)
                                     ? Navigator.push(
                                         context,

@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:crypto/crypto.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:yoggo/component/home_screen.dart';
+import 'package:yoggo/component/home/view/home_screen.dart';
 import 'package:yoggo/models/user.dart';
 import 'package:yoggo/size_config.dart';
 
@@ -66,8 +65,8 @@ class _LoginScreenState extends State<LoginScreen> {
         await prefs.setBool('record', record);
         await prefs.setString('username', username);
 
-        await Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const HomeScreen()));
+        await Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomeScreen()));
       } else {
         // 로그인 실패
         print('로그인 실패. 상태 코드: ${response.statusCode}');

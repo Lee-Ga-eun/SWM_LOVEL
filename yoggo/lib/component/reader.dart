@@ -480,7 +480,7 @@ class _PageWidgetState extends State<PageWidget> {
                                             lastPage: widget.lastPage,
                                             isSelected: widget.isSelected,
                                             //           record: widget.record,
-                                            //           purchase: widget.purchase,
+                                            //         purchase: widget.purchase,
                                           ),
                                         ),
                                       );

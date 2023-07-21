@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:yoggo/component/home_screen.dart';
 import 'package:yoggo/component/reader.dart';
 import 'package:yoggo/component/record_info.dart';
 import 'package:yoggo/size_config.dart';
@@ -113,12 +112,21 @@ class _ReaderEndState extends State<ReaderEnd> {
                     padding:
                         EdgeInsets.only(bottom: SizeConfig.defaultSize! * 4),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HomeScreen(),
-                        ),
-                      );
+                      //
+                      //
+                      Navigator.popUntil(context, (route) => route.isFirst);
+                      // Navigator.pushReplacement(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const HomeScreen(),
+                      //   ),
+                      // );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const HomeScreen(),
+                      //   ),
+                      // );
                     },
                     icon: Icon(
                       Icons.home,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yoggo/size_config.dart';
-import '../component/home_screen.dart';
+import 'home/view/home_screen.dart';
 import './record_retry.dart';
 import 'package:audioplayers/audioplayers.dart';
 
@@ -65,7 +65,7 @@ class _CheckVoiceState extends State<CheckVoice> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const HomeScreen(),
+                          builder: (context) => HomeScreen(),
                         ),
                       );
                     },
@@ -82,7 +82,7 @@ class _CheckVoiceState extends State<CheckVoice> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 3 * SizeConfig.defaultSize!,
-                color: Color.fromARGB(255, 194, 120, 209),
+                color: const Color.fromARGB(255, 194, 120, 209),
                 fontFamily: 'BreeSerif',
               ),
             ),
@@ -216,7 +216,7 @@ class _CheckVoiceState extends State<CheckVoice> {
                       icon: Icon(
                         Icons.play_arrow,
                         size: 3 * SizeConfig.defaultSize!,
-                        color: Color.fromARGB(255, 194, 120, 209),
+                        color: const Color.fromARGB(255, 194, 120, 209),
                       ),
                       onPressed: () {
                         audioPlayer.play(UrlSource(widget.infenrencedVoice));
@@ -231,7 +231,7 @@ class _CheckVoiceState extends State<CheckVoice> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const HomeScreen(),
+                            builder: (context) => HomeScreen(),
                           ),
                         );
                       },
