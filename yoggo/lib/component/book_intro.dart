@@ -1,12 +1,12 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yoggo/component/purchase.dart';
 import 'package:yoggo/component/record_info.dart';
 import '../component/reader.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:yoggo/size_config.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class BookIntro extends StatefulWidget {
   final String title, thumb, summary;
@@ -213,23 +213,29 @@ class _BookIntroState extends State<BookIntro> {
               fit: BoxFit.cover,
             ),
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: Colors.white,
-                  valueColor:
-                      const AlwaysStoppedAnimation<Color>(Colors.yellow),
-                  strokeWidth: 0.5 * SizeConfig.defaultSize!, // 동그라미 로딩의 크기 조정
-                ),
-              ),
-              SizedBox(
-                height: 1 * SizeConfig.defaultSize!,
-              ),
-              const Text('Loading a book'),
-            ],
+          child: Center(
+            child: LoadingAnimationWidget.fourRotatingDots(
+              color: Colors.white,
+              size: SizeConfig.defaultSize! * 16,
+            ),
           ),
+          // Column(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     Center(
+          //       child: CircularProgressIndicator(
+          //         backgroundColor: Colors.white,
+          //         valueColor:
+          //             const AlwaysStoppedAnimation<Color>(Colors.yellow),
+          //         strokeWidth: 0.5 * SizeConfig.defaultSize!, // 동그라미 로딩의 크기 조정
+          //       ),
+          //     ),
+          //     SizedBox(
+          //       height: 1 * SizeConfig.defaultSize!,
+          //     ),
+          //     const Text('Loading a book'),
+          //   ],
+          // ),
         ),
       );
     }

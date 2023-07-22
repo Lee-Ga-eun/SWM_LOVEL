@@ -7,6 +7,7 @@ import 'package:yoggo/size_config.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import './reader_end.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class FairytalePage extends StatefulWidget {
   final int voiceId; //detail_screen에서 받아오는 것들
@@ -154,7 +155,9 @@ class _FairyTalePageState extends State<FairytalePage>
 
   @override
   void dispose() async {
-    await stopAudio();
+    //await stopAudio();
+    audioPlayer.stop();
+    audioPlayer.dispose();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -175,17 +178,28 @@ class _FairyTalePageState extends State<FairytalePage>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: Colors.white,
-                  valueColor:
-                      const AlwaysStoppedAnimation<Color>(Colors.yellow),
-                  strokeWidth: 0.5 * SizeConfig.defaultSize!, // 동그라미 로딩의 크기 조정
+                child: Center(
+                  child: LoadingAnimationWidget.fourRotatingDots(
+                    color: Colors.white,
+                    size: SizeConfig.defaultSize! * 18,
+                  ),
                 ),
+                // CircularProgressIndicator(
+                //   backgroundColor: Colors.white,
+                //   valueColor:
+                //       const AlwaysStoppedAnimation<Color>(Colors.yellow),
+                //   strokeWidth: 0.5 * SizeConfig.defaultSize!, // 동그라미 로딩의 크기 조정
+                // ),
               ),
               SizedBox(
                 height: 1 * SizeConfig.defaultSize!,
               ),
-              const Text('Loading a book'),
+              Text(
+                'Loading a book ...',
+                style: TextStyle(
+                    fontFamily: 'Gloria',
+                    fontSize: SizeConfig.defaultSize! * 2),
+              ),
             ],
           ),
         ),
@@ -430,7 +444,8 @@ class _PageWidgetState extends State<PageWidget> {
                         widget.dispose();
                         _sendHomeBookExitClickEvent(
                             widget.voiceId, widget.currentPageIndex + 1);
-                        Navigator.of(context).pop();
+                        // Navigator.of(context).pop();
+                        Navigator.pop(context);
                       },
                     ),
                   ),
