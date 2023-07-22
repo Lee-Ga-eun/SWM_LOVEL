@@ -1,15 +1,23 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'component/intro.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 void main() async {
   //runApp(const App());
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   await Firebase.initializeApp();
+  FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+
+  bool isDebug = kDebugMode;
+  if (isDebug) {
+    analytics.setAnalyticsCollectionEnabled(true);
+  }
   SystemChrome.setPreferredOrientations(
           [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight])
       .then((_) {
@@ -19,6 +27,10 @@ void main() async {
 
 class App extends StatefulWidget {
   const App({super.key});
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+
+  static FirebaseAnalyticsObserver observer =
+      FirebaseAnalyticsObserver(analytics: analytics);
 
   @override
   _AppState createState() => _AppState();
@@ -46,7 +58,6 @@ class _AppState extends State<App> {
     super.initState();
     initialize();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
-
   }
 
   Future<void> initialize() async {

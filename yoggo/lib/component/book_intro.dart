@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yoggo/component/purchase.dart';
@@ -77,15 +78,61 @@ class _BookIntroState extends State<BookIntro> {
   void initState() {
     super.initState();
     fetchPageData();
-    getToken();
+    //getToken();
   }
 
-  Future<void> getToken() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      token = prefs.getString('token')!;
-      purchaseInfo(token);
-    });
+  // Future<void> getToken() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     token = prefs.getString('token')!;
+  //     purchaseInfo(token);
+  //   });
+  // }
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+
+  Future<void> _sendVoiceClickEvent(contentVoiceId) async {
+    try {
+      // 이벤트 로깅
+      await analytics.logEvent(
+        name: 'voice_click',
+        parameters: <String, dynamic>{'contentVoiceId': contentVoiceId},
+      );
+    } catch (e) {
+      // 이벤트 로깅 실패 시 에러 출력
+      print('Failed to log event: $e');
+    }
+  }
+
+  Future<void> _sendBookStartClickEvent(contentVoiceId) async {
+    try {
+      // 이벤트 로깅
+      await analytics.logEvent(
+        name: 'book_start_click',
+        parameters: <String, dynamic>{
+          'contentVoiceId': contentVoiceId,
+          'contentId': widget.id
+        },
+      );
+    } catch (e) {
+      // 이벤트 로깅 실패 시 에러 출력
+      print('Failed to log event: $e');
+    }
+  }
+
+  Future<void> _sendHomeBookExitClickEvent(contentVoiceId) async {
+    try {
+      // 이벤트 로깅
+      await analytics.logEvent(
+        name: 'home_book_exit_click',
+        parameters: <String, dynamic>{
+          'contentVoiceId': contentVoiceId,
+          'pageId': 0,
+        },
+      );
+    } catch (e) {
+      // 이벤트 로깅 실패 시 에러 출력
+      print('Failed to log event: $e');
+    }
   }
 
 //구매한 사람인지, 이 책이 인퍼런스되어 있는지 확인
@@ -212,6 +259,7 @@ class _BookIntroState extends State<BookIntro> {
                         alignment: Alignment.topLeft,
                         child: IconButton(
                           onPressed: () {
+                            _sendHomeBookExitClickEvent(cvi);
                             Navigator.of(context).pop();
                           },
                           icon: Icon(
@@ -359,6 +407,7 @@ class _BookIntroState extends State<BookIntro> {
                                       onTap: () {
                                         cvi = voices[0][
                                             'contentVoiceId']; // 1, 2, 3 등 --> 이 값을 밑에 화살표 부분에 넘겨준 것
+                                        _sendVoiceClickEvent(cvi);
                                         setState(() {
                                           isClicked0 = true;
                                           isClicked1 = !isClicked0;
@@ -424,6 +473,7 @@ class _BookIntroState extends State<BookIntro> {
                                       onTap: () {
                                         cvi = voices[1][
                                             'contentVoiceId']; // 1, 2, 3 등 --> 이 값을 밑에 화살표 부분에 넘겨준 것
+                                        _sendVoiceClickEvent(cvi);
                                         setState(() {
                                           isClicked1 = true;
                                           isClicked0 = !isClicked1;
@@ -475,6 +525,7 @@ class _BookIntroState extends State<BookIntro> {
                                       onTap: () {
                                         cvi = voices[2][
                                             'contentVoiceId']; // 1, 2, 3 등 --> 이 값을 밑에 화살표 부분에 넘겨준 것
+                                        _sendVoiceClickEvent(cvi);
                                         setState(() {
                                           isClicked2 = true;
                                           isClicked0 = !isClicked2;
@@ -568,34 +619,41 @@ class _BookIntroState extends State<BookIntro> {
                           onTap: () async {
                             (cvi == 100000)
                                 ? await checkInference(token)
-                                    ? Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => FairytalePage(
-                                            // 다음 화면으로 contetnVoiceId를 가지고 이동
-                                            voiceId: cvi,
-                                            lastPage: lastPage,
-                                            isSelected: true,
-                                          ),
-                                        ))
+                                    ? {
+                                        _sendBookStartClickEvent(cvi),
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  FairytalePage(
+                                                // 다음 화면으로 contetnVoiceId를 가지고 이동
+                                                voiceId: cvi,
+                                                lastPage: lastPage,
+                                                isSelected: true,
+                                              ),
+                                            ))
+                                      }
                                     : setState(() {
                                         completeInference = false;
                                       })
                                 : canChanged
-                                    ? Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => FairytalePage(
-                                            // 다음 화면으로 contetnVoiceId를 가지고 이동
+                                    ? {
+                                        _sendBookStartClickEvent(cvi),
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => FairytalePage(
+                                              // 다음 화면으로 contetnVoiceId를 가지고 이동
 
-                                            //  record: widget.record!,
-                                            // purchase: widget.purchase!,
-                                            voiceId: cvi,
-                                            lastPage: lastPage,
-                                            isSelected: true,
+                                              //  record: widget.record!,
+                                              // purchase: widget.purchase!,
+                                              voiceId: cvi,
+                                              lastPage: lastPage,
+                                              isSelected: true,
+                                            ),
                                           ),
-                                        ),
-                                      )
+                                        )
+                                      }
                                     : null;
                           },
                           child: Row(

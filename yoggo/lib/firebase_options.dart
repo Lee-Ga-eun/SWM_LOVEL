@@ -63,6 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '127586410541',
     projectId: 'lovel-a2507',
     storageBucket: 'lovel-a2507.appspot.com',
+    androidClientId: '127586410541-70861lai2h86ald7qtbk2c3f4jiqs9cm.apps.googleusercontent.com',
     iosClientId: '127586410541-r15cjul2ouodd4feg8cm4sf2l08hbrui.apps.googleusercontent.com',
     iosBundleId: 'com.sayit.yoggo',
   );

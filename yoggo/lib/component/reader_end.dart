@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:yoggo/component/reader.dart';
 import 'package:yoggo/component/record_info.dart';
@@ -36,8 +37,50 @@ class _ReaderEndState extends State<ReaderEnd> {
     super.dispose();
   }
 
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+
+  Future<void> _sendBookEndViewEvent(contentVoiceId) async {
+    try {
+      // 이벤트 로깅
+      await analytics.logEvent(
+        name: 'book_end_view',
+        parameters: <String, dynamic>{'contentVoiceId': contentVoiceId},
+      );
+    } catch (e) {
+      // 이벤트 로깅 실패 시 에러 출력
+      print('Failed to log event: $e');
+    }
+  }
+
+  Future<void> _sendHomeBookEndClickEvent(contentVoiceId) async {
+    try {
+      // 이벤트 로깅
+      await analytics.logEvent(
+        name: 'home_book_end_click',
+        parameters: <String, dynamic>{'contentVoiceId': contentVoiceId},
+      );
+    } catch (e) {
+      // 이벤트 로깅 실패 시 에러 출력
+      print('Failed to log event: $e');
+    }
+  }
+
+  Future<void> _sendBookAgainClickEvent(contentVoiceId) async {
+    try {
+      // 이벤트 로깅
+      await analytics.logEvent(
+        name: 'home_book_end_click',
+        parameters: <String, dynamic>{'contentVoiceId': contentVoiceId},
+      );
+    } catch (e) {
+      // 이벤트 로깅 실패 시 에러 출력
+      print('Failed to log event: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    _sendBookEndViewEvent(widget.voiceId);
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -86,6 +129,7 @@ class _ReaderEndState extends State<ReaderEnd> {
                     padding:
                         EdgeInsets.only(bottom: SizeConfig.defaultSize! * 4),
                     onPressed: () {
+                      _sendBookAgainClickEvent(widget.voiceId);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -112,6 +156,7 @@ class _ReaderEndState extends State<ReaderEnd> {
                     padding:
                         EdgeInsets.only(bottom: SizeConfig.defaultSize! * 4),
                     onPressed: () {
+                      _sendHomeBookEndClickEvent(widget.voiceId);
                       //
                       //
                       Navigator.popUntil(context, (route) => route.isFirst);
