@@ -4,6 +4,7 @@ import 'package:yoggo/component/reader.dart';
 import 'package:yoggo/component/record_info.dart';
 import 'package:yoggo/size_config.dart';
 import 'package:yoggo/component/purchase.dart';
+import '../component/home/view/home_screen.dart';
 
 class ReaderEnd extends StatefulWidget {
   final int voiceId; //detail_screen에서 받아오는 것들
@@ -159,19 +160,19 @@ class _ReaderEndState extends State<ReaderEnd> {
                       _sendHomeBookEndClickEvent(widget.voiceId);
                       //
                       //
-                      Navigator.popUntil(context, (route) => route.isFirst);
+                      // Navigator.popUntil(context, (route) => route.isFirst);
                       // Navigator.pushReplacement(
                       //   context,
                       //   MaterialPageRoute(
                       //     builder: (context) => const HomeScreen(),
                       //   ),
                       // );
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => const HomeScreen(),
-                      //   ),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HomeScreen(),
+                        ),
+                      );
                     },
                     icon: Icon(
                       Icons.home,
