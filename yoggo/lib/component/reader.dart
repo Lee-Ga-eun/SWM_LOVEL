@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -50,6 +51,39 @@ class _FairyTalePageState extends State<FairytalePage>
     // 책 페이지 데이터 미리 불러오기
     fetchAllBookPages();
     WidgetsBinding.instance.addObserver(this);
+  }
+
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+
+  Future<void> _sendBookPageViewEvent(contentVoiceId, pageId) async {
+    try {
+      // 이벤트 로깅
+      await analytics.logEvent(
+        name: 'book_page_view',
+        parameters: <String, dynamic>{
+          'contentVoiceId': contentVoiceId,
+          'pageId': pageId,
+        },
+      );
+    } catch (e) {
+      // 이벤트 로깅 실패 시 에러 출력
+      print('Failed to log event: $e');
+    }
+  }
+
+  Future<void> _sendBookLoadPageViewEvent(contentVoiceId) async {
+    try {
+      // 이벤트 로깅
+      await analytics.logEvent(
+        name: 'book_page_view',
+        parameters: <String, dynamic>{
+          'contentVoiceId': contentVoiceId,
+        },
+      );
+    } catch (e) {
+      // 이벤트 로깅 실패 시 에러 출력
+      print('Failed to log event: $e');
+    }
   }
 
   Future<void> fetchAllBookPages() async {
@@ -128,6 +162,7 @@ class _FairyTalePageState extends State<FairytalePage>
   @override
   Widget build(BuildContext context) {
     if (pages.isEmpty) {
+      _sendBookLoadPageViewEvent(widget.voiceId);
       return Scaffold(
         body: Container(
           decoration: const BoxDecoration(
@@ -156,6 +191,7 @@ class _FairyTalePageState extends State<FairytalePage>
         ),
       );
     }
+    _sendBookPageViewEvent(widget.voiceId, currentPageIndex + 1);
     return WillPopScope(
       child: Scaffold(
         body: Stack(
@@ -294,6 +330,56 @@ class PageWidget extends StatefulWidget {
 }
 
 class _PageWidgetState extends State<PageWidget> {
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+
+  Future<void> _sendHomeBookExitClickEvent(contentVoiceId, pageId) async {
+    try {
+      // 이벤트 로깅
+      await analytics.logEvent(
+        name: 'home_book_exit_click',
+        parameters: <String, dynamic>{
+          'contentVoiceId': contentVoiceId,
+          'pageId': pageId,
+        },
+      );
+    } catch (e) {
+      // 이벤트 로깅 실패 시 에러 출력
+      print('Failed to log event: $e');
+    }
+  }
+
+  Future<void> _sendBookNextClickEvent(contentVoiceId, pageId) async {
+    try {
+      // 이벤트 로깅
+      await analytics.logEvent(
+        name: 'book_next_click',
+        parameters: <String, dynamic>{
+          'contentVoiceId': contentVoiceId,
+          'pageId': pageId,
+        },
+      );
+    } catch (e) {
+      // 이벤트 로깅 실패 시 에러 출력
+      print('Failed to log event: $e');
+    }
+  }
+
+  Future<void> _sendBookBackClickEvent(contentVoiceId, pageId) async {
+    try {
+      // 이벤트 로깅
+      await analytics.logEvent(
+        name: 'book_back_click',
+        parameters: <String, dynamic>{
+          'contentVoiceId': contentVoiceId,
+          'pageId': pageId,
+        },
+      );
+    } catch (e) {
+      // 이벤트 로깅 실패 시 에러 출력
+      print('Failed to log event: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     void playAudio(String audioUrl) async {
@@ -342,6 +428,8 @@ class _PageWidgetState extends State<PageWidget> {
                       onPressed: () {
                         // stopAudio();
                         widget.dispose();
+                        _sendHomeBookExitClickEvent(
+                            widget.voiceId, widget.currentPageIndex + 1);
                         Navigator.of(context).pop();
                       },
                     ),
@@ -426,12 +514,15 @@ class _PageWidgetState extends State<PageWidget> {
                           // bottom: 5,
                           // left: 10,
                           child: IconButton(
-                            icon: Icon(
-                              Icons.arrow_back,
-                              size: SizeConfig.defaultSize! * 3,
-                            ),
-                            onPressed: widget.previousPage,
-                          ),
+                              icon: Icon(
+                                Icons.arrow_back,
+                                size: SizeConfig.defaultSize! * 3,
+                              ),
+                              onPressed: () {
+                                _sendBookBackClickEvent(widget.voiceId,
+                                    widget.currentPageIndex + 1);
+                                widget.previousPage();
+                              }),
                         ),
                         Expanded(
                           child: widget.currentPageIndex != widget.lastPage - 1
@@ -440,8 +531,11 @@ class _PageWidgetState extends State<PageWidget> {
                                     Icons.arrow_forward,
                                     size: SizeConfig.defaultSize! * 3,
                                   ),
-                                  onPressed: widget.nextPage,
-                                )
+                                  onPressed: () {
+                                    _sendBookNextClickEvent(widget.voiceId,
+                                        widget.currentPageIndex + 1);
+                                    widget.nextPage();
+                                  })
                               : IconButton(
                                   icon: Icon(
                                     Icons.check,

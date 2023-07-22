@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yoggo/size_config.dart';
@@ -7,9 +8,30 @@ import '../viewModel/home_screen_cubit.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+
+  Future<void> _sendAnalyticsEvent() async {
+    try {
+      // 이벤트 로깅
+      await analytics.logEvent(
+        name: 'home_view',
+        parameters: <String, dynamic>{
+          //   'string': 'string',
+          //   'int': 42,
+          //   'long': 12345678910,
+          //   'double': 42.0,
+          //   'bool': true,
+        },
+      );
+    } catch (e) {
+      // 이벤트 로깅 실패 시 에러 출력
+      print('Failed to log event: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    _sendAnalyticsEvent();
     SizeConfig().init(context);
     return Scaffold(
       body: Container(
@@ -71,6 +93,19 @@ class HomeScreen extends StatelessWidget {
 
 class DataList extends StatelessWidget {
   const DataList({super.key});
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  static Future<void> _sendBookClickEvent(contentId) async {
+    try {
+      // 이벤트 로깅
+      await analytics.logEvent(
+        name: 'book_click',
+        parameters: <String, dynamic>{'contentId': contentId},
+      );
+    } catch (e) {
+      // 이벤트 로깅 실패 시 에러 출력
+      print('Failed to log event: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +129,7 @@ class DataList extends StatelessWidget {
               final book = state[index];
               return InkWell(
                 onTap: () {
+                  _sendBookClickEvent(book.id);
                   Navigator.push(
                       context,
                       MaterialPageRoute(
