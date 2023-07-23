@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:yoggo/component/purchase.dart';
@@ -290,25 +291,28 @@ class _BookIntroState extends State<BookIntro> {
                               tag: widget.id,
                               child: Center(
                                 child: Container(
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey
-                                              .withOpacity(0.5), // 그림자 색상
-                                          spreadRadius: 5, // 그림자의 확산 범위
-                                          blurRadius: 7, // 그림자의 흐림 정도
-                                          offset: const Offset(
-                                              0, 3), // 그림자의 위치 (가로, 세로)
-                                        ),
-                                      ],
-                                    ),
-                                    child: Container(
-                                        clipBehavior: Clip.hardEdge,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        child: Image.network(widget.thumb))),
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey
+                                            .withOpacity(0.5), // 그림자 색상
+                                        spreadRadius: 5, // 그림자의 확산 범위
+                                        blurRadius: 7, // 그림자의 흐림 정도
+                                        offset: const Offset(
+                                            0, 3), // 그림자의 위치 (가로, 세로)
+                                      ),
+                                    ],
+                                  ),
+                                  child: Container(
+                                      clipBehavior: Clip.hardEdge,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: CachedNetworkImage(
+                                          imageUrl: widget.thumb)
+                                      //Image.network(widget.thumb),
+                                      ),
+                                ),
                               ),
                             ),
                           ),
