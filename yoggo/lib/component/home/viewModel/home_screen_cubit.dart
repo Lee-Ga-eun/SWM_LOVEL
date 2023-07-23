@@ -63,7 +63,6 @@ class DataCubit extends Cubit<List<BookModel>> {
   DataCubit() : super([]);
 
   void loadData() async {
-    print(_loadedData);
     if (!_isLoaded) {
       // 데이터를 로드하지 않았을 경우에만 로드
       final response =
