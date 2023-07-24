@@ -4,7 +4,7 @@
 <uses-permission android:name="android.permission.RECORD_AUDIO" />
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+<uses-permission android:name="com.google.android.gms.permission.AD_ID" />
     <application
         android:label="LOVEL"
         android:name="${applicationName}"
@@ -25,6 +25,7 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
+                  <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
               <meta-data
             android:name="com.android.vending.licensing.InAppBillingPublicKey"
             android:value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAueLdlUKaP3P2Gnd3nY7SRkJHAVqnOA/5fXYMj7lgT3RYvd+SNQ4WKB+C5+bsDylkmSbvzpRxnWDzwamtcsY1zbyPqO5ItmHWSoTHxq05pJRXqfkSNH1JeR8R8VJvZ9yB9c3YIfNz7ddNhkRoZuGw/73gdg80O4iVJUwlVwumZK8GGpIQ1FD/NFvhCFBagU0OR7hBrRpBZNMQq5ogCgrK7lKcMOlBJE4etnrVsu7Q27JJFBhA1msbbc5Ds4ON13U3PbVG8Ic7IuD+Xq5EuIFXn8ZBorpVghcc8NydARoMUVTwvnSqMQTD+zVVYlIlhXubTiEia+Kku7ad2hUIwgT3BwIDAQAB" />
