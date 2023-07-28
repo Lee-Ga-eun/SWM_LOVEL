@@ -14,7 +14,6 @@ import '../viewModel/home_screen_cubit.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import '../../globalCubit/user/user_cubit.dart';
-import '../../push.dart';
 import 'package:yoggo/main.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -742,7 +741,6 @@ class DataList extends StatelessWidget {
             ),
           );
         } else {
-          showNotification(flutterLocalNotificationsPlugin);
           return ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: state.length,

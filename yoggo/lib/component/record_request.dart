@@ -140,12 +140,18 @@ class _recordRequesteState extends State<recordRequest> {
                               width: SizeConfig.defaultSize! * 5,
                               alignment: Alignment.topCenter,
                             ),
+                            SizedBox(
+                              width: SizeConfig.defaultSize! * 1.5,
+                            ),
                             Text(
-                              'Congratulations on \n completing the RECORDING ',
+                              'Congratulations on \n completing the RECORDING',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontFamily: 'Molengo',
                                   fontSize: SizeConfig.defaultSize! * 2.5),
+                            ),
+                            SizedBox(
+                              width: SizeConfig.defaultSize! * 2,
                             ),
                             Image.asset(
                               'lib/images/congratulate1.png',
@@ -184,56 +190,42 @@ class _recordRequesteState extends State<recordRequest> {
                           ],
                         ),
                         SizedBox(
-                          height: SizeConfig.defaultSize! * 5,
+                          height: SizeConfig.defaultSize! * 4,
                         ),
                         Padding(
                             padding: const EdgeInsets.only(),
-                            child: Container(
-                              width: SizeConfig.defaultSize! * 20.6,
-                              height: SizeConfig.defaultSize! * 4.5,
-                              decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 255, 167, 26),
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(SizeConfig.defaultSize!)),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                  left: SizeConfig.defaultSize! * 1,
-                                  right: SizeConfig.defaultSize! * 1,
-                                  // top: SizeConfig.defaultSize! * 0.2,
-                                  // bottom: SizeConfig.defaultSize! * 0.2,
-                                ),
-                                child: TextButton(
-                                  onPressed: () async {
-                                    // await userCubit.fetchUser();
-                                    print(userState.record);
-                                    if (userState.record) {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const HomeScreen()),
-                                      );
-                                    }
-                                    // await Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //       builder: (context) =>
-                                    //           const HomeScreen()),
-                                    // );
-                                  },
-                                  child: Text(
-                                    'OK',
-                                    style: TextStyle(
-                                      fontFamily: 'Molengo',
-                                      fontSize: SizeConfig.defaultSize! * 2.1,
-                                      color: Colors.black,
-                                    ),
-                                    textAlign: TextAlign.center,
+                            child: GestureDetector(
+                              onTap: () async {
+                                await userCubit.fetchUser();
+                                if (userState.record) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const HomeScreen()),
+                                  );
+                                }
+                              },
+                              child: Container(
+                                  width: SizeConfig.defaultSize! * 24,
+                                  height: SizeConfig.defaultSize! * 4.5,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFFFA91A),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(
+                                            SizeConfig.defaultSize! * 1.5)),
                                   ),
-                                ),
-                              ),
-                            ))
+                                  child: Center(
+                                    child: Text(
+                                      'OK',
+                                      style: TextStyle(
+                                        fontFamily: 'Molengo',
+                                        fontSize: SizeConfig.defaultSize! * 2.3,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  )),
+                            )),
                       ],
                     )),
               ),
