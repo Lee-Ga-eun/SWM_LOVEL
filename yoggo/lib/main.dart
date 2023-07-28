@@ -52,7 +52,7 @@ void main() async {
   //     DarwinInitializationSettings(
   //   onDidReceiveLocalNotification:
   //       (int? id, String? title, String? body, String? payload) async {},
-  // );
+  // );ㄹ
   // const LinuxInitializationSettings initializationSettingsLinux =
   //     LinuxInitializationSettings(defaultActionName: 'Open notification');
   // final InitializationSettings initializationSettings = InitializationSettings(
