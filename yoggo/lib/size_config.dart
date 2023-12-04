@@ -17,6 +17,6 @@ class SizeConfig {
     // So if the screen size increase or decrease then our defaultSize also vary
     defaultSize = orientation == Orientation.landscape
         ? screenWidth! * 0.0112
-        : screenHeight! * 0.024;
+        : screenHeight! * 0.0112;
   }
 }

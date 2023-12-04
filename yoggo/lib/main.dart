@@ -94,8 +94,7 @@ void main() async {
   await EasyLocalization.ensureInitialized();
 
   SystemChrome.setPreferredOrientations(
-          [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight])
-      .then((_) {
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
     runApp(
       EasyLocalization(
         supportedLocales: const [Locale('ko', 'KR')], //Locale('en', 'US'),

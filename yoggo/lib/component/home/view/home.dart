@@ -305,27 +305,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     return shouldExit ?? false; // Return false if shouldExit is null
   }
 
-  void logout() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove('token');
-    await _googleSignIn.disconnect();
-  }
-
-  void deleteAccount() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var tokens = prefs.getString('token')!;
-    var response = await http.get(
-      Uri.parse('${dotenv.get("API_SERVER")}auth/delete'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $tokens',
-      },
-    );
-    if (response.statusCode == 200) {
-      logout();
-    }
-  }
-
   void pointFunction() {
     // AppBar 아이콘 클릭
   }
@@ -543,23 +522,17 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         child: BlocProvider(
             create: (context) =>
                 dataCubit..loadHomeBookData(), // DataCubit 생성 및 데이터 로드
-            // child: DataList(
-            //   record:
-            //   purchase:
-            // ),
-            //final userCubit = context.watch<UserCubit>();
-            //final userState = userCubit.state;
             child: BlocBuilder<DataCubit, List<HomeScreenBookModel>>(
               builder: (context, state) {
                 if (state.isEmpty) {
                   _sendHomeLoadingViewEvent();
                   return Container(
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('lib/images/bkground.png'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                      decoration: const BoxDecoration(color: Colors.white
+                          // image: DecorationImage(
+                          //   image: AssetImage('lib/images/bkground.png'),
+                          //   fit: BoxFit.cover,
+                          // ),
+                          ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -604,203 +577,399 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                       //   ),
                       Container(
                         decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            opacity: 1.0,
-                            image: AssetImage('lib/images/bkground.png'),
-                            fit: BoxFit.cover,
-                          ),
+                          color: Colors.white,
+                          // image: DecorationImage(
+                          //   opacity: 1.0,
+                          //   image: AssetImage('lib/images/bkground.png'),
+                          //   fit: BoxFit.cover,
+                          // ),
                         ),
                         child: SafeArea(
+                          top: true,
                           bottom: false,
-                          top: false,
-                          minimum: EdgeInsets.only(
-                              left: 2 * SizeConfig.defaultSize!,
-                              right: 2 * SizeConfig.defaultSize!),
+                          // minimum: EdgeInsets.only(
+                          //     left: 2 * SizeConfig.defaultSize!,
+                          //     right: 2 * SizeConfig.defaultSize!),
                           child: Column(
                             children: [
-                              Expanded(
-                                flex: SizeConfig.defaultSize!.toInt(),
-                                child: Stack(
-                                  alignment: Alignment.centerLeft,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'LOVEL',
-                                          style: TextStyle(
+                              // Expanded(
+                              // flex: SizeConfig.defaultSize!.toInt(),
+                              //child:
+                              Stack(
+                                alignment: Alignment.topLeft,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'LOVEL',
+                                        style: TextStyle(
                                             fontFamily: 'Modak',
                                             fontSize:
-                                                SizeConfig.defaultSize! * 5,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Positioned(
-                                      //left: 20,
-                                      top: SizeConfig.defaultSize! * 2,
-                                      child: InkWell(
-                                        onTap: () {
-                                          userCubit.fetchUser();
+                                                SizeConfig.defaultSize! * 4,
+                                            color: Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                  Positioned(
+                                    //left: 20,
+                                    top: SizeConfig.defaultSize! * 0.5,
+                                    left: SizeConfig.defaultSize! * 2,
+                                    child: InkWell(
+                                      onTap: () {
+                                        userCubit.fetchUser();
 
-                                          _sendHbgClickEvent();
-                                          _scaffoldKey.currentState
-                                              ?.openDrawer();
-                                          userCubit.fetchUser();
-                                        },
-                                        child: Image.asset(
-                                          'lib/images/hamburger.png',
-                                          width: 3.5 *
-                                              SizeConfig
-                                                  .defaultSize!, // 이미지의 폭 설정
-                                          height: // 이미지의 높이 설정
-                                              3.5 * SizeConfig.defaultSize!,
-                                        ),
+                                        _sendHbgClickEvent();
+                                        _scaffoldKey.currentState?.openDrawer();
+                                        userCubit.fetchUser();
+                                      },
+                                      child: Image.asset(
+                                        'lib/images/hamburger.png',
+                                        width: 4.5 *
+                                            SizeConfig
+                                                .defaultSize!, // 이미지의 폭 설정
+                                        height: // 이미지의 높이 설정
+                                            4.5 * SizeConfig.defaultSize!,
                                       ),
                                     ),
-                                    //userState.purchase // 구독이면 캘린더 보여주지 않음
-                                    // ? Container()
-                                    //:
-                                    // Positioned(
-                                    //     right: SizeConfig.defaultSize! * 10,
-                                    //     top: SizeConfig.defaultSize! * 0.2,
-                                    //     child: SizedBox(
-                                    //         width: 8 * SizeConfig.defaultSize!,
-                                    //         height: 8 * SizeConfig.defaultSize!,
-                                    //         child: Container(
-                                    //             decoration: BoxDecoration(
-                                    //                 gradient: RadialGradient(
-                                    //                     radius: 0.5,
-                                    //                     // begin: Alignment.topCenter,
-                                    //                     // end: Alignment.bottomCenter,
-                                    //                     colors: [
-                                    //               const Color.fromARGB(255, 255,
-                                    //                   0, 0), // 흐린 배경의 시작 색상
-                                    //               Color.fromARGB(0, 255, 255,
-                                    //                   255), // 투명한 중간 색상
-                                    //             ]))))),
-                                    Positioned(
-                                      right: SizeConfig.defaultSize! * 12.5,
-                                      top: SizeConfig.defaultSize! * 2,
-                                      child: InkWell(
-                                        onTap: () {
-                                          lastPointYMD == formattedTime
-                                              ? _sendCalClickEvent(
-                                                  userState.point,
-                                                  availableGetPoint,
-                                                  'Already Claimed')
-                                              : _sendCalClickEvent(
-                                                  userState.point,
-                                                  availableGetPoint,
-                                                  'Not Claimed Yet');
-                                          _openCalendarFunc();
-                                        },
-                                        child: Image.asset(
-                                          'lib/images/calendarOrange.png',
-                                          width: 4 *
-                                              SizeConfig
-                                                  .defaultSize!, // 이미지의 폭 설정
-                                          height: 4 * SizeConfig.defaultSize!,
-                                          // 이미지의 높이 설정
-                                        ),
-                                      ),
-                                    ),
+                                  ),
+                                  //userState.purchase // 구독이면 캘린더 보여주지 않음
+                                  // ? Container()
+                                  //:
+                                  // Positioned(
+                                  //     right: SizeConfig.defaultSize! * 10,
+                                  //     top: SizeConfig.defaultSize! * 0.2,
+                                  //     child: SizedBox(
+                                  //         width: 8 * SizeConfig.defaultSize!,
+                                  //         height: 8 * SizeConfig.defaultSize!,
+                                  //         child: Container(
+                                  //             decoration: BoxDecoration(
+                                  //                 gradient: RadialGradient(
+                                  //                     radius: 0.5,
+                                  //                     // begin: Alignment.topCenter,
+                                  //                     // end: Alignment.bottomCenter,
+                                  //                     colors: [
+                                  //               const Color.fromARGB(255, 255,
+                                  //                   0, 0), // 흐린 배경의 시작 색상
+                                  //               Color.fromARGB(0, 255, 255,
+                                  //                   255), // 투명한 중간 색상
+                                  //             ]))))),
+                                  // Positioned(
+                                  //   right: SizeConfig.defaultSize! * 12.5,
+                                  //   top: SizeConfig.defaultSize! * 2,
+                                  //   child: InkWell(
+                                  //     onTap: () {
+                                  //       lastPointYMD == formattedTime
+                                  //           ? _sendCalClickEvent(
+                                  //               userState.point,
+                                  //               availableGetPoint,
+                                  //               'Already Claimed')
+                                  //           : _sendCalClickEvent(
+                                  //               userState.point,
+                                  //               availableGetPoint,
+                                  //               'Not Claimed Yet');
+                                  //       _openCalendarFunc();
+                                  //     },
+                                  //     child: Image.asset(
+                                  //       'lib/images/calendarOrange.png',
+                                  //       width: 4 *
+                                  //           SizeConfig
+                                  //               .defaultSize!, // 이미지의 폭 설정
+                                  //       height: 4 * SizeConfig.defaultSize!,
+                                  //       // 이미지의 높이 설정
+                                  //     ),
+                                  //   ),
+                                  // ),
 
-                                    Visibility(
-                                        visible: lastPointYMD != formattedTime,
-                                        child: Positioned(
-                                            right: SizeConfig.defaultSize! * 12,
-                                            top: 0.05 * sh,
-                                            child: Image.asset(
-                                              'lib/images/redButton.png',
-                                              width: 0.02 * sw,
-                                            ))),
-                                    //userState.purchase
-                                    // ? Container()
-                                    //:
-                                    Positioned(
-                                      //구독이면 포인트 보여주지 않음
-                                      top: 2.2 * SizeConfig.defaultSize!,
-                                      right: 1 * SizeConfig.defaultSize!,
-                                      child: Stack(children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            _sendHomePointClickEvent(
-                                                userState.point);
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Purchase(
-                                                        abTest: widget.abTest,
-                                                      )),
-                                            );
-                                          },
-                                          child: Container(
-                                            width: 10 * SizeConfig.defaultSize!,
-                                            height: 4 * SizeConfig.defaultSize!,
-                                            decoration: BoxDecoration(
-                                                color: const Color.fromARGB(
-                                                    128, 255, 255, 255),
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(SizeConfig
-                                                            .defaultSize! *
-                                                        1))),
-                                            child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  SizedBox(
-                                                    width: 0.5 *
-                                                        SizeConfig.defaultSize!,
-                                                  ),
-                                                  SizedBox(
-                                                      width: 2 *
-                                                          SizeConfig
-                                                              .defaultSize!,
-                                                      child: Image.asset(
-                                                        'lib/images/oneCoin.png',
-                                                      )),
-                                                  Container(
-                                                    width: 7 *
-                                                        SizeConfig.defaultSize!,
-                                                    alignment: Alignment.center,
-                                                    // decoration: BoxDecoration(color: Colors.blue),
-                                                    child: Text(
-                                                      '${userState.point + 0}',
-                                                      style: TextStyle(
-                                                          fontFamily: 'lilita',
-                                                          fontSize: SizeConfig
-                                                                  .defaultSize! *
-                                                              2,
-                                                          color: Colors.black),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                    ),
-                                                  )
-                                                ]),
-                                          ),
-                                        ),
-                                      ]),
-                                    ),
-                                  ],
-                                ),
+                                  // Visibility(
+                                  //     visible: lastPointYMD != formattedTime,
+                                  //     child: Positioned(
+                                  //         right: SizeConfig.defaultSize! * 12,
+                                  //         top: 0.05 * sh,
+                                  //         child: Image.asset(
+                                  //           'lib/images/redButton.png',
+                                  //           width: 0.02 * sw,
+                                  //         ))),
+                                  //userState.purchase
+                                  // ? Container()
+                                  //:
+                                  //   Positioned(
+                                  //     //구독이면 포인트 보여주지 않음
+                                  //     top: 2.2 * SizeConfig.defaultSize!,
+                                  //     right: 1 * SizeConfig.defaultSize!,
+                                  //     child: Stack(children: [
+                                  //       GestureDetector(
+                                  //         onTap: () {
+                                  //           _sendHomePointClickEvent(
+                                  //               userState.point);
+                                  //           Navigator.push(
+                                  //             context,
+                                  //             MaterialPageRoute(
+                                  //                 builder: (context) =>
+                                  //                     Purchase(
+                                  //                       abTest: widget.abTest,
+                                  //                     )),
+                                  //           );
+                                  //         },
+                                  //         child: Container(
+                                  //           width: 10 * SizeConfig.defaultSize!,
+                                  //           height: 4 * SizeConfig.defaultSize!,
+                                  //           decoration: BoxDecoration(
+                                  //               color: const Color.fromARGB(
+                                  //                   128, 255, 255, 255),
+                                  //               borderRadius: BorderRadius.all(
+                                  //                   Radius.circular(SizeConfig
+                                  //                           .defaultSize! *
+                                  //                       1))),
+                                  //           child: Row(
+                                  //               mainAxisAlignment:
+                                  //                   MainAxisAlignment.start,
+                                  //               children: [
+                                  //                 SizedBox(
+                                  //                   width: 0.5 *
+                                  //                       SizeConfig.defaultSize!,
+                                  //                 ),
+                                  //                 SizedBox(
+                                  //                     width: 2 *
+                                  //                         SizeConfig
+                                  //                             .defaultSize!,
+                                  //                     child: Image.asset(
+                                  //                       'lib/images/oneCoin.png',
+                                  //                     )),
+                                  //                 Container(
+                                  //                   width: 7 *
+                                  //                       SizeConfig.defaultSize!,
+                                  //                   alignment: Alignment.center,
+                                  //                   // decoration: BoxDecoration(color: Colors.blue),
+                                  //                   child: Text(
+                                  //                     '${userState.point + 0}',
+                                  //                     style: TextStyle(
+                                  //                         fontFamily: 'lilita',
+                                  //                         fontSize: SizeConfig
+                                  //                                 .defaultSize! *
+                                  //                             2,
+                                  //                         color: Colors.black),
+                                  //                     textAlign:
+                                  //                         TextAlign.center,
+                                  //                   ),
+                                  //                 )
+                                  //               ]),
+                                  //         ),
+                                  //       ),
+                                  //     ]),
+                                  //   ),
+                                  //
+                                ],
                               ),
-                              Expanded(
-                                flex: SizeConfig.defaultSize!.toInt() * 4,
+                              //),
+                              // Expanded(
+                              //   flex: SizeConfig.defaultSize!.toInt() * 6,
+                              //   child:
+                              Container(
+                                color: Colors.blue,
                                 child: SingleChildScrollView(
                                   child: Column(
                                     children: [
-                                      SizedBox(
-                                        height: SizeConfig.defaultSize! * 30,
+                                      Container(
+                                        height: SizeConfig.defaultSize! * 25,
+                                        color: Color(0x00FFF0DF),
                                         child: BlocProvider(
                                           create: (context) => dataCubit
                                             ..loadHomeBookData(), // DataCubit 생성 및 데이터 로드
                                           child: ListView.separated(
                                             scrollDirection: Axis.horizontal,
                                             itemCount: state.length,
+
+                                            //  itemCount: 4,
+                                            itemBuilder: (context, index) {
+                                              var book = state[index];
+                                              return GestureDetector(
+                                                onTap: () async {
+                                                  _sendBookClickEvent(book.id);
+                                                  SharedPreferences prefs =
+                                                      await SharedPreferences
+                                                          .getInstance();
+                                                  bgmPlayer.pause();
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            MultiBlocProvider(
+                                                              providers: [
+                                                                BlocProvider<
+                                                                    BookVoiceCubit>(
+                                                                  create: (context) => BookVoiceCubit(
+                                                                      dataRepository)
+                                                                    ..loadBookVoiceData(
+                                                                        book.id),
+                                                                ),
+                                                                BlocProvider<
+                                                                    BookIntroCubit>(
+                                                                  create: (context) =>
+                                                                      // BookIntroCubit(),
+                                                                      // DataCubit()..loadHomeBookData()
+                                                                      BookIntroCubit(dataRepository)..loadBookIntroData(book.id),
+                                                                )
+                                                              ],
+                                                              child: BookIntro(
+                                                                abTest: widget
+                                                                    .abTest,
+                                                                id: book.id,
+                                                                title:
+                                                                    book.title,
+                                                                thumbUrl: book
+                                                                    .thumbUrl,
+                                                                bgmPlayer:
+                                                                    bgmPlayer,
+                                                              ),
+                                                            )),
+                                                  );
+                                                  // : Navigator.push(
+                                                  //     //구독자가 아니면 purchase로 보낸다?
+                                                  //     context,
+                                                  //     MaterialPageRoute(
+                                                  //       builder: (context) =>
+                                                  //           userState.purchase
+                                                  //               ? BlocProvider(
+                                                  //                   create: (context) =>
+                                                  //                       // BookIntroCubit(),
+                                                  //                       // DataCubit()..loadHomeBookData()
+                                                  //                       BookIntroCubit()..loadBookIntroData(book.id),
+                                                  //                   child:
+                                                  //                       BookIntro(
+                                                  //                     title: book
+                                                  //                         .title,
+                                                  //                     thumb: book
+                                                  //                         .thumbUrl,
+                                                  //                     id: book
+                                                  //                         .id,
+                                                  //                     summary: book
+                                                  //                         .summary,
+                                                  //                   ),
+                                                  //                 )
+                                                  //               : const Purchase(),
+                                                  //     ));
+                                                }, //onTap 종료
+                                                child: book.lock
+                                                    // 사용자가 포인트로 책을 풀었거나, 무료 공개 책이면 lock 해제
+                                                    ? Container()
+                                                    : unlockedBook(
+                                                        book), //구독자아님
+                                              );
+                                            },
+                                            separatorBuilder:
+                                                (context, index) => SizedBox(
+                                                    width: 2 *
+                                                        SizeConfig
+                                                            .defaultSize!),
+                                          ),
+                                        ),
+                                      ), //첫 줄 종료
+                                      Container(
+                                        height: SizeConfig.defaultSize! * 25,
+                                        color: Color(0xFFFEF8D6),
+                                        child: BlocProvider(
+                                          create: (context) => dataCubit
+                                            ..loadHomeBookData(), // DataCubit 생성 및 데이터 로드
+                                          child: ListView.separated(
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount: state.length,
+
+                                            //  itemCount: 4,
+                                            itemBuilder: (context, index) {
+                                              var book = state[index];
+                                              return GestureDetector(
+                                                onTap: () async {
+                                                  _sendBookClickEvent(book.id);
+                                                  SharedPreferences prefs =
+                                                      await SharedPreferences
+                                                          .getInstance();
+                                                  bgmPlayer.pause();
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            MultiBlocProvider(
+                                                              providers: [
+                                                                BlocProvider<
+                                                                    BookVoiceCubit>(
+                                                                  create: (context) => BookVoiceCubit(
+                                                                      dataRepository)
+                                                                    ..loadBookVoiceData(
+                                                                        book.id),
+                                                                ),
+                                                                BlocProvider<
+                                                                    BookIntroCubit>(
+                                                                  create: (context) =>
+                                                                      // BookIntroCubit(),
+                                                                      // DataCubit()..loadHomeBookData()
+                                                                      BookIntroCubit(dataRepository)..loadBookIntroData(book.id),
+                                                                )
+                                                              ],
+                                                              child: BookIntro(
+                                                                abTest: widget
+                                                                    .abTest,
+                                                                id: book.id,
+                                                                title:
+                                                                    book.title,
+                                                                thumbUrl: book
+                                                                    .thumbUrl,
+                                                                bgmPlayer:
+                                                                    bgmPlayer,
+                                                              ),
+                                                            )),
+                                                  );
+                                                  // : Navigator.push(
+                                                  //     //구독자가 아니면 purchase로 보낸다?
+                                                  //     context,
+                                                  //     MaterialPageRoute(
+                                                  //       builder: (context) =>
+                                                  //           userState.purchase
+                                                  //               ? BlocProvider(
+                                                  //                   create: (context) =>
+                                                  //                       // BookIntroCubit(),
+                                                  //                       // DataCubit()..loadHomeBookData()
+                                                  //                       BookIntroCubit()..loadBookIntroData(book.id),
+                                                  //                   child:
+                                                  //                       BookIntro(
+                                                  //                     title: book
+                                                  //                         .title,
+                                                  //                     thumb: book
+                                                  //                         .thumbUrl,
+                                                  //                     id: book
+                                                  //                         .id,
+                                                  //                     summary: book
+                                                  //                         .summary,
+                                                  //                   ),
+                                                  //                 )
+                                                  //               : const Purchase(),
+                                                  //     ));
+                                                }, //onTap 종료
+                                                child: book.lock
+                                                    // 사용자가 포인트로 책을 풀었거나, 무료 공개 책이면 lock 해제
+                                                    ? lockedBook(book)
+                                                    : unlockedBook(
+                                                        book), //구독자아님
+                                              );
+                                            },
+                                            separatorBuilder:
+                                                (context, index) => SizedBox(
+                                                    width: 2 *
+                                                        SizeConfig
+                                                            .defaultSize!),
+                                          ),
+                                        ),
+                                      ), //첫 줄 종료
+                                      Container(
+                                        height: SizeConfig.defaultSize! * 25,
+                                        color: Color(0xFFFFFFF),
+                                        child: BlocProvider(
+                                          create: (context) => dataCubit
+                                            ..loadHomeBookData(), // DataCubit 생성 및 데이터 로드
+                                          child: ListView.separated(
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount: state.length,
+
                                             //  itemCount: 4,
                                             itemBuilder: (context, index) {
                                               var book = state[index];
@@ -960,6 +1129,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                   ),
                                 ),
                               ),
+                              // ),
                             ],
                           ),
                         ),
@@ -2432,12 +2602,12 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
             ),
-            height: SizeConfig.defaultSize! * 22,
+            height: SizeConfig.defaultSize! * 12,
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Stack(children: [
                   Container(
-                    width: SizeConfig.defaultSize! * 22,
+                    width: SizeConfig.defaultSize! * 12,
                     color: Colors.white.withOpacity(0.6),
                   ),
                   Image(
@@ -2454,12 +2624,12 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           height: SizeConfig.defaultSize! * 1,
         ),
         SizedBox(
-          width: SizeConfig.defaultSize! * 20,
+          width: SizeConfig.defaultSize! * 12,
           child: Text(
             book.title,
             style: TextStyle(
               fontFamily: 'GenBkBasR',
-              fontSize: SizeConfig.defaultSize! * 2,
+              fontSize: SizeConfig.defaultSize! * 1.2,
             ),
             textAlign: TextAlign.center,
             maxLines: 2,
@@ -2479,7 +2649,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
             ),
-            height: SizeConfig.defaultSize! * 22,
+            height: SizeConfig.defaultSize! * 12,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Stack(children: [
@@ -2490,7 +2660,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 //   imageUrl: book.thumbUrl,
                 // ),
                 Container(
-                  width: SizeConfig.defaultSize! * 22,
+                  width: SizeConfig.defaultSize! * 12,
                   color: Colors.white.withOpacity(0.6),
                 ),
                 Align(
@@ -2501,7 +2671,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                           top: SizeConfig.defaultSize! * 0.5),
                       child: Image.asset(
                         'lib/images/locked.png',
-                        width: SizeConfig.defaultSize! * 6,
+                        width: SizeConfig.defaultSize! * 3,
                       )),
                 ),
                 if (book.isNew == true)
@@ -2510,7 +2680,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                       top: SizeConfig.defaultSize! * 0,
                       child: Image.asset(
                         'lib/images/new.png',
-                        width: SizeConfig.defaultSize! * 8,
+                        width: SizeConfig.defaultSize! * 3,
                       )),
                 if (book.badge == "offer")
                   Positioned(
@@ -2518,7 +2688,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                       bottom: SizeConfig.defaultSize! * 1,
                       child: Image.asset(
                         'lib/images/specialOffer.png',
-                        width: SizeConfig.defaultSize! * 6,
+                        width: SizeConfig.defaultSize! * 2,
                       )),
 
                 // CachedNetworkIma
@@ -2530,12 +2700,12 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           height: SizeConfig.defaultSize! * 1,
         ),
         SizedBox(
-          width: SizeConfig.defaultSize! * 20,
+          width: SizeConfig.defaultSize! * 12,
           child: Text(
             book.title,
             style: TextStyle(
               fontFamily: 'GenBkBasR',
-              fontSize: SizeConfig.defaultSize! * 2,
+              fontSize: SizeConfig.defaultSize! * 1.2,
             ),
             textAlign: TextAlign.center,
             maxLines: 2,
