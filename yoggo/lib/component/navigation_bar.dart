@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:yoggo/component/home/view/home.dart';
 import 'package:yoggo/component/shop.dart';
 import 'package:yoggo/size_config.dart';
 
@@ -23,13 +24,45 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     setState(() {
       _currentIndex = index;
     });
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => Purchase(
-                bgmPlayer: widget.bgmPlayer,
-              )),
-    );
+    switch (index) {
+      case 0:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Purchase(
+                    bgmPlayer: widget.bgmPlayer,
+                  )),
+        );
+      case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Purchase(
+                    bgmPlayer: widget.bgmPlayer,
+                  )),
+        );
+      case 2:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+        );
+      case 3:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Purchase(
+                    bgmPlayer: widget.bgmPlayer,
+                  )),
+        );
+      case 4:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Purchase(
+                    bgmPlayer: widget.bgmPlayer,
+                  )),
+        );
+    }
   }
 
   @override
@@ -37,7 +70,9 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     return Container(
       width: 39 * SizeConfig.defaultSize!,
       height: 6.7 * SizeConfig.defaultSize!,
-      padding: const EdgeInsets.only(left: 10, right: 10),
+      padding: EdgeInsets.only(
+          left: 2.5 * SizeConfig.defaultSize!,
+          right: 2.5 * SizeConfig.defaultSize!),
       decoration: const BoxDecoration(
         color: Color(0xFFFFFFFF),
         boxShadow: [
@@ -73,7 +108,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                     width: 2.8 * SizeConfig.defaultSize!),
                 SizedBox(height: 0.6 * SizeConfig.defaultSize!)
               ]),
-              label: '포인트'),
+              label: '상점'),
           BottomNavigationBarItem(
               icon: Column(children: [
                 Image.asset('lib/images/home.png',
@@ -101,6 +136,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         showUnselectedLabels: true,
         selectedFontSize: SizeConfig.defaultSize! * 1.2,
         unselectedFontSize: SizeConfig.defaultSize! * 1.2,
+        selectedLabelStyle: TextStyle(fontFamily: 'Suit'),
         // enableFeedback: false,
       ),
     );

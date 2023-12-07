@@ -252,10 +252,7 @@ class _BookPageState extends State<BookPage> with WidgetsBindingObserver {
             return Scaffold(
               body: Container(
                 decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('lib/images/bkground.png'),
-                    fit: BoxFit.cover,
-                  ),
+                  color: Color(0xFFFFFAE4),
                 ),
                 child: SafeArea(
                   child: Column(
@@ -325,10 +322,7 @@ class _BookPageState extends State<BookPage> with WidgetsBindingObserver {
                 children: [
                   Container(
                     decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('lib/images/bkground.png'),
-                        fit: BoxFit.cover,
-                      ),
+                      color: Color(0xFFFFFAE4),
                     ),
                   ),
                   SafeArea(

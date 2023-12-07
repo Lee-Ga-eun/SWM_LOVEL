@@ -281,11 +281,7 @@ class _BookIntroOnboardingState extends State<BookIntroOnboarding> {
             children: [
               Container(
                 decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    opacity: 0.6,
-                    image: AssetImage('lib/images/bkground.png'),
-                    fit: BoxFit.cover,
-                  ),
+                  color: Color(0xFFFFFAE4),
                 ),
                 child: Padding(
                   padding: EdgeInsets.only(

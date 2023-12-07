@@ -13,7 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yoggo/component/bookIntro/view/book_intro.dart';
 import 'package:yoggo/component/bookIntro/view/book_intro_onboarding.dart';
 import 'package:yoggo/component/globalCubit/user/user_state.dart';
-import 'package:yoggo/component/home/view/home_onboarding.dart';
+import 'package:yoggo/component/home/view/ex_home_onboarding.dart';
 import 'package:yoggo/component/home/viewModel/home_screen_book_model.dart';
 import 'package:yoggo/component/navigation_bar.dart';
 // import 'package:yoggo/component/sub.dart';
@@ -28,6 +28,7 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:yoggo/widgets/custom_text.dart';
 import '../../../Repositories/Repository.dart';
 import '../../bookIntro/viewModel/book_intro_cubit.dart';
 import '../../bookIntro/viewModel/book_voice_cubit.dart';
@@ -581,7 +582,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                           color: Colors.white,
                           // image: DecorationImage(
                           //   opacity: 1.0,
-                          //   image: AssetImage('lçib/images/bkground.png'),
+                          //   image: AssetImage('lib/images/bkground.png'),
                           //   fit: BoxFit.cover,
                           // ),
                         ),
@@ -785,11 +786,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                                     width: SizeConfig
                                                             .defaultSize! *
                                                         0.7),
-                                                Text('내 책',
+                                                CustomText('내 책',
                                                     style: TextStyle(
                                                         fontSize: 1.8 *
                                                             SizeConfig
-                                                                .defaultSize!))
+                                                                .defaultSize!)),
                                               ],
                                             ),
                                             SizedBox(
@@ -918,6 +919,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                                         0.7),
                                                 Text('클래식 고전',
                                                     style: TextStyle(
+                                                        fontFamily: 'Suit',
                                                         fontSize: 1.8 *
                                                             SizeConfig
                                                                 .defaultSize!))
@@ -1059,6 +1061,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                                         0.7),
                                                 Text('어거스틴 작가 모음전',
                                                     style: TextStyle(
+                                                        fontFamily: 'Suit',
                                                         fontSize: 1.8 *
                                                             SizeConfig
                                                                 .defaultSize!))

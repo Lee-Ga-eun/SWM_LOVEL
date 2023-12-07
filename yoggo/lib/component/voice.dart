@@ -99,10 +99,7 @@ class _VoiceProfileState extends State<VoiceProfile> {
         body: Stack(children: [
       Container(
         decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('lib/images/bkground.png'),
-            fit: BoxFit.cover,
-          ),
+          color: Color(0xFFFFFAE4),
         ),
         child: SafeArea(
           bottom: false,

@@ -72,10 +72,7 @@ class _RecEndState extends State<RecEnd> {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('lib/images/bkground.png'),
-            fit: BoxFit.cover,
-          ),
+          color: Color(0xFFFFFAE4),
         ),
         child: SafeArea(
           bottom: false,
