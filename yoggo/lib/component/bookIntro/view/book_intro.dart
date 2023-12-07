@@ -2,6 +2,7 @@ import 'package:amplitude_flutter/amplitude.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yoggo/component/bookIntro/viewModel/book_voice_cubit.dart';
@@ -89,14 +90,14 @@ class _BookIntroState extends State<BookIntro> {
 
   @override
   void dispose() {
-    // isClicked.dispose();
-    // isClicked0.dispose();
-    // isClicked1.dispose();
-    // isClicked2.dispose();
     wantInference.dispose();
     wantRecord.dispose();
     canChanged.dispose();
     super.dispose();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
   }
 
   Future<void> fetchPageData() async {
@@ -117,8 +118,6 @@ class _BookIntroState extends State<BookIntro> {
         //   }
         // }
         final contentText = data['voice'][0]['voiceName'];
-        //  lastPage = data['last'];
-        //  contentId = data['contentId'];
 
         setState(() {
           text = contentText;
@@ -136,6 +135,10 @@ class _BookIntroState extends State<BookIntro> {
   void initState() {
     super.initState();
     UserCubit().fetchUser();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
 
     //  cvi = 0;
     contentId = widget.id;
@@ -807,10 +810,7 @@ class _BookIntroState extends State<BookIntro> {
           return Scaffold(
             body: Container(
               decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('lib/images/bkground.png'),
-                  fit: BoxFit.cover,
-                ),
+                color: Color(0xFFFFFAE4),
               ),
               child: Center(
                 // 로딩 화면
@@ -834,10 +834,7 @@ class _BookIntroState extends State<BookIntro> {
               body: Stack(children: [
                 Container(
                   decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/images/bkground.png'),
-                      fit: BoxFit.cover,
-                    ),
+                    color: Color(0xFFFFFAE4),
                   ),
                   child: Padding(
                     padding: EdgeInsets.only(
