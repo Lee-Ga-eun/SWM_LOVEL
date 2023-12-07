@@ -17,7 +17,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class RecLoading extends StatefulWidget {
-  final FirebaseRemoteConfig abTest;
   final int contentId;
   final void Function(String path)? onStop;
   final String path;
@@ -29,7 +28,6 @@ class RecLoading extends StatefulWidget {
       this.onStop,
       required this.path,
       this.retry,
-      required this.abTest,
       required this.contentId,
       required this.bgmPlayer})
       : super(key: key);
@@ -131,7 +129,6 @@ class _RecLoadingState extends State<RecLoading> {
         context,
         MaterialPageRoute(
             builder: (context) => RecEnd(
-                  abTest: widget.abTest,
                   contentId: widget.contentId,
                   bgmPlayer: widget.bgmPlayer,
                 )),

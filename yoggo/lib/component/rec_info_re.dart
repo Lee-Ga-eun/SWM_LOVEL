@@ -12,9 +12,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:amplitude_flutter/amplitude.dart';
 
 class RecReInfo extends StatefulWidget {
-  final FirebaseRemoteConfig abTest;
-
-  const RecReInfo({super.key, required this.abTest});
+  const RecReInfo({super.key});
 
   @override
   _RecInfoState createState() => _RecInfoState();

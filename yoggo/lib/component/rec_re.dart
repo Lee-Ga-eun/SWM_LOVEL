@@ -21,12 +21,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class RecRe extends StatefulWidget {
-  final FirebaseRemoteConfig abTest;
   final void Function(String path)? onStop;
   final AudioPlayer bgmPlayer;
 
-  const RecRe(
-      {Key? key, this.onStop, required this.abTest, required this.bgmPlayer})
+  const RecRe({Key? key, this.onStop, required this.bgmPlayer})
       : super(key: key);
 
   @override
@@ -271,9 +269,8 @@ class _RecReState extends State<RecRe> {
                                           await Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) => RecReInfo(
-                                                      abTest: widget.abTest,
-                                                    )),
+                                                builder: (context) =>
+                                                    RecReInfo()),
                                           );
                                           // showDialog를 통해 팝업 창을 띄웁니다.
                                           // await showDialog(
@@ -402,7 +399,6 @@ class _RecReState extends State<RecRe> {
                                       MaterialPageRoute(
                                           builder: (context) => RecRe(
                                                 bgmPlayer: widget.bgmPlayer,
-                                                abTest: widget.abTest,
                                               )),
                                     );
                                   },
@@ -447,7 +443,6 @@ class _RecReState extends State<RecRe> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => RecLoading(
-                                                abTest: widget.abTest,
                                                 onStop: widget.onStop,
                                                 path: path!,
                                                 retry: true,

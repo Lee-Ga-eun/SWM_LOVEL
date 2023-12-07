@@ -14,15 +14,10 @@ import 'dart:async';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class RecInfo2 extends StatefulWidget {
-  final FirebaseRemoteConfig abTest;
   final int contentId;
   final AudioPlayer bgmPlayer;
 
-  const RecInfo2(
-      {super.key,
-      required this.abTest,
-      required this.contentId,
-      required this.bgmPlayer});
+  const RecInfo2({super.key, required this.contentId, required this.bgmPlayer});
 
   @override
   _RecInfo2State createState() => _RecInfo2State();
@@ -256,7 +251,6 @@ class _RecInfo2State extends State<RecInfo2> {
                                 bgmPlayer: widget.bgmPlayer,
 
                                 // 다음 화면으로 contetnVoiceId를 가지고 이동
-                                abTest: widget.abTest,
                               ),
                             ),
                           );

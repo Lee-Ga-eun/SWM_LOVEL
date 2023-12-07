@@ -19,15 +19,10 @@ import 'package:yoggo/component/voice.dart';
 import 'home/viewModel/home_screen_book_model.dart';
 
 class RecEnd extends StatefulWidget {
-  final FirebaseRemoteConfig abTest;
   final int contentId;
   final AudioPlayer bgmPlayer;
 
-  const RecEnd(
-      {super.key,
-      required this.abTest,
-      required this.contentId,
-      required this.bgmPlayer});
+  const RecEnd({super.key, required this.contentId, required this.bgmPlayer});
 
   @override
   _RecEndState createState() => _RecEndState();
@@ -192,7 +187,6 @@ class _RecEndState extends State<RecEnd> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => VoiceProfile(
-                                          abTest: widget.abTest,
                                           bgmPlayer: widget.bgmPlayer,
                                         ),
                                       ));
@@ -220,7 +214,6 @@ class _RecEndState extends State<RecEnd> {
                                                 )
                                               ],
                                               child: BookIntro(
-                                                abTest: widget.abTest,
                                                 id: widget.contentId,
                                                 title: book!.title,
                                                 thumbUrl: book!.thumbUrl,

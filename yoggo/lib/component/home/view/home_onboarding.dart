@@ -32,11 +32,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 class HomeOnboarding extends StatefulWidget {
-  final FirebaseRemoteConfig abTest;
   final AudioPlayer bgmPlayer;
-  const HomeOnboarding(
-      {Key? key, required this.abTest, required this.bgmPlayer})
-      : super(key: key);
+  const HomeOnboarding({Key? key, required this.bgmPlayer}) : super(key: key);
 
   @override
   _HomeOnboardingState createState() => _HomeOnboardingState();
@@ -281,7 +278,6 @@ class _HomeOnboardingState extends State<HomeOnboarding> {
                               )
                             ],
                             child: BookIntroOnboarding(
-                              abTest: widget.abTest,
                               id: 10,
                               title: 'The Sun and the Wind',
                               showOnboarding: true,

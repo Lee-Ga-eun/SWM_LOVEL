@@ -21,17 +21,12 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class Rec extends StatefulWidget {
-  final FirebaseRemoteConfig abTest;
   final int contentId;
   final void Function(String path)? onStop;
   final AudioPlayer bgmPlayer;
 
   const Rec(
-      {Key? key,
-      this.onStop,
-      required this.abTest,
-      required this.contentId,
-      required this.bgmPlayer})
+      {Key? key, this.onStop, required this.contentId, required this.bgmPlayer})
       : super(key: key);
 
   @override
@@ -325,7 +320,6 @@ class _RecState extends State<Rec> {
                                           builder: (context) => Rec(
                                                 contentId: widget.contentId,
                                                 bgmPlayer: widget.bgmPlayer,
-                                                abTest: widget.abTest,
                                               )),
                                     );
                                   },
@@ -371,7 +365,6 @@ class _RecState extends State<Rec> {
                                       MaterialPageRoute(
                                           builder: (context) => RecLoading(
                                                 contentId: widget.contentId,
-                                                abTest: widget.abTest,
                                                 onStop: widget.onStop,
                                                 bgmPlayer: widget.bgmPlayer,
                                                 path: path!,

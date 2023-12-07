@@ -10,6 +10,7 @@ class HomeScreenBookModel extends Equatable {
   final String thumbUrl;
   final String summary;
   final String createdAt;
+  final String author;
   final int last;
   final int age;
   final bool visible;
@@ -28,6 +29,7 @@ class HomeScreenBookModel extends Equatable {
     required this.age,
     required this.visible,
     required this.isNew,
+    required this.author,
     this.badge,
     this.sequence,
     required this.lock,

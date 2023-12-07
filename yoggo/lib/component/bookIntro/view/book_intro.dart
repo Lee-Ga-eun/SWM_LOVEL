@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yoggo/component/bookIntro/viewModel/book_voice_cubit.dart';
 import 'package:yoggo/component/bookIntro/viewModel/book_voice_model.dart';
 import 'package:yoggo/component/home/viewModel/home_screen_cubit.dart';
-import 'package:yoggo/component/point.dart';
+import 'package:yoggo/component/shop.dart';
 import 'package:yoggo/component/rec_info_1.dart';
 
 import '../../../Repositories/Repository.dart';
@@ -31,7 +31,6 @@ import 'dart:math';
 class BookIntro extends StatefulWidget {
   final String title, thumbUrl;
   final int id;
-  final FirebaseRemoteConfig abTest;
   final AudioPlayer bgmPlayer;
 
   const BookIntro({
@@ -39,7 +38,6 @@ class BookIntro extends StatefulWidget {
     Key? key,
     required this.title,
     required this.id,
-    required this.abTest,
     required this.thumbUrl,
     required this.bgmPlayer,
   }) : super(key: key);
@@ -250,22 +248,22 @@ class _BookIntroState extends State<BookIntro> {
     }
   }
 
-  Future<void> _sendABBookLoadingEvent() async {
-    await widget.abTest.fetchAndActivate();
-    print(widget.abTest.getString("is_loading_text_enabled"));
-    try {
-      Amplitude.getInstance().setUserProperties({
-        'ab_book_loading': widget.abTest.getString("is_loading_text_enabled")
-      });
-      await analytics.logEvent(
-        name: 'ab_book_loading',
-        parameters: <String, dynamic>{},
-      );
-    } catch (e) {
-      // 이벤트 로깅 실패 시 에러 출력
-      print('Failed to log event: $e');
-    }
-  }
+  // Future<void> _sendABBookLoadingEvent() async {
+  //   await firebaseabTest.fetchAndActivate();
+  //   print(widget.abTest.getString("is_loading_text_enabled"));
+  //   try {
+  //     Amplitude.getInstance().setUserProperties({
+  //       'ab_book_loading': widget.abTest.getString("is_loading_text_enabled")
+  //     });
+  //     await analytics.logEvent(
+  //       name: 'ab_book_loading',
+  //       parameters: <String, dynamic>{},
+  //     );
+  //   } catch (e) {
+  //     // 이벤트 로깅 실패 시 에러 출력
+  //     print('Failed to log event: $e');
+  //   }
+  // }
 
   Future<void> _sendBookIntroViewEvent(
     contentId,
@@ -1783,7 +1781,6 @@ class _BookIntroState extends State<BookIntro> {
                                                                             title,
                                                                             clickedVoice!.voiceId,
                                                                           ),
-                                                                          _sendABBookLoadingEvent(),
 
                                                                           // print(clickedVoice!
                                                                           //     .voiceName),
@@ -1799,7 +1796,6 @@ class _BookIntroState extends State<BookIntro> {
                                                                                 lastPage: lastPage,
                                                                                 isSelected: true,
                                                                                 title: bookIntro.first.title,
-                                                                                abTest: widget.abTest,
                                                                                 bgmPlayer: widget.bgmPlayer,
                                                                               ),
                                                                             ),
@@ -1821,14 +1817,12 @@ class _BookIntroState extends State<BookIntro> {
                                                                           ),
                                                                           print(
                                                                               clickedVoice!.voiceName),
-                                                                          _sendABBookLoadingEvent(),
                                                                           Navigator
                                                                               .push(
                                                                             context,
                                                                             MaterialPageRoute(
                                                                               builder: (context) => BookPage(
                                                                                 // 다음 화면으로 contetnVoiceId를 가지고 이동
-                                                                                abTest: widget.abTest,
                                                                                 contentVoiceId: clickedVoice!.contentVoiceId,
                                                                                 voiceId: clickedVoice!.voiceId,
                                                                                 contentId: contentId,
@@ -2069,7 +2063,7 @@ class _BookIntroState extends State<BookIntro> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => Purchase(
-                                          abTest: widget.abTest,
+                                          bgmPlayer: widget.bgmPlayer,
                                         )),
                               );
                             },
@@ -2330,9 +2324,8 @@ class _BookIntroState extends State<BookIntro> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Purchase(
-                                          abTest: widget.abTest,
-                                        )),
+                                    builder: (context) =>
+                                        Purchase(bgmPlayer: widget.bgmPlayer)),
                               );
                               //});
                             },
@@ -2438,7 +2431,6 @@ class _BookIntroState extends State<BookIntro> {
                                     MaterialPageRoute(
                                         builder: (context) => RecInfo(
                                               contentId: contentId,
-                                              abTest: widget.abTest,
                                               bgmPlayer: widget.bgmPlayer,
                                             )),
                                   );
