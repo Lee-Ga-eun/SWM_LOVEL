@@ -158,7 +158,24 @@ flutter:
         - asset: assets/fonts/SOYO Maple Regular.ttf
     - family: Suit
       fonts:
-        - asset: assets/fonts/SUIT-Variable.ttf
+        - asset: assets/fonts/SUITv1-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/SUITv1-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/SUITv1-Light.ttf
+          weight: 300    
+        - asset: assets/fonts/SUITv1-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/SUITv1-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/SUITv1-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/SUITv1-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/SUITv1-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/SUITv1-Heavy.ttf
+          weight: 900    
     - family: Maple
       fonts:
         - asset: assets/fonts/SOYO Maple Bold.ttf
