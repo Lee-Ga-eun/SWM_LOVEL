@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yoggo/component/bookIntro/viewModel/book_voice_cubit.dart';
 import 'package:yoggo/component/bookIntro/viewModel/book_voice_model.dart';
 import 'package:yoggo/component/home/viewModel/home_screen_cubit.dart';
-import 'package:yoggo/component/point.dart';
+import 'package:yoggo/component/shop.dart';
 import 'package:yoggo/component/rec_info_1.dart';
 import '../../../Repositories/Repository.dart';
 import '../../bookPage/view/book_page.dart';
@@ -32,7 +32,6 @@ import 'dart:math';
 class BookIntroOnboarding extends StatefulWidget {
   final String title;
   final int id;
-  final FirebaseRemoteConfig abTest;
   final AudioPlayer bgmPlayer;
   final bool showOnboarding;
 
@@ -41,7 +40,6 @@ class BookIntroOnboarding extends StatefulWidget {
     Key? key,
     required this.title,
     required this.id,
-    required this.abTest,
     required this.showOnboarding,
     required this.bgmPlayer,
   }) : super(key: key);
@@ -255,7 +253,7 @@ class _BookIntroOnboardingState extends State<BookIntroOnboarding> {
   Future<void> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      token = prefs.getString('token')!;
+      //token = prefs.getString('token')!;
     });
   }
 
@@ -496,8 +494,6 @@ class _BookIntroOnboardingState extends State<BookIntroOnboarding> {
                                                                           RecInfo(
                                                                             contentId:
                                                                                 10,
-                                                                            abTest:
-                                                                                widget.abTest,
                                                                             bgmPlayer:
                                                                                 widget.bgmPlayer,
                                                                           )),

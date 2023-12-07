@@ -77,7 +77,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  print(FirebaseAuth.instance.app);
   FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+
   FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
   //print('🤖token ${await FirebaseMessaging.instance.getToken()}');
   await remoteConfig.setConfigSettings(RemoteConfigSettings(
@@ -179,6 +181,7 @@ class _AppState extends State<App> {
 
   Future<void> anonymousLogin() async {
     try {
+      print('hihi');
       final userCredential = await FirebaseAuth.instance.signInAnonymously();
       print("Signed in with temporary account.");
       AnonymousUserModel user = AnonymousUserModel(
@@ -244,6 +247,7 @@ class _AppState extends State<App> {
           break;
         default:
           print(e);
+          print(e.stackTrace);
           print("Unknown error.");
       }
     }
@@ -272,16 +276,14 @@ class _AppState extends State<App> {
                 {'subscribe': state.purchase, 'record': state.record});
           }
           if (token != null) {
-            return HomeScreen(
-              abTest: App.remoteConfig,
-            );
+            return HomeScreen();
           } else {
             anonymousLoginFuture ??= anonymousLogin();
             return FutureBuilder(
               future: anonymousLoginFuture,
               builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
-                  return HomeScreen(abTest: App.remoteConfig);
+                  return HomeScreen();
                 } else {
                   return Container(
                       decoration: const BoxDecoration(

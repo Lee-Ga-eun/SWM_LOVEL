@@ -336,6 +336,7 @@ class DataRepository {
         isNew: element["new"],
         badge: element["badge"],
         sequence: element["sequence"],
+        author: element["author"],
         lock: element["lock"],
       );
       data.add(homeScreenBookModel);

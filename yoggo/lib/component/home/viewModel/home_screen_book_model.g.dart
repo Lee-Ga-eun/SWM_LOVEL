@@ -19,6 +19,7 @@ HomeScreenBookModel _$HomeScreenBookModelFromJson(Map<String, dynamic> json) =>
       isNew: json['new'] as bool,
       badge: json['badge'] as String?,
       sequence: json['sequence'] as int?,
+      author: json['author'] as String,
       lock: json['lock'] as bool,
     );
 
@@ -36,5 +37,6 @@ Map<String, dynamic> _$HomeScreenBookModelToJson(
       'new': instance.isNew,
       'badge': instance.badge,
       'sequence': instance.sequence,
+      'author': instance.author,
       'lock': instance.lock,
     };

@@ -15,12 +15,10 @@ import 'package:easy_localization/easy_localization.dart';
 
 class VoiceProfile extends StatefulWidget {
   // final String infenrencedVoice;
-  final FirebaseRemoteConfig abTest;
   final AudioPlayer bgmPlayer;
 
   const VoiceProfile({
     super.key,
-    required this.abTest,
     required this.bgmPlayer,
     // required this.infenrencedVoice,
   });
@@ -523,7 +521,6 @@ class _VoiceProfileState extends State<VoiceProfile> {
                       MaterialPageRoute(
                         builder: (context) => RecRe(
                           bgmPlayer: widget.bgmPlayer,
-                          abTest: widget.abTest,
                         ),
                       ),
                     );

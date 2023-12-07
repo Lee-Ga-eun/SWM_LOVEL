@@ -15,9 +15,10 @@ import 'package:yoggo/component/bookIntro/view/book_intro_onboarding.dart';
 import 'package:yoggo/component/globalCubit/user/user_state.dart';
 import 'package:yoggo/component/home/view/home_onboarding.dart';
 import 'package:yoggo/component/home/viewModel/home_screen_book_model.dart';
+import 'package:yoggo/component/navigation_bar.dart';
 // import 'package:yoggo/component/sub.dart';
 // import 'package:yoggo/component/shop.dart';
-import 'package:yoggo/component/point.dart';
+import 'package:yoggo/component/shop.dart';
 
 import 'package:yoggo/component/rec_info_1.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -43,8 +44,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 class HomeScreen extends StatefulWidget {
-  final FirebaseRemoteConfig abTest;
-  const HomeScreen({Key? key, required this.abTest}) : super(key: key);
+  const HomeScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -98,9 +100,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     bgmPlayer.setReleaseMode(ReleaseMode.loop);
     WidgetsBinding.instance.addObserver(this);
 
-    // Amplitude.getInstance().setUserProperties({
-    //   'ab_book_loading': widget.abTest.getString("is_loading_text_enabled")
-    // });
     getToken();
     _checkFirstTimeAccess(); // 앱 최초 사용 접속 : 온보딩 화면 보여주기
     Future.delayed(Duration.zero, () async {
@@ -204,7 +203,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         context,
         MaterialPageRoute(
             builder: (context) => HomeOnboarding(
-                  abTest: widget.abTest,
                   bgmPlayer: bgmPlayer,
                 )),
       );
@@ -527,12 +525,12 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 if (state.isEmpty) {
                   _sendHomeLoadingViewEvent();
                   return Container(
-                      decoration: const BoxDecoration(color: Colors.white
-                          // image: DecorationImage(
-                          //   image: AssetImage('lib/images/bkground.png'),
-                          //   fit: BoxFit.cover,
-                          // ),
-                          ),
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('lib/images/bkground.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -561,8 +559,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                     resizeToAvoidBottomInset: false,
                     key: _scaffoldKey,
                     drawer: SizedBox(
-                      width: 33 * SizeConfig.defaultSize!,
+                      width: SizeConfig.defaultSize! * 33,
                       child: _Drawer(userState, userCubit, context),
+                    ),
+                    bottomNavigationBar: CustomBottomNavigationBar(
+                      bgmPlayer: bgmPlayer,
                     ),
                     body: Stack(children: [
                       // if (openCalendar)
@@ -580,7 +581,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                           color: Colors.white,
                           // image: DecorationImage(
                           //   opacity: 1.0,
-                          //   image: AssetImage('lib/images/bkground.png'),
+                          //   image: AssetImage('lçib/images/bkground.png'),
                           //   fit: BoxFit.cover,
                           // ),
                         ),
@@ -592,469 +593,736 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                           //     right: 2 * SizeConfig.defaultSize!),
                           child: Column(
                             children: [
-                              // Expanded(
-                              // flex: SizeConfig.defaultSize!.toInt(),
-                              //child:
-                              Stack(
-                                alignment: Alignment.topLeft,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'LOVEL',
-                                        style: TextStyle(
-                                            fontFamily: 'Modak',
-                                            fontSize:
-                                                SizeConfig.defaultSize! * 4,
-                                            color: Colors.black),
-                                      ),
-                                    ],
-                                  ),
-                                  Positioned(
-                                    //left: 20,
-                                    top: SizeConfig.defaultSize! * 0.5,
-                                    left: SizeConfig.defaultSize! * 2,
-                                    child: InkWell(
-                                      onTap: () {
-                                        userCubit.fetchUser();
+                              Expanded(
+                                child: Stack(
+                                  alignment: Alignment.topLeft,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'LOVEL',
+                                          style: TextStyle(
+                                              fontFamily: 'Modak',
+                                              fontSize:
+                                                  SizeConfig.defaultSize! * 4,
+                                              color: Colors.black),
+                                        ),
+                                      ],
+                                    ),
+                                    Positioned(
+                                      //left: 20,
+                                      top: SizeConfig.defaultSize! * 0.5,
+                                      left: SizeConfig.defaultSize! * 2,
+                                      child: InkWell(
+                                        onTap: () {
+                                          userCubit.fetchUser();
 
-                                        _sendHbgClickEvent();
-                                        _scaffoldKey.currentState?.openDrawer();
-                                        userCubit.fetchUser();
-                                      },
-                                      child: Image.asset(
-                                        'lib/images/hamburger.png',
-                                        width: 4.5 *
-                                            SizeConfig
-                                                .defaultSize!, // 이미지의 폭 설정
-                                        height: // 이미지의 높이 설정
-                                            4.5 * SizeConfig.defaultSize!,
+                                          _sendHbgClickEvent();
+                                          _scaffoldKey.currentState
+                                              ?.openDrawer();
+                                          userCubit.fetchUser();
+                                        },
+                                        child: Image.asset(
+                                          'lib/images/hamburger.png',
+                                          width: 4.5 *
+                                              SizeConfig
+                                                  .defaultSize!, // 이미지의 폭 설정
+                                          height: // 이미지의 높이 설정
+                                              4.5 * SizeConfig.defaultSize!,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  //userState.purchase // 구독이면 캘린더 보여주지 않음
-                                  // ? Container()
-                                  //:
-                                  // Positioned(
-                                  //     right: SizeConfig.defaultSize! * 10,
-                                  //     top: SizeConfig.defaultSize! * 0.2,
-                                  //     child: SizedBox(
-                                  //         width: 8 * SizeConfig.defaultSize!,
-                                  //         height: 8 * SizeConfig.defaultSize!,
-                                  //         child: Container(
-                                  //             decoration: BoxDecoration(
-                                  //                 gradient: RadialGradient(
-                                  //                     radius: 0.5,
-                                  //                     // begin: Alignment.topCenter,
-                                  //                     // end: Alignment.bottomCenter,
-                                  //                     colors: [
-                                  //               const Color.fromARGB(255, 255,
-                                  //                   0, 0), // 흐린 배경의 시작 색상
-                                  //               Color.fromARGB(0, 255, 255,
-                                  //                   255), // 투명한 중간 색상
-                                  //             ]))))),
-                                  // Positioned(
-                                  //   right: SizeConfig.defaultSize! * 12.5,
-                                  //   top: SizeConfig.defaultSize! * 2,
-                                  //   child: InkWell(
-                                  //     onTap: () {
-                                  //       lastPointYMD == formattedTime
-                                  //           ? _sendCalClickEvent(
-                                  //               userState.point,
-                                  //               availableGetPoint,
-                                  //               'Already Claimed')
-                                  //           : _sendCalClickEvent(
-                                  //               userState.point,
-                                  //               availableGetPoint,
-                                  //               'Not Claimed Yet');
-                                  //       _openCalendarFunc();
-                                  //     },
-                                  //     child: Image.asset(
-                                  //       'lib/images/calendarOrange.png',
-                                  //       width: 4 *
-                                  //           SizeConfig
-                                  //               .defaultSize!, // 이미지의 폭 설정
-                                  //       height: 4 * SizeConfig.defaultSize!,
-                                  //       // 이미지의 높이 설정
-                                  //     ),
-                                  //   ),
-                                  // ),
+                                    //userState.purchase // 구독이면 캘린더 보여주지 않음
+                                    // ? Container()
+                                    //:
+                                    // Positioned(
+                                    //     right: SizeConfig.defaultSize! * 10,
+                                    //     top: SizeConfig.defaultSize! * 0.2,
+                                    //     child: SizedBox(
+                                    //         width: 8 * SizeConfig.defaultSize!,
+                                    //         height: 8 * SizeConfig.defaultSize!,
+                                    //         child: Container(
+                                    //             decoration: BoxDecoration(
+                                    //                 gradient: RadialGradient(
+                                    //                     radius: 0.5,
+                                    //                     // begin: Alignment.topCenter,
+                                    //                     // end: Alignment.bottomCenter,
+                                    //                     colors: [
+                                    //               const Color.fromARGB(255, 255,
+                                    //                   0, 0), // 흐린 배경의 시작 색상
+                                    //               Color.fromARGB(0, 255, 255,
+                                    //                   255), // 투명한 중간 색상
+                                    //             ]))))),
+                                    // Positioned(
+                                    //   right: SizeConfig.defaultSize! * 12.5,
+                                    //   top: SizeConfig.defaultSize! * 2,
+                                    //   child: InkWell(
+                                    //     onTap: () {
+                                    //       lastPointYMD == formattedTime
+                                    //           ? _sendCalClickEvent(
+                                    //               userState.point,
+                                    //               availableGetPoint,
+                                    //               'Already Claimed')
+                                    //           : _sendCalClickEvent(
+                                    //               userState.point,
+                                    //               availableGetPoint,
+                                    //               'Not Claimed Yet');
+                                    //       _openCalendarFunc();
+                                    //     },
+                                    //     child: Image.asset(
+                                    //       'lib/images/calendarOrange.png',
+                                    //       width: 4 *
+                                    //           SizeConfig
+                                    //               .defaultSize!, // 이미지의 폭 설정
+                                    //       height: 4 * SizeConfig.defaultSize!,
+                                    //       // 이미지의 높이 설정
+                                    //     ),
+                                    //   ),
+                                    // ),
 
-                                  // Visibility(
-                                  //     visible: lastPointYMD != formattedTime,
-                                  //     child: Positioned(
-                                  //         right: SizeConfig.defaultSize! * 12,
-                                  //         top: 0.05 * sh,
-                                  //         child: Image.asset(
-                                  //           'lib/images/redButton.png',
-                                  //           width: 0.02 * sw,
-                                  //         ))),
-                                  //userState.purchase
-                                  // ? Container()
-                                  //:
-                                  //   Positioned(
-                                  //     //구독이면 포인트 보여주지 않음
-                                  //     top: 2.2 * SizeConfig.defaultSize!,
-                                  //     right: 1 * SizeConfig.defaultSize!,
-                                  //     child: Stack(children: [
-                                  //       GestureDetector(
-                                  //         onTap: () {
-                                  //           _sendHomePointClickEvent(
-                                  //               userState.point);
-                                  //           Navigator.push(
-                                  //             context,
-                                  //             MaterialPageRoute(
-                                  //                 builder: (context) =>
-                                  //                     Purchase(
-                                  //                       abTest: widget.abTest,
-                                  //                     )),
-                                  //           );
-                                  //         },
-                                  //         child: Container(
-                                  //           width: 10 * SizeConfig.defaultSize!,
-                                  //           height: 4 * SizeConfig.defaultSize!,
-                                  //           decoration: BoxDecoration(
-                                  //               color: const Color.fromARGB(
-                                  //                   128, 255, 255, 255),
-                                  //               borderRadius: BorderRadius.all(
-                                  //                   Radius.circular(SizeConfig
-                                  //                           .defaultSize! *
-                                  //                       1))),
-                                  //           child: Row(
-                                  //               mainAxisAlignment:
-                                  //                   MainAxisAlignment.start,
-                                  //               children: [
-                                  //                 SizedBox(
-                                  //                   width: 0.5 *
-                                  //                       SizeConfig.defaultSize!,
-                                  //                 ),
-                                  //                 SizedBox(
-                                  //                     width: 2 *
-                                  //                         SizeConfig
-                                  //                             .defaultSize!,
-                                  //                     child: Image.asset(
-                                  //                       'lib/images/oneCoin.png',
-                                  //                     )),
-                                  //                 Container(
-                                  //                   width: 7 *
-                                  //                       SizeConfig.defaultSize!,
-                                  //                   alignment: Alignment.center,
-                                  //                   // decoration: BoxDecoration(color: Colors.blue),
-                                  //                   child: Text(
-                                  //                     '${userState.point + 0}',
-                                  //                     style: TextStyle(
-                                  //                         fontFamily: 'lilita',
-                                  //                         fontSize: SizeConfig
-                                  //                                 .defaultSize! *
-                                  //                             2,
-                                  //                         color: Colors.black),
-                                  //                     textAlign:
-                                  //                         TextAlign.center,
-                                  //                   ),
-                                  //                 )
-                                  //               ]),
-                                  //         ),
-                                  //       ),
-                                  //     ]),
-                                  //   ),
-                                  //
-                                ],
+                                    // Visibility(
+                                    //     visible: lastPointYMD != formattedTime,
+                                    //     child: Positioned(
+                                    //         right: SizeConfig.defaultSize! * 12,
+                                    //         top: 0.05 * sh,
+                                    //         child: Image.asset(
+                                    //           'lib/images/redButton.png',
+                                    //           width: 0.02 * sw,
+                                    //         ))),
+                                    //userState.purchase
+                                    // ? Container()
+                                    //:
+                                    //   Positioned(
+                                    //     //구독이면 포인트 보여주지 않음
+                                    //     top: 2.2 * SizeConfig.defaultSize!,
+                                    //     right: 1 * SizeConfig.defaultSize!,
+                                    //     child: Stack(children: [
+                                    //       GestureDetector(
+                                    //         onTap: () {
+                                    //           _sendHomePointClickEvent(
+                                    //               userState.point);
+                                    //           Navigator.push(
+                                    //             context,
+                                    //             MaterialPageRoute(
+                                    //                 builder: (context) =>
+                                    //                     Purchase(
+                                    //                      )),
+                                    //           );
+                                    //         },
+                                    //         child: Container(
+                                    //           width: 10 * SizeConfig.defaultSize!,
+                                    //           height: 4 * SizeConfig.defaultSize!,
+                                    //           decoration: BoxDecoration(
+                                    //               color: const Color.fromARGB(
+                                    //                   128, 255, 255, 255),
+                                    //               borderRadius: BorderRadius.all(
+                                    //                   Radius.circular(SizeConfig
+                                    //                           .defaultSize! *
+                                    //                       1))),
+                                    //           child: Row(
+                                    //               mainAxisAlignment:
+                                    //                   MainAxisAlignment.start,
+                                    //               children: [
+                                    //                 SizedBox(
+                                    //                   width: 0.5 *
+                                    //                       SizeConfig.defaultSize!,
+                                    //                 ),
+                                    //                 SizedBox(
+                                    //                     width: 2 *
+                                    //                         SizeConfig
+                                    //                             .defaultSize!,
+                                    //                     child: Image.asset(
+                                    //                       'lib/images/oneCoin.png',
+                                    //                     )),
+                                    //                 Container(
+                                    //                   width: 7 *
+                                    //                       SizeConfig.defaultSize!,
+                                    //                   alignment: Alignment.center,
+                                    //                   // decoration: BoxDecoration(color: Colors.blue),
+                                    //                   child: Text(
+                                    //                     '${userState.point + 0}',
+                                    //                     style: TextStyle(
+                                    //                         fontFamily: 'lilita',
+                                    //                         fontSize: SizeConfig
+                                    //                                 .defaultSize! *
+                                    //                             2,
+                                    //                         color: Colors.black),
+                                    //                     textAlign:
+                                    //                         TextAlign.center,
+                                    //                   ),
+                                    //                 )
+                                    //               ]),
+                                    //         ),
+                                    //       ),
+                                    //     ]),
+                                    //   ),
+                                    //
+                                  ],
+                                ),
                               ),
-                              //),
-                              // Expanded(
-                              //   flex: SizeConfig.defaultSize!.toInt() * 6,
-                              //   child:
-                              Container(
-                                color: Colors.blue,
+                              Expanded(
+                                flex: 12,
                                 child: SingleChildScrollView(
                                   child: Column(
                                     children: [
                                       Container(
-                                        height: SizeConfig.defaultSize! * 25,
-                                        color: Color(0x00FFF0DF),
-                                        child: BlocProvider(
-                                          create: (context) => dataCubit
-                                            ..loadHomeBookData(), // DataCubit 생성 및 데이터 로드
-                                          child: ListView.separated(
-                                            scrollDirection: Axis.horizontal,
-                                            itemCount: state.length,
-
-                                            //  itemCount: 4,
-                                            itemBuilder: (context, index) {
-                                              var book = state[index];
-                                              return GestureDetector(
-                                                onTap: () async {
-                                                  _sendBookClickEvent(book.id);
-                                                  SharedPreferences prefs =
-                                                      await SharedPreferences
-                                                          .getInstance();
-                                                  bgmPlayer.pause();
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            MultiBlocProvider(
-                                                              providers: [
-                                                                BlocProvider<
-                                                                    BookVoiceCubit>(
-                                                                  create: (context) => BookVoiceCubit(
-                                                                      dataRepository)
-                                                                    ..loadBookVoiceData(
-                                                                        book.id),
-                                                                ),
-                                                                BlocProvider<
-                                                                    BookIntroCubit>(
-                                                                  create: (context) =>
-                                                                      // BookIntroCubit(),
-                                                                      // DataCubit()..loadHomeBookData()
-                                                                      BookIntroCubit(dataRepository)..loadBookIntroData(book.id),
-                                                                )
-                                                              ],
-                                                              child: BookIntro(
-                                                                abTest: widget
-                                                                    .abTest,
-                                                                id: book.id,
-                                                                title:
-                                                                    book.title,
-                                                                thumbUrl: book
-                                                                    .thumbUrl,
-                                                                bgmPlayer:
-                                                                    bgmPlayer,
-                                                              ),
-                                                            )),
-                                                  );
-                                                  // : Navigator.push(
-                                                  //     //구독자가 아니면 purchase로 보낸다?
-                                                  //     context,
-                                                  //     MaterialPageRoute(
-                                                  //       builder: (context) =>
-                                                  //           userState.purchase
-                                                  //               ? BlocProvider(
-                                                  //                   create: (context) =>
-                                                  //                       // BookIntroCubit(),
-                                                  //                       // DataCubit()..loadHomeBookData()
-                                                  //                       BookIntroCubit()..loadBookIntroData(book.id),
-                                                  //                   child:
-                                                  //                       BookIntro(
-                                                  //                     title: book
-                                                  //                         .title,
-                                                  //                     thumb: book
-                                                  //                         .thumbUrl,
-                                                  //                     id: book
-                                                  //                         .id,
-                                                  //                     summary: book
-                                                  //                         .summary,
-                                                  //                   ),
-                                                  //                 )
-                                                  //               : const Purchase(),
-                                                  //     ));
-                                                }, //onTap 종료
-                                                child: book.lock
-                                                    // 사용자가 포인트로 책을 풀었거나, 무료 공개 책이면 lock 해제
-                                                    ? Container()
-                                                    : unlockedBook(
-                                                        book), //구독자아님
-                                              );
-                                            },
-                                            separatorBuilder:
-                                                (context, index) => SizedBox(
-                                                    width: 2 *
+                                          padding: EdgeInsets.only(
+                                              left: SizeConfig.defaultSize! * 2,
+                                              top: SizeConfig.defaultSize! * 2),
+                                          height: SizeConfig.defaultSize! * 25,
+                                          color: Color(0xFFFFF0DF),
+                                          child: Column(children: [
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                    'lib/images/duck.png',
+                                                    width: 2.5 *
                                                         SizeConfig
                                                             .defaultSize!),
-                                          ),
-                                        ),
-                                      ), //첫 줄 종료
+                                                SizedBox(
+                                                    width: SizeConfig
+                                                            .defaultSize! *
+                                                        0.7),
+                                                Text('내 책',
+                                                    style: TextStyle(
+                                                        fontSize: 1.8 *
+                                                            SizeConfig
+                                                                .defaultSize!))
+                                              ],
+                                            ),
+                                            SizedBox(
+                                                height:
+                                                    SizeConfig.defaultSize! *
+                                                        1.5),
+                                            BlocProvider(
+                                              create: (context) => dataCubit
+                                                ..loadHomeBookData(), // DataCubit 생성 및 데이터 로드
+                                              child: Container(
+                                                height:
+                                                    SizeConfig.defaultSize! *
+                                                        18,
+                                                child: ListView.separated(
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  itemCount: state.length,
+                                                  //  itemCount: 4,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    var book = state[index];
+                                                    return GestureDetector(
+                                                      onTap: () async {
+                                                        _sendBookClickEvent(
+                                                            book.id);
+                                                        SharedPreferences
+                                                            prefs =
+                                                            await SharedPreferences
+                                                                .getInstance();
+                                                        bgmPlayer.pause();
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  MultiBlocProvider(
+                                                                    providers: [
+                                                                      BlocProvider<
+                                                                          BookVoiceCubit>(
+                                                                        create: (context) => BookVoiceCubit(
+                                                                            dataRepository)
+                                                                          ..loadBookVoiceData(
+                                                                              book.id),
+                                                                      ),
+                                                                      BlocProvider<
+                                                                          BookIntroCubit>(
+                                                                        create: (context) =>
+                                                                            // BookIntroCubit(),
+                                                                            // DataCubit()..loadHomeBookData()
+                                                                            BookIntroCubit(dataRepository)..loadBookIntroData(book.id),
+                                                                      )
+                                                                    ],
+                                                                    child:
+                                                                        BookIntro(
+                                                                      id: book
+                                                                          .id,
+                                                                      title: book
+                                                                          .title,
+                                                                      thumbUrl:
+                                                                          book.thumbUrl,
+                                                                      bgmPlayer:
+                                                                          bgmPlayer,
+                                                                    ),
+                                                                  )),
+                                                        );
+                                                        // : Navigator.push(
+                                                        //     //구독자가 아니면 purchase로 보낸다?
+                                                        //     context,
+                                                        //     MaterialPageRoute(
+                                                        //       builder: (context) =>
+                                                        //           userState.purchase
+                                                        //               ? BlocProvider(
+                                                        //                   create: (context) =>
+                                                        //                       // BookIntroCubit(),
+                                                        //                       // DataCubit()..loadHomeBookData()
+                                                        //                       BookIntroCubit()..loadBookIntroData(book.id),
+                                                        //                   child:
+                                                        //                       BookIntro(
+                                                        //                     title: book
+                                                        //                         .title,
+                                                        //                     thumb: book
+                                                        //                         .thumbUrl,
+                                                        //                     id: book
+                                                        //                         .id,
+                                                        //                     summary: book
+                                                        //                         .summary,
+                                                        //                   ),
+                                                        //                 )
+                                                        //               : const Purchase(),
+                                                        //     ));
+                                                      }, //onTap 종료
+                                                      child: book.lock
+                                                          // 사용자가 포인트로 책을 풀었거나, 무료 공개 책이면 lock 해제
+                                                          ? Container()
+                                                          : unlockedBook(
+                                                              book), //구독자아님
+                                                    );
+                                                  },
+                                                  separatorBuilder: (context,
+                                                          index) =>
+                                                      SizedBox(
+                                                          width: 2 *
+                                                              SizeConfig
+                                                                  .defaultSize!),
+                                                ),
+                                              ),
+                                            ),
+                                            //첫 줄 종료
+                                          ])),
                                       Container(
-                                        height: SizeConfig.defaultSize! * 25,
-                                        color: Color(0xFFFEF8D6),
-                                        child: BlocProvider(
-                                          create: (context) => dataCubit
-                                            ..loadHomeBookData(), // DataCubit 생성 및 데이터 로드
-                                          child: ListView.separated(
-                                            scrollDirection: Axis.horizontal,
-                                            itemCount: state.length,
-
-                                            //  itemCount: 4,
-                                            itemBuilder: (context, index) {
-                                              var book = state[index];
-                                              return GestureDetector(
-                                                onTap: () async {
-                                                  _sendBookClickEvent(book.id);
-                                                  SharedPreferences prefs =
-                                                      await SharedPreferences
-                                                          .getInstance();
-                                                  bgmPlayer.pause();
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            MultiBlocProvider(
-                                                              providers: [
-                                                                BlocProvider<
-                                                                    BookVoiceCubit>(
-                                                                  create: (context) => BookVoiceCubit(
-                                                                      dataRepository)
-                                                                    ..loadBookVoiceData(
-                                                                        book.id),
-                                                                ),
-                                                                BlocProvider<
-                                                                    BookIntroCubit>(
-                                                                  create: (context) =>
-                                                                      // BookIntroCubit(),
-                                                                      // DataCubit()..loadHomeBookData()
-                                                                      BookIntroCubit(dataRepository)..loadBookIntroData(book.id),
-                                                                )
-                                                              ],
-                                                              child: BookIntro(
-                                                                abTest: widget
-                                                                    .abTest,
-                                                                id: book.id,
-                                                                title:
-                                                                    book.title,
-                                                                thumbUrl: book
-                                                                    .thumbUrl,
-                                                                bgmPlayer:
-                                                                    bgmPlayer,
-                                                              ),
-                                                            )),
-                                                  );
-                                                  // : Navigator.push(
-                                                  //     //구독자가 아니면 purchase로 보낸다?
-                                                  //     context,
-                                                  //     MaterialPageRoute(
-                                                  //       builder: (context) =>
-                                                  //           userState.purchase
-                                                  //               ? BlocProvider(
-                                                  //                   create: (context) =>
-                                                  //                       // BookIntroCubit(),
-                                                  //                       // DataCubit()..loadHomeBookData()
-                                                  //                       BookIntroCubit()..loadBookIntroData(book.id),
-                                                  //                   child:
-                                                  //                       BookIntro(
-                                                  //                     title: book
-                                                  //                         .title,
-                                                  //                     thumb: book
-                                                  //                         .thumbUrl,
-                                                  //                     id: book
-                                                  //                         .id,
-                                                  //                     summary: book
-                                                  //                         .summary,
-                                                  //                   ),
-                                                  //                 )
-                                                  //               : const Purchase(),
-                                                  //     ));
-                                                }, //onTap 종료
-                                                child: book.lock
-                                                    // 사용자가 포인트로 책을 풀었거나, 무료 공개 책이면 lock 해제
-                                                    ? lockedBook(book)
-                                                    : unlockedBook(
-                                                        book), //구독자아님
-                                              );
-                                            },
-                                            separatorBuilder:
-                                                (context, index) => SizedBox(
-                                                    width: 2 *
+                                          padding: EdgeInsets.only(
+                                              left: SizeConfig.defaultSize! * 2,
+                                              top: SizeConfig.defaultSize! * 2),
+                                          height: SizeConfig.defaultSize! * 25,
+                                          color: Color(0xFFFEF8D6),
+                                          child: Column(children: [
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                    'lib/images/bear.png',
+                                                    width: 2.5 *
                                                         SizeConfig
                                                             .defaultSize!),
-                                          ),
-                                        ),
-                                      ), //첫 줄 종료
+                                                SizedBox(
+                                                    width: SizeConfig
+                                                            .defaultSize! *
+                                                        0.7),
+                                                Text('클래식 고전',
+                                                    style: TextStyle(
+                                                        fontSize: 1.8 *
+                                                            SizeConfig
+                                                                .defaultSize!))
+                                              ],
+                                            ),
+                                            SizedBox(
+                                                height:
+                                                    SizeConfig.defaultSize! *
+                                                        1.5),
+                                            BlocProvider(
+                                              create: (context) => dataCubit
+                                                ..loadHomeBookData(), // DataCubit 생성 및 데이터 로드
+                                              child: Container(
+                                                height:
+                                                    SizeConfig.defaultSize! *
+                                                        18,
+                                                child: ListView.builder(
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  itemCount: state.length,
+                                                  //  itemCount: 4,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    var book = state[index];
+                                                    return GestureDetector(
+                                                      onTap: () async {
+                                                        _sendBookClickEvent(
+                                                            book.id);
+                                                        SharedPreferences
+                                                            prefs =
+                                                            await SharedPreferences
+                                                                .getInstance();
+                                                        bgmPlayer.pause();
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  MultiBlocProvider(
+                                                                    providers: [
+                                                                      BlocProvider<
+                                                                          BookVoiceCubit>(
+                                                                        create: (context) => BookVoiceCubit(
+                                                                            dataRepository)
+                                                                          ..loadBookVoiceData(
+                                                                              book.id),
+                                                                      ),
+                                                                      BlocProvider<
+                                                                          BookIntroCubit>(
+                                                                        create: (context) =>
+                                                                            // BookIntroCubit(),
+                                                                            // DataCubit()..loadHomeBookData()
+                                                                            BookIntroCubit(dataRepository)..loadBookIntroData(book.id),
+                                                                      )
+                                                                    ],
+                                                                    child:
+                                                                        BookIntro(
+                                                                      id: book
+                                                                          .id,
+                                                                      title: book
+                                                                          .title,
+                                                                      thumbUrl:
+                                                                          book.thumbUrl,
+                                                                      bgmPlayer:
+                                                                          bgmPlayer,
+                                                                    ),
+                                                                  )),
+                                                        );
+                                                        // : Navigator.push(
+                                                        //     //구독자가 아니면 purchase로 보낸다?
+                                                        //     context,
+                                                        //     MaterialPageRoute(
+                                                        //       builder: (context) =>
+                                                        //           userState.purchase
+                                                        //               ? BlocProvider(
+                                                        //                   create: (context) =>
+                                                        //                       // BookIntroCubit(),
+                                                        //                       // DataCubit()..loadHomeBookData()
+                                                        //                       BookIntroCubit()..loadBookIntroData(book.id),
+                                                        //                   child:
+                                                        //                       BookIntro(
+                                                        //                     title: book
+                                                        //                         .title,
+                                                        //                     thumb: book
+                                                        //                         .thumbUrl,
+                                                        //                     id: book
+                                                        //                         .id,
+                                                        //                     summary: book
+                                                        //                         .summary,
+                                                        //                   ),
+                                                        //                 )
+                                                        //               : const Purchase(),
+                                                        //     ));
+                                                      }, //onTap 종료
+                                                      child: book.author ==
+                                                              "classic"
+                                                          ? book.lock
+                                                              // 사용자가 포인트로 책을 풀었거나, 무료 공개 책이면 lock 해제
+                                                              ? Row(
+                                                                  children: [
+                                                                      lockedBook(
+                                                                          book),
+                                                                      SizedBox(
+                                                                          width:
+                                                                              2 * SizeConfig.defaultSize!)
+                                                                    ])
+                                                              : Row(
+                                                                  children: [
+                                                                      unlockedBook(
+                                                                          book),
+                                                                      SizedBox(
+                                                                          width:
+                                                                              2 * SizeConfig.defaultSize!)
+                                                                    ])
+                                                          : Container(), //구독자아님
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                            //첫 줄 종료
+                                          ])),
                                       Container(
-                                        height: SizeConfig.defaultSize! * 25,
-                                        color: Color(0xFFFFFFF),
-                                        child: BlocProvider(
-                                          create: (context) => dataCubit
-                                            ..loadHomeBookData(), // DataCubit 생성 및 데이터 로드
-                                          child: ListView.separated(
-                                            scrollDirection: Axis.horizontal,
-                                            itemCount: state.length,
-
-                                            //  itemCount: 4,
-                                            itemBuilder: (context, index) {
-                                              var book = state[index];
-                                              return GestureDetector(
-                                                onTap: () async {
-                                                  _sendBookClickEvent(book.id);
-                                                  SharedPreferences prefs =
-                                                      await SharedPreferences
-                                                          .getInstance();
-                                                  bgmPlayer.pause();
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            MultiBlocProvider(
-                                                              providers: [
-                                                                BlocProvider<
-                                                                    BookVoiceCubit>(
-                                                                  create: (context) => BookVoiceCubit(
-                                                                      dataRepository)
-                                                                    ..loadBookVoiceData(
-                                                                        book.id),
-                                                                ),
-                                                                BlocProvider<
-                                                                    BookIntroCubit>(
-                                                                  create: (context) =>
-                                                                      // BookIntroCubit(),
-                                                                      // DataCubit()..loadHomeBookData()
-                                                                      BookIntroCubit(dataRepository)..loadBookIntroData(book.id),
-                                                                )
-                                                              ],
-                                                              child: BookIntro(
-                                                                abTest: widget
-                                                                    .abTest,
-                                                                id: book.id,
-                                                                title:
-                                                                    book.title,
-                                                                thumbUrl: book
-                                                                    .thumbUrl,
-                                                                bgmPlayer:
-                                                                    bgmPlayer,
-                                                              ),
-                                                            )),
-                                                  );
-                                                  // : Navigator.push(
-                                                  //     //구독자가 아니면 purchase로 보낸다?
-                                                  //     context,
-                                                  //     MaterialPageRoute(
-                                                  //       builder: (context) =>
-                                                  //           userState.purchase
-                                                  //               ? BlocProvider(
-                                                  //                   create: (context) =>
-                                                  //                       // BookIntroCubit(),
-                                                  //                       // DataCubit()..loadHomeBookData()
-                                                  //                       BookIntroCubit()..loadBookIntroData(book.id),
-                                                  //                   child:
-                                                  //                       BookIntro(
-                                                  //                     title: book
-                                                  //                         .title,
-                                                  //                     thumb: book
-                                                  //                         .thumbUrl,
-                                                  //                     id: book
-                                                  //                         .id,
-                                                  //                     summary: book
-                                                  //                         .summary,
-                                                  //                   ),
-                                                  //                 )
-                                                  //               : const Purchase(),
-                                                  //     ));
-                                                }, //onTap 종료
-                                                child: book.lock
-                                                    // 사용자가 포인트로 책을 풀었거나, 무료 공개 책이면 lock 해제
-                                                    ? lockedBook(book)
-                                                    : unlockedBook(
-                                                        book), //구독자아님
-                                              );
-                                            },
-                                            separatorBuilder:
-                                                (context, index) => SizedBox(
-                                                    width: 2 *
+                                          padding: EdgeInsets.only(
+                                              left: SizeConfig.defaultSize! * 2,
+                                              top: SizeConfig.defaultSize! * 2),
+                                          height: SizeConfig.defaultSize! * 25,
+                                          color: Color(0xFFFFFFFF),
+                                          child: Column(children: [
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                    'lib/images/pencil.png',
+                                                    width: 2.5 *
                                                         SizeConfig
                                                             .defaultSize!),
-                                          ),
-                                        ),
-                                      ), //첫 줄 종료
+                                                SizedBox(
+                                                    width: SizeConfig
+                                                            .defaultSize! *
+                                                        0.7),
+                                                Text('어거스틴 작가 모음전',
+                                                    style: TextStyle(
+                                                        fontSize: 1.8 *
+                                                            SizeConfig
+                                                                .defaultSize!))
+                                              ],
+                                            ),
+                                            SizedBox(
+                                                height:
+                                                    SizeConfig.defaultSize! *
+                                                        1.5),
+                                            BlocProvider(
+                                              create: (context) => dataCubit
+                                                ..loadHomeBookData(), // DataCubit 생성 및 데이터 로드
+                                              child: Container(
+                                                height:
+                                                    SizeConfig.defaultSize! *
+                                                        18,
+                                                child: ListView.builder(
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  itemCount: state.length,
+                                                  //  itemCount: 4,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    var book = state[index];
+                                                    return GestureDetector(
+                                                      onTap: () async {
+                                                        _sendBookClickEvent(
+                                                            book.id);
+                                                        SharedPreferences
+                                                            prefs =
+                                                            await SharedPreferences
+                                                                .getInstance();
+                                                        bgmPlayer.pause();
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  MultiBlocProvider(
+                                                                    providers: [
+                                                                      BlocProvider<
+                                                                          BookVoiceCubit>(
+                                                                        create: (context) => BookVoiceCubit(
+                                                                            dataRepository)
+                                                                          ..loadBookVoiceData(
+                                                                              book.id),
+                                                                      ),
+                                                                      BlocProvider<
+                                                                          BookIntroCubit>(
+                                                                        create: (context) =>
+                                                                            // BookIntroCubit(),
+                                                                            // DataCubit()..loadHomeBookData()
+                                                                            BookIntroCubit(dataRepository)..loadBookIntroData(book.id),
+                                                                      )
+                                                                    ],
+                                                                    child:
+                                                                        BookIntro(
+                                                                      id: book
+                                                                          .id,
+                                                                      title: book
+                                                                          .title,
+                                                                      thumbUrl:
+                                                                          book.thumbUrl,
+                                                                      bgmPlayer:
+                                                                          bgmPlayer,
+                                                                    ),
+                                                                  )),
+                                                        );
+                                                        // : Navigator.push(
+                                                        //     //구독자가 아니면 purchase로 보낸다?
+                                                        //     context,
+                                                        //     MaterialPageRoute(
+                                                        //       builder: (context) =>
+                                                        //           userState.purchase
+                                                        //               ? BlocProvider(
+                                                        //                   create: (context) =>
+                                                        //                       // BookIntroCubit(),
+                                                        //                       // DataCubit()..loadHomeBookData()
+                                                        //                       BookIntroCubit()..loadBookIntroData(book.id),
+                                                        //                   child:
+                                                        //                       BookIntro(
+                                                        //                     title: book
+                                                        //                         .title,
+                                                        //                     thumb: book
+                                                        //                         .thumbUrl,
+                                                        //                     id: book
+                                                        //                         .id,
+                                                        //                     summary: book
+                                                        //                         .summary,
+                                                        //                   ),
+                                                        //                 )
+                                                        //               : const Purchase(),
+                                                        //     ));
+                                                      }, //onTap 종료
+                                                      child: book.author ==
+                                                              "augustine"
+                                                          ? book.lock
+                                                              // 사용자가 포인트로 책을 풀었거나, 무료 공개 책이면 lock 해제
+                                                              ? Row(
+                                                                  children: [
+                                                                      lockedBook(
+                                                                          book),
+                                                                      SizedBox(
+                                                                          width:
+                                                                              2 * SizeConfig.defaultSize!)
+                                                                    ])
+                                                              : Row(
+                                                                  children: [
+                                                                      unlockedBook(
+                                                                          book),
+                                                                      SizedBox(
+                                                                          width:
+                                                                              2 * SizeConfig.defaultSize!)
+                                                                    ])
+                                                          : Container(),
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                            //첫 줄 종료
+                                          ])),
+
+                                      Container(
+                                          padding: EdgeInsets.only(
+                                              left: SizeConfig.defaultSize! * 2,
+                                              top: SizeConfig.defaultSize! * 2),
+                                          height: SizeConfig.defaultSize! * 25,
+                                          color: Color(0xFFEBF4FF),
+                                          child: Column(children: [
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                    'lib/images/vane.png',
+                                                    width: 2.5 *
+                                                        SizeConfig
+                                                            .defaultSize!),
+                                                SizedBox(
+                                                    width: SizeConfig
+                                                            .defaultSize! *
+                                                        0.7),
+                                                Text('LOVEL 오리지널',
+                                                    style: TextStyle(
+                                                        fontSize: 1.8 *
+                                                            SizeConfig
+                                                                .defaultSize!))
+                                              ],
+                                            ),
+                                            SizedBox(
+                                                height:
+                                                    SizeConfig.defaultSize! *
+                                                        1.5),
+                                            BlocProvider(
+                                              create: (context) => dataCubit
+                                                ..loadHomeBookData(), // DataCubit 생성 및 데이터 로드
+                                              child: Container(
+                                                height:
+                                                    SizeConfig.defaultSize! *
+                                                        18,
+                                                child: ListView.builder(
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  itemCount: state.length,
+                                                  //  itemCount: 4,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    var book = state[index];
+                                                    return GestureDetector(
+                                                      onTap: () async {
+                                                        _sendBookClickEvent(
+                                                            book.id);
+                                                        SharedPreferences
+                                                            prefs =
+                                                            await SharedPreferences
+                                                                .getInstance();
+                                                        bgmPlayer.pause();
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  MultiBlocProvider(
+                                                                    providers: [
+                                                                      BlocProvider<
+                                                                          BookVoiceCubit>(
+                                                                        create: (context) => BookVoiceCubit(
+                                                                            dataRepository)
+                                                                          ..loadBookVoiceData(
+                                                                              book.id),
+                                                                      ),
+                                                                      BlocProvider<
+                                                                          BookIntroCubit>(
+                                                                        create: (context) =>
+                                                                            // BookIntroCubit(),
+                                                                            // DataCubit()..loadHomeBookData()
+                                                                            BookIntroCubit(dataRepository)..loadBookIntroData(book.id),
+                                                                      )
+                                                                    ],
+                                                                    child:
+                                                                        BookIntro(
+                                                                      id: book
+                                                                          .id,
+                                                                      title: book
+                                                                          .title,
+                                                                      thumbUrl:
+                                                                          book.thumbUrl,
+                                                                      bgmPlayer:
+                                                                          bgmPlayer,
+                                                                    ),
+                                                                  )),
+                                                        );
+                                                        // : Navigator.push(
+                                                        //     //구독자가 아니면 purchase로 보낸다?
+                                                        //     context,
+                                                        //     MaterialPageRoute(
+                                                        //       builder: (context) =>
+                                                        //           userState.purchase
+                                                        //               ? BlocProvider(
+                                                        //                   create: (context) =>
+                                                        //                       // BookIntroCubit(),
+                                                        //                       // DataCubit()..loadHomeBookData()
+                                                        //                       BookIntroCubit()..loadBookIntroData(book.id),
+                                                        //                   child:
+                                                        //                       BookIntro(
+                                                        //                     title: book
+                                                        //                         .title,
+                                                        //                     thumb: book
+                                                        //                         .thumbUrl,
+                                                        //                     id: book
+                                                        //                         .id,
+                                                        //                     summary: book
+                                                        //                         .summary,
+                                                        //                   ),
+                                                        //                 )
+                                                        //               : const Purchase(),
+                                                        //     ));
+                                                      }, //onTap 종료
+                                                      child: book.author ==
+                                                              "original"
+                                                          ? book.lock
+                                                              // 사용자가 포인트로 책을 풀었거나, 무료 공개 책이면 lock 해제
+                                                              ? Row(
+                                                                  children: [
+                                                                      lockedBook(
+                                                                          book),
+                                                                      SizedBox(
+                                                                          width:
+                                                                              2 * SizeConfig.defaultSize!)
+                                                                    ])
+                                                              : Row(
+                                                                  children: [
+                                                                      unlockedBook(
+                                                                          book),
+                                                                      SizedBox(
+                                                                          width:
+                                                                              2 * SizeConfig.defaultSize!)
+                                                                    ])
+                                                          : Container(), //구독자아님
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                            //첫 줄 종료
+                                          ])),
+
                                       // SizedBox(
                                       //   //두 번째 줄 시작
                                       //   height: SizeConfig.defaultSize! * 36,
@@ -1128,8 +1396,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                     ],
                                   ),
                                 ),
+                                //),
                               ),
-                              // ),
                             ],
                           ),
                         ),
@@ -2078,11 +2346,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     return Drawer(
         child: Container(
       decoration: const BoxDecoration(
-        //color: Color(0xFFFDE392),
-        image: DecorationImage(
-          image: AssetImage('lib/images/bkground.png'),
-          fit: BoxFit.cover,
-        ),
+        color: Color(0xFFFFFAE4),
+        // image: DecorationImage(
+        //   image: AssetImage('lib/images/bkground.png'),
+        //   fit: BoxFit.cover,
+        // ),
       ),
       child: ListView(
         padding: EdgeInsets.zero,
@@ -2129,7 +2397,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                         width: 23 * SizeConfig.defaultSize!,
                                         height: 11 * SizeConfig.defaultSize!,
                                         decoration: ShapeDecoration(
-                                          color: Colors.white.withOpacity(0.5),
+                                          color: Colors.white,
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(10),
@@ -2156,7 +2424,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     VoiceProfile(
-                                                  abTest: widget.abTest,
                                                   bgmPlayer: bgmPlayer,
                                                 ),
                                               ),
@@ -2181,7 +2448,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   VoiceProfile(
-                                                abTest: widget.abTest,
                                                 bgmPlayer: bgmPlayer,
                                               ),
                                             ),
@@ -2218,7 +2484,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     VoiceProfile(
-                                                  abTest: widget.abTest,
                                                   bgmPlayer: bgmPlayer,
                                                 ),
                                               ),
@@ -2264,11 +2529,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                     builder: (context) => userState.purchase
                                         ? RecInfo(
                                             contentId: 0,
-                                            abTest: widget.abTest,
                                             bgmPlayer: bgmPlayer,
                                           )
                                         : Purchase(
-                                            abTest: widget.abTest,
+                                            bgmPlayer: bgmPlayer,
                                           ),
                                   ),
                                 );
@@ -2277,7 +2541,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                   width: 27 * SizeConfig.defaultSize!,
                                   height: 4 * SizeConfig.defaultSize!,
                                   decoration: ShapeDecoration(
-                                    color: Colors.white.withOpacity(0.5),
+                                    color: Colors.white,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
@@ -2629,7 +2893,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             book.title,
             style: TextStyle(
               fontFamily: 'GenBkBasR',
-              fontSize: SizeConfig.defaultSize! * 1.2,
+              fontSize: SizeConfig.defaultSize! * 1.5,
             ),
             textAlign: TextAlign.center,
             maxLines: 2,
@@ -2705,7 +2969,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             book.title,
             style: TextStyle(
               fontFamily: 'GenBkBasR',
-              fontSize: SizeConfig.defaultSize! * 1.2,
+              fontSize: SizeConfig.defaultSize! * 1.5,
             ),
             textAlign: TextAlign.center,
             maxLines: 2,

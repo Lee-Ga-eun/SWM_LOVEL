@@ -26,12 +26,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 class Purchase extends StatefulWidget {
-  final FirebaseRemoteConfig abTest;
   final AudioPlayer bgmPlayer;
 
   const Purchase({
     super.key,
-    required this.abTest,
     required this.bgmPlayer,
   });
 
@@ -106,9 +104,7 @@ class _PurchaseState extends State<Purchase> {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => HomeScreen(
-                      abTest: widget.abTest,
-                    ),
+                    builder: (context) => HomeScreen(),
                   ),
                 );
               } else {
@@ -444,9 +440,7 @@ class _PurchaseState extends State<Purchase> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    HomeScreen(
-                                                  abTest: widget.abTest,
-                                                ),
+                                                    HomeScreen(),
                                               ),
                                             );
                                           } else {
@@ -455,7 +449,6 @@ class _PurchaseState extends State<Purchase> {
                                               MaterialPageRoute(
                                                 builder: (context) => RecInfo(
                                                   contentId: 0,
-                                                  abTest: widget.abTest,
                                                   bgmPlayer: widget.bgmPlayer,
                                                 ),
                                               ),
