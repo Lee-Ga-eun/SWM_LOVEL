@@ -40,7 +40,12 @@
   "출첵-광고": "  DOUBLE REWARD",
   "달력-안내": "Attend daily and claim your rewards!",
 
-  "구독여부확인": "Already Subscribed?",
+  "이미구독": "Already Subscribed?",
+
+  "로벨구독": "LOVEL Subscription",
+  "로벨포인트": "LOVEL Point",
+
+  "7일무료체험": "7-Day Free Trial Available",
 
   "구독-설명": "✅ Read with your voice\n✅ Unlock all books\n✅ 7-day FREE trial",
   "구독-가격": "$5.99",
@@ -51,10 +56,10 @@
   "베이직할인전가격": "$9.99",
   "베이직할인후가격": "$1.99",
 
-  "프리미엄설명1": "당신의 목소리로 읽어보세요",
-  "프리미엄설명2": "모든 책을 이용할 수 있어요",
-  "베이직설명1": "당신의 목소리로 읽어보세요",
-    "포인트": "Point",
+  "프리미엄설명1": " 당신의 목소리로 읽어보세요",
+  "프리미엄설명2": " 모든 책을 이용할 수 있어요",
+  "베이직설명1": " 당신의 목소리로 읽어보세요",
+  "포인트": "Point",
 
 
   "포인트-가격-3000": "$ 2.99",

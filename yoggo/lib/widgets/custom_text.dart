@@ -26,5 +26,4 @@ class CustomText extends StatelessWidget {
 const TextStyle customTextStyle = TextStyle(
   fontFamily: 'Suit',
   fontWeight: FontWeight.w500,
-  color: ccBlack,
 );
