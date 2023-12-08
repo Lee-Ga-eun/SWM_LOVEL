@@ -682,11 +682,11 @@ class _CalendarState extends State<Calendar> {
                                     : null;
                               },
                               child: Container(
-                                  width: 24 * SizeConfig.defaultSize!,
+                                  width: 28 * SizeConfig.defaultSize!,
                                   height: 5 * SizeConfig.defaultSize!,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(
-                                        1.4 * SizeConfig.defaultSize!),
+                                        1.8 * SizeConfig.defaultSize!),
                                     color: lastPointYMD != formattedTime
                                         ? orangeDark
                                         : Colors.grey,
@@ -708,10 +708,9 @@ class _CalendarState extends State<Calendar> {
                                                 ? black
                                                 : black,
                                             fontWeight: FontWeight.w700,
-
                                             fontSize:
                                                 SizeConfig.defaultSize! * 2.2,
-                                            //fontFamily: 'font-point'.tr(),
+                                            fontFamily: 'Suit',
                                           ),
                                         ),
                                       ],
@@ -749,10 +748,9 @@ class _CalendarState extends State<Calendar> {
                                     '출첵-일반'.tr(),
                                     style: TextStyle(
                                       color: black,
-                                      fontWeight: FontWeight.w700,
-
+                                      fontWeight: FontWeight.w600,
                                       fontSize: SizeConfig.defaultSize! * 1.5,
-                                      //fontFamily: 'font-claim'.tr(),
+                                      fontFamily: 'Suit',
                                     ),
                                   ),
                                 ),

@@ -1500,193 +1500,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                   title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // ),
                       SizedBox(
                         height: 3 * SizeConfig.defaultSize!,
                       ),
-                      CustomText(
-                        '프로필'.tr(),
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 2 * SizeConfig.defaultSize!,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 1 * SizeConfig.defaultSize!,
-                      ),
-                      userState.record && userState.purchase
-                          ? GestureDetector(
-                              onTap: () {
-                                _sendHbgVoiceBoxClickEvent();
-                              },
-                              child: SizedBox(
-                                width: 23 * SizeConfig.defaultSize!,
-                                height: 11 * SizeConfig.defaultSize!,
-                                child: Stack(
-                                  children: [
-                                    Positioned(
-                                      child: Container(
-                                        width: 23 * SizeConfig.defaultSize!,
-                                        height: 11 * SizeConfig.defaultSize!,
-                                        decoration: ShapeDecoration(
-                                          color: Colors.white,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                        left: 1.2 * SizeConfig.defaultSize!,
-                                        top: 1.5 * SizeConfig.defaultSize!,
-                                        // child: Transform.translate(
-                                        //     offset: Offset(
-                                        //         0.5,
-                                        //         -0.7 *
-                                        //             SizeConfig.defaultSize!),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            userCubit.fetchUser();
-                                            _sendHbgVoiceClickEvent();
-                                            bgmPlayer.pause();
-
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    VoiceProfile(
-                                                  bgmPlayer: bgmPlayer,
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                          child: Image.asset(
-                                            'lib/images/icons/${userState.voiceIcon}-c.png',
-                                            height: SizeConfig.defaultSize! * 8,
-                                          ),
-                                        )),
-                                    Positioned(
-                                      left: 9.5 * SizeConfig.defaultSize!,
-                                      top: 2.3 * SizeConfig.defaultSize!,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          userCubit.fetchUser();
-                                          _sendHbgVoiceClickEvent();
-                                          bgmPlayer.pause();
-
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  VoiceProfile(
-                                                bgmPlayer: bgmPlayer,
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                        child: SizedBox(
-                                          width: 12.2 * SizeConfig.defaultSize!,
-                                          height: 2 * SizeConfig.defaultSize!,
-                                          child: Text(
-                                            userState.voiceName!,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize:
-                                                  2 * SizeConfig.defaultSize!,
-                                              fontFamily: 'Molengo',
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 10.2 * SizeConfig.defaultSize!,
-                                      top: 6 * SizeConfig.defaultSize!,
-                                      child: GestureDetector(
-                                          onTap: () {
-                                            userCubit.fetchUser();
-                                            _sendHbgVoiceClickEvent();
-                                            bgmPlayer.pause();
-
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    VoiceProfile(
-                                                  bgmPlayer: bgmPlayer,
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                          child: Container(
-                                              width:
-                                                  11 * SizeConfig.defaultSize!,
-                                              height:
-                                                  3 * SizeConfig.defaultSize!,
-                                              decoration: ShapeDecoration(
-                                                color: const Color(0xFFFFA91A),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                              ),
-                                              child: Center(
-                                                child: CustomText(
-                                                  '프로필-수정'.tr(),
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 1.4 *
-                                                        SizeConfig.defaultSize!,
-                                                    fontWeight: FontWeight.w700,
-                                                  ),
-                                                ),
-                                              ))),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )
-                          : GestureDetector(
-                              onTap: () {
-                                _sendHbgAddVoiceClickEvent();
-                                userState.purchase ? bgmPlayer.pause() : null;
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => userState.purchase
-                                        ? RecInfo(
-                                            contentId: 0,
-                                            bgmPlayer: bgmPlayer,
-                                          )
-                                        : Purchase(
-                                            bgmPlayer: bgmPlayer,
-                                          ),
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                  width: 27 * SizeConfig.defaultSize!,
-                                  height: 4 * SizeConfig.defaultSize!,
-                                  decoration: ShapeDecoration(
-                                    color: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                  ),
-                                  child: Icon(
-                                    Icons.add,
-                                    size: SizeConfig.defaultSize! * 2.5,
-                                    color: const Color(0xFFFFA91A),
-                                  ))),
-
-                      SizedBox(
-                        height: 1.5 * SizeConfig.defaultSize!,
-                      ),
-                      // 친구에게 string 공유
                       GestureDetector(
                         behavior: HitTestBehavior.opaque,
                         child: Padding(
@@ -1697,10 +1513,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                           child: CustomText(
                             '공지사항'.tr(),
                             style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 2 * SizeConfig.defaultSize!,
-                              fontWeight: FontWeight.w700,
-                            ),
+                                color: Colors.black,
+                                fontSize: 2 * SizeConfig.defaultSize!,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Suit'),
                           ),
                         ),
                         onTap: () async {
@@ -1726,10 +1542,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                           child: CustomText(
                             '친구초대'.tr(),
                             style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 2 * SizeConfig.defaultSize!,
-                              fontWeight: FontWeight.w700,
-                            ),
+                                color: Colors.black,
+                                fontSize: 2 * SizeConfig.defaultSize!,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Suit'),
                           ),
                         ),
                         onTap: () async {
@@ -1757,10 +1573,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                 ? '별점-구글플레이'.tr()
                                 : '별점-앱스토어'.tr(),
                             style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 2 * SizeConfig.defaultSize!,
-                              fontWeight: FontWeight.w700,
-                            ),
+                                color: Colors.black,
+                                fontSize: 2 * SizeConfig.defaultSize!,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Suit'),
                           ),
                         ),
                         onTap: () async {
@@ -1786,10 +1602,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                           child: CustomText(
                             '리포트'.tr(),
                             style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 2 * SizeConfig.defaultSize!,
-                              fontWeight: FontWeight.w700,
-                            ),
+                                color: Colors.black,
+                                fontSize: 2 * SizeConfig.defaultSize!,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Suit'),
                           ),
                         ),
                         onTap: () async {
@@ -1810,10 +1626,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                             CustomText(
                               '배경음악'.tr(),
                               style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 2 * SizeConfig.defaultSize!,
-                                fontWeight: FontWeight.w700,
-                              ),
+                                  color: Colors.black,
+                                  fontSize: 2 * SizeConfig.defaultSize!,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'Suit'),
                             ),
                             Transform.scale(
                               scale: 0.8,

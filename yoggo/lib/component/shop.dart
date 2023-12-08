@@ -362,7 +362,7 @@ class _PurchaseState extends State<Purchase> {
                               style: TextStyle(
                                   color: Colors.white,
                                   fontFamily: 'Suit',
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w800,
                                   fontSize: SizeConfig.defaultSize! * 1.8),
                               textAlign: TextAlign.left,
                             ),
@@ -383,8 +383,8 @@ class _PurchaseState extends State<Purchase> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               SizedBox(
-                                  width: 2 * SizeConfig.defaultSize!,
-                                  child: Image.asset('lib/images/oneCoin.png')),
+                                  width: 2.5 * SizeConfig.defaultSize!,
+                                  child: Image.asset('lib/images/coin.png')),
                               SizedBox(
                                 width: 0.5 * SizeConfig.defaultSize!,
                               ),
@@ -393,11 +393,11 @@ class _PurchaseState extends State<Purchase> {
                                 alignment: Alignment.center,
                                 // decoration: BoxDecoration(color: Colors.blue),
                                 child: Text(
-                                  '${userState.point}',
+                                  '${userState.point + 0}',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: 'Suit',
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w800,
                                       fontSize: SizeConfig.defaultSize! * 2),
                                   textAlign: TextAlign.right,
                                 ),
@@ -420,6 +420,9 @@ class _PurchaseState extends State<Purchase> {
                     child: Padding(
                   padding: EdgeInsets.only(left: 0.05 * sw, right: 0.05 * sw),
                   child: Column(children: [
+                    SizedBox(
+                      height: 0.5 * sizec,
+                    ),
                     // 구독 시작
                     Container(
                       alignment: Alignment.center,
@@ -439,7 +442,8 @@ class _PurchaseState extends State<Purchase> {
                                         color: Colors.black,
                                         fontFamily: 'Suit',
                                         fontWeight: FontWeight.w800,
-                                        fontSize: SizeConfig.defaultSize! * 2),
+                                        fontSize:
+                                            SizeConfig.defaultSize! * 2.4),
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
@@ -495,7 +499,6 @@ class _PurchaseState extends State<Purchase> {
                                               // showDialog(
                                               //   context: context,
                                               //   builder: (BuildContext context) {
-
                                               //     // return AlertDialog(
                                               //     //   // title: Text('Sorry'),
                                               //     //   content: const Text('답변-부정 subscription found.'),
@@ -514,71 +517,29 @@ class _PurchaseState extends State<Purchase> {
                                           } else {
                                             _sendAlreadysubClickEvent(
                                                 userState.point, 'false');
-
                                             await subStart();
-
-                                            // print("entitlement: $entitlement");
-                                            // showDialog(
-                                            //   context: context,
-                                            //   builder: (BuildContext context) {
-                                            //     return AlertDialog(
-                                            //       // title: Text('Sorry'),
-                                            //       content: const Text('답변-부정 subscription found.'),
-                                            //       actions: <Widget>[
-                                            //         TextButton(
-                                            //           child: const Text('Close'),
-                                            //           onPressed: () {
-                                            //             Navigator.of(context).pop();
-                                            //           },
-                                            //         ),
-                                            //       ],
-                                            //     );
-                                            //   },
-                                            // );
                                           }
                                         } on PlatformException {
                                           _sendAlreadysubClickEvent(
                                               userState.point, 'false');
                                           await subStart();
-
-                                          // showDialog(
-                                          //   context: context,
-                                          //   builder: (BuildContext context) {
-                                          //     return AlertDialog(
-                                          //       // title: Text('Sorry'),
-                                          //       content: const Text('답변-부정 subscription found.'),
-                                          //       actions: <Widget>[
-                                          //         TextButton(
-                                          //           child: const Text('Close'),
-                                          //           onPressed: () {
-                                          //             Navigator.of(context).pop();
-                                          //           },
-                                          //         ),
-                                          //       ],
-                                          //     );
-                                          //   },
-                                          // );
-
-                                          // Error restoring purchases
                                         }
                                       },
                                       child: Text(
                                         '이미구독'.tr(),
+                                        textAlign: TextAlign.center,
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontFamily: 'Suit',
                                           fontWeight: FontWeight.w400,
                                           // decoration: TextDecoration.underline,
                                           fontSize:
-                                              SizeConfig.defaultSize! * 1.8,
+                                              SizeConfig.defaultSize! * 1.5,
                                         ),
                                       ),
                                     ),
                                   ]),
                             ],
-                          ),
-                          SizedBox(
-                            height: 0.0 * sh,
                           ),
                           Container(
                               height: 0.1 * sh,
@@ -621,7 +582,8 @@ class _PurchaseState extends State<Purchase> {
                                 borderRadius: BorderRadius.all(
                                     Radius.circular(0.04 * sw))),
                             child: Padding(
-                                padding: EdgeInsets.only(left: 0.05 * sw),
+                                padding: EdgeInsets.only(
+                                    left: 0.05 * sw, right: 0.05 * sw),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -632,7 +594,7 @@ class _PurchaseState extends State<Purchase> {
                                         color: Colors.black,
                                         fontWeight: FontWeight.w900,
                                         fontFamily: 'Suit',
-                                        fontSize: SizeConfig.defaultSize! * 1.8,
+                                        fontSize: SizeConfig.defaultSize! * 2,
                                       ),
                                     ),
                                     SizedBox(
@@ -644,7 +606,7 @@ class _PurchaseState extends State<Purchase> {
                                           top: 0.5 * SizeConfig.defaultSize!,
                                           left: 0.06 * sw,
                                           child: SizedBox(
-                                              width: 0.3 * sw,
+                                              width: 0.4 * sw,
                                               child: Image.asset(
                                                   'lib/images/arrow.png')),
                                         ),
@@ -794,7 +756,7 @@ class _PurchaseState extends State<Purchase> {
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontFamily: 'Suit',
-                                        fontSize: SizeConfig.defaultSize! * 1.8,
+                                        fontSize: SizeConfig.defaultSize! * 2,
                                         fontWeight: FontWeight.w900,
                                       ),
                                     ),
@@ -807,7 +769,7 @@ class _PurchaseState extends State<Purchase> {
                                           top: 0.5 * SizeConfig.defaultSize!,
                                           left: 0.06 * sw,
                                           child: SizedBox(
-                                              width: 0.3 * sw,
+                                              width: 0.4 * sw,
                                               child: Image.asset(
                                                   'lib/images/arrow.png')),
                                         ),
@@ -913,79 +875,86 @@ class _PurchaseState extends State<Purchase> {
                           SizedBox(
                             height: 0.01 * sh,
                           ),
-                          Container(
-                            padding: EdgeInsets.only(
-                                left: 0.02 * sw, right: 0.02 * sw),
-                            child: Platform.isAndroid
-                                ? Text(
-                                    "구독-약관설명-안드로이드",
-                                    style: TextStyle(
-                                      fontFamily: 'Suit',
-                                      fontSize: SizeConfig.defaultSize! * 1.4,
-                                      color: Color.fromARGB(255, 150, 150, 150),
-                                    ),
-                                    textAlign: TextAlign.justify,
-                                  ).tr()
-                                : RichText(
-                                    textAlign: TextAlign.justify,
-                                    text: TextSpan(
-                                      children: [
-                                        TextSpan(
-                                            style: TextStyle(
-                                              fontSize:
-                                                  1.2 * SizeConfig.defaultSize!,
-                                              fontFamily: 'Suit',
-                                              color: Color.fromARGB(
-                                                  255, 150, 150, 150),
+                          SizedBox(
+                            height: 3 * sizec,
+                            child: SingleChildScrollView(
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    left: 0.02 * sw, right: 0.02 * sw),
+                                child: Platform.isAndroid
+                                    ? Text(
+                                        "구독-약관설명-안드로이드",
+                                        style: TextStyle(
+                                          fontFamily: 'Suit',
+                                          fontSize:
+                                              SizeConfig.defaultSize! * 1.4,
+                                          color: Color.fromARGB(
+                                              255, 150, 150, 150),
+                                        ),
+                                        textAlign: TextAlign.justify,
+                                      ).tr()
+                                    : RichText(
+                                        textAlign: TextAlign.justify,
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                                style: TextStyle(
+                                                  fontSize: 1.2 *
+                                                      SizeConfig.defaultSize!,
+                                                  fontFamily: 'Suit',
+                                                  color: Color.fromARGB(
+                                                      255, 150, 150, 150),
+                                                ),
+                                                text: "구독-약관설명-iOS".tr()),
+                                            TextSpan(
+                                              text: "구독-약관".tr(),
+                                              style: TextStyle(
+                                                fontSize: 1.2 *
+                                                    SizeConfig.defaultSize!,
+                                                fontFamily: 'Suit',
+                                                color: Color.fromARGB(
+                                                    255, 150, 150, 150),
+                                                decoration:
+                                                    TextDecoration.underline,
+                                              ),
+                                              recognizer: TapGestureRecognizer()
+                                                ..onTap = () {
+                                                  launch(
+                                                      'http://www.apple.com/legal/itunes/appstore/dev/stdeula');
+                                                },
                                             ),
-                                            text: "구독-약관설명-iOS".tr()),
-                                        TextSpan(
-                                          text: "구독-약관".tr(),
-                                          style: TextStyle(
-                                            fontSize:
-                                                1.2 * SizeConfig.defaultSize!,
-                                            fontFamily: 'Suit',
-                                            color: Color.fromARGB(
-                                                255, 150, 150, 150),
-                                            decoration:
-                                                TextDecoration.underline,
-                                          ),
-                                          recognizer: TapGestureRecognizer()
-                                            ..onTap = () {
-                                              launch(
-                                                  'http://www.apple.com/legal/itunes/appstore/dev/stdeula');
-                                            },
+                                            TextSpan(
+                                              text: "구독-그리고".tr(),
+                                              style: TextStyle(
+                                                fontSize: 1.2 *
+                                                    SizeConfig.defaultSize!,
+                                                fontFamily: 'Suit',
+                                                color: Color.fromARGB(
+                                                    255, 150, 150, 150),
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: "구독-개인정보처리방침".tr(),
+                                              style: TextStyle(
+                                                fontSize: 1.2 *
+                                                    SizeConfig.defaultSize!,
+                                                fontFamily: 'Suit',
+                                                color: Color.fromARGB(
+                                                    255, 150, 150, 150),
+                                                decoration:
+                                                    TextDecoration.underline,
+                                              ),
+                                              recognizer: TapGestureRecognizer()
+                                                ..onTap = () {
+                                                  launch(
+                                                      'https://doc-hosting.flycricket.io/lovel-privacy-policy/f8c6f57c-dd5f-4b67-8859-bc4afe251396/privacy');
+                                                },
+                                            ),
+                                          ],
                                         ),
-                                        TextSpan(
-                                          text: "구독-그리고".tr(),
-                                          style: TextStyle(
-                                            fontSize:
-                                                1.2 * SizeConfig.defaultSize!,
-                                            fontFamily: 'Suit',
-                                            color: Color.fromARGB(
-                                                255, 150, 150, 150),
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: "구독-개인정보처리방침".tr(),
-                                          style: TextStyle(
-                                            fontSize:
-                                                1.2 * SizeConfig.defaultSize!,
-                                            fontFamily: 'Suit',
-                                            color: Color.fromARGB(
-                                                255, 150, 150, 150),
-                                            decoration:
-                                                TextDecoration.underline,
-                                          ),
-                                          recognizer: TapGestureRecognizer()
-                                            ..onTap = () {
-                                              launch(
-                                                  'https://doc-hosting.flycricket.io/lovel-privacy-policy/f8c6f57c-dd5f-4b67-8859-bc4afe251396/privacy');
-                                            },
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                      ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -1014,7 +983,7 @@ class _PurchaseState extends State<Purchase> {
                                           fontFamily: 'Suit',
                                           fontWeight: FontWeight.w800,
                                           fontSize:
-                                              SizeConfig.defaultSize! * 2),
+                                              SizeConfig.defaultSize! * 2.4),
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
@@ -1051,7 +1020,8 @@ class _PurchaseState extends State<Purchase> {
                                       ],
                                     ),
                                     child: Padding(
-                                      padding: EdgeInsets.only(left: 0.05 * sw),
+                                      padding: EdgeInsets.only(
+                                          left: 0.05 * sw, right: 0.05 * sw),
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -1076,14 +1046,14 @@ class _PurchaseState extends State<Purchase> {
                                                                 FontWeight.w800,
                                                             fontSize: SizeConfig
                                                                     .defaultSize! *
-                                                                1.8,
+                                                                2,
                                                           ),
                                                         ),
                                                         Text(
                                                           '포인트'.tr(),
                                                           style: TextStyle(
                                                             color: Colors.black,
-                                                            fontSize: 1.8 *
+                                                            fontSize: 2 *
                                                                 SizeConfig
                                                                     .defaultSize! *
                                                                 double.parse(
@@ -1099,8 +1069,7 @@ class _PurchaseState extends State<Purchase> {
                                                   flex: 1,
                                                   child: Row(
                                                       mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
+                                                          MainAxisAlignment.end,
                                                       children: [
                                                         Text(
                                                           '포인트-가격-3000'.tr(),
@@ -1109,7 +1078,7 @@ class _PurchaseState extends State<Purchase> {
                                                             fontFamily: 'Suit',
                                                             fontSize: SizeConfig
                                                                     .defaultSize! *
-                                                                1.8,
+                                                                2,
                                                             fontWeight:
                                                                 FontWeight.w500,
                                                           ),
@@ -1151,7 +1120,8 @@ class _PurchaseState extends State<Purchase> {
                                       ],
                                     ),
                                     child: Padding(
-                                      padding: EdgeInsets.only(left: 0.05 * sw),
+                                      padding: EdgeInsets.only(
+                                          left: 0.05 * sw, right: 0.05 * sw),
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -1174,7 +1144,7 @@ class _PurchaseState extends State<Purchase> {
                                                             fontFamily: 'Suit',
                                                             fontSize: SizeConfig
                                                                     .defaultSize! *
-                                                                1.8,
+                                                                2,
                                                             fontWeight:
                                                                 FontWeight.w800,
                                                           ),
@@ -1183,7 +1153,7 @@ class _PurchaseState extends State<Purchase> {
                                                           '포인트'.tr(),
                                                           style: TextStyle(
                                                             color: Colors.black,
-                                                            fontSize: 1.8 *
+                                                            fontSize: 2 *
                                                                 SizeConfig
                                                                     .defaultSize! *
                                                                 double.parse(
@@ -1199,8 +1169,7 @@ class _PurchaseState extends State<Purchase> {
                                                   flex: 1,
                                                   child: Row(
                                                       mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
+                                                          MainAxisAlignment.end,
                                                       children: [
                                                         Text(
                                                           '포인트-가격-6000'.tr(),
@@ -1209,7 +1178,7 @@ class _PurchaseState extends State<Purchase> {
                                                             fontFamily: 'Suit',
                                                             fontSize: SizeConfig
                                                                     .defaultSize! *
-                                                                1.8,
+                                                                2,
                                                             fontWeight:
                                                                 FontWeight.w500,
                                                           ),
@@ -1252,7 +1221,8 @@ class _PurchaseState extends State<Purchase> {
                                       ],
                                     ),
                                     child: Padding(
-                                      padding: EdgeInsets.only(left: 0.05 * sw),
+                                      padding: EdgeInsets.only(
+                                          left: 0.05 * sw, right: 0.05 * sw),
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -1275,7 +1245,7 @@ class _PurchaseState extends State<Purchase> {
                                                             fontFamily: 'Suit',
                                                             fontSize: SizeConfig
                                                                     .defaultSize! *
-                                                                1.8,
+                                                                2,
                                                             fontWeight:
                                                                 FontWeight.w800,
                                                           ),
@@ -1284,7 +1254,7 @@ class _PurchaseState extends State<Purchase> {
                                                           '포인트'.tr(),
                                                           style: TextStyle(
                                                             color: Colors.black,
-                                                            fontSize: 1.8 *
+                                                            fontSize: 2 *
                                                                 SizeConfig
                                                                     .defaultSize! *
                                                                 double.parse(
@@ -1300,8 +1270,7 @@ class _PurchaseState extends State<Purchase> {
                                                   flex: 1,
                                                   child: Row(
                                                       mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
+                                                          MainAxisAlignment.end,
                                                       children: [
                                                         Text(
                                                           '포인트-가격-10000'.tr(),
@@ -1310,7 +1279,7 @@ class _PurchaseState extends State<Purchase> {
                                                             fontFamily: 'Suit',
                                                             fontSize: SizeConfig
                                                                     .defaultSize! *
-                                                                1.8,
+                                                                2,
                                                             fontWeight:
                                                                 FontWeight.w500,
                                                           ),
@@ -1352,12 +1321,13 @@ class _PurchaseState extends State<Purchase> {
                                       ],
                                     ),
                                     child: Padding(
-                                      padding: EdgeInsets.only(left: 0.05 * sw),
+                                      padding: EdgeInsets.only(
+                                          left: 0.05 * sw, right: 0.05 * sw),
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                            CrossAxisAlignment.center,
                                         children: [
                                           Row(
                                             children: [
@@ -1375,7 +1345,7 @@ class _PurchaseState extends State<Purchase> {
                                                             fontFamily: 'Suit',
                                                             fontSize: SizeConfig
                                                                     .defaultSize! *
-                                                                1.8,
+                                                                2,
                                                             fontWeight:
                                                                 FontWeight.w800,
                                                           ),
@@ -1384,7 +1354,7 @@ class _PurchaseState extends State<Purchase> {
                                                           '포인트'.tr(),
                                                           style: TextStyle(
                                                             color: Colors.black,
-                                                            fontSize: 1.8 *
+                                                            fontSize: 2 *
                                                                 SizeConfig
                                                                     .defaultSize! *
                                                                 double.parse(
@@ -1400,8 +1370,7 @@ class _PurchaseState extends State<Purchase> {
                                                   flex: 1,
                                                   child: Row(
                                                       mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
+                                                          MainAxisAlignment.end,
                                                       children: [
                                                         Text(
                                                           '포인트-가격-15000'.tr(),
@@ -1410,7 +1379,7 @@ class _PurchaseState extends State<Purchase> {
                                                             color: Colors.black,
                                                             fontSize: SizeConfig
                                                                     .defaultSize! *
-                                                                1.8,
+                                                                2,
                                                             fontWeight:
                                                                 FontWeight.w500,
                                                           ),
@@ -1421,6 +1390,9 @@ class _PurchaseState extends State<Purchase> {
                                         ],
                                       ),
                                     )),
+                              ),
+                              SizedBox(
+                                height: 2 * SizeConfig.defaultSize!,
                               ),
                             ],
                           ),
@@ -1434,7 +1406,7 @@ class _PurchaseState extends State<Purchase> {
                                   payCashToPoint(6000);
                                 },
                                 child: Container(
-                                    width: 0.38 * sw,
+                                    width: 0.35 * sw,
                                     height: 3 * SizeConfig.defaultSize!,
                                     decoration: BoxDecoration(
                                         color: Color(
@@ -1467,7 +1439,7 @@ class _PurchaseState extends State<Purchase> {
                                   payCashToPoint(15000);
                                 },
                                 child: Container(
-                                    width: 0.48 * sw,
+                                    width: 0.45 * sw,
                                     height: 3 * SizeConfig.defaultSize!,
                                     decoration: BoxDecoration(
                                         color: Color(
