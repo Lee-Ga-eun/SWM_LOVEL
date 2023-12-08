@@ -105,14 +105,25 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             GestureDetector(
               onTap: () {
                 if (_currentIndex != 0) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Calendar(
-                              bgmPlayer: widget.bgmPlayer,
-                            )),
-                  );
-                  _currentIndex = 0;
+                  if (_currentIndex == 2) {
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            Calendar(bgmPlayer: widget.bgmPlayer),
+                        transitionDuration:
+                            const Duration(seconds: 0), // 애니메이션 시간을 0으로 설정
+                      ),
+                    );
+                  } else {
+                    Navigator.of(context).pushReplacement(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            Calendar(bgmPlayer: widget.bgmPlayer),
+                        transitionDuration:
+                            const Duration(seconds: 0), // 애니메이션 시간을 0으로 설정
+                      ),
+                    );
+                  }
                 }
               },
               child: Column(children: [
@@ -128,14 +139,25 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             GestureDetector(
               onTap: () {
                 if (_currentIndex != 1) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Purchase(
-                              bgmPlayer: widget.bgmPlayer,
-                            )),
-                  );
-                  _currentIndex = 1;
+                  if (_currentIndex == 2) {
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            Purchase(bgmPlayer: widget.bgmPlayer),
+                        transitionDuration:
+                            const Duration(seconds: 0), // 애니메이션 시간을 0으로 설정
+                      ),
+                    );
+                  } else {
+                    Navigator.of(context).pushReplacement(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            Purchase(bgmPlayer: widget.bgmPlayer),
+                        transitionDuration:
+                            const Duration(seconds: 0), // 애니메이션 시간을 0으로 설정
+                      ),
+                    );
+                  }
                 }
               },
               child: Column(children: [
@@ -151,12 +173,8 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             GestureDetector(
               onTap: () {
                 if (_currentIndex != 2) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
-                  );
+                  Navigator.of(context).pop();
                 }
-                _currentIndex = 2;
               },
               child: Column(children: [
                 Image.asset('lib/images/home.png',
@@ -171,12 +189,26 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             GestureDetector(
               onTap: () {
                 if (_currentIndex != 3) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
-                  );
+                  if (_currentIndex == 2) {
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            Purchase(bgmPlayer: widget.bgmPlayer),
+                        transitionDuration:
+                            const Duration(seconds: 0), // 애니메이션 시간을 0으로 설정
+                      ),
+                    );
+                  } else {
+                    Navigator.of(context).pushReplacement(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            Purchase(bgmPlayer: widget.bgmPlayer),
+                        transitionDuration:
+                            const Duration(seconds: 0), // 애니메이션 시간을 0으로 설정
+                      ),
+                    );
+                  }
                 }
-                _currentIndex = 3;
               },
               child: Column(children: [
                 Image.asset('lib/images/favorite.png',
@@ -191,11 +223,25 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             GestureDetector(
               onTap: () {
                 if (_currentIndex != 4) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
-                  );
-                  _currentIndex = 4;
+                  if (_currentIndex == 2) {
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            Purchase(bgmPlayer: widget.bgmPlayer),
+                        transitionDuration:
+                            const Duration(seconds: 0), // 애니메이션 시간을 0으로 설정
+                      ),
+                    );
+                  } else {
+                    Navigator.of(context).pushReplacement(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            Purchase(bgmPlayer: widget.bgmPlayer),
+                        transitionDuration:
+                            const Duration(seconds: 0), // 애니메이션 시간을 0으로 설정
+                      ),
+                    );
+                  }
                 }
               },
               child: Column(children: [

@@ -6,12 +6,14 @@ class CustomText extends StatelessWidget {
   final TextStyle? style;
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
+  final int? maxLines;
 
   CustomText(
     this.text, {
     this.style,
     this.strutStyle,
     this.textAlign,
+    this.maxLines,
   });
 
   @override
@@ -21,6 +23,7 @@ class CustomText extends StatelessWidget {
       style: (style != null) ? customTextStyle.merge(style) : customTextStyle,
       textAlign: textAlign,
       strutStyle: strutStyle,
+      maxLines: maxLines,
     );
   }
 }
