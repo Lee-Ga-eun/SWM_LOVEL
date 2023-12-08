@@ -12,6 +12,7 @@ Stack CustomDialog(String title, String? content, String leftText,
             color: Color(0x60000000))),
     // width: 100 * sizec,
     AlertDialog(
+      elevation: 0,
       shadowColor: Colors.white.withOpacity(0),
       titlePadding: EdgeInsets.only(
         top: sizec * 2,
