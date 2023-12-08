@@ -18,3 +18,7 @@ const Color purpleLight = Color(0xffF0E6FF);
 
 const Color pinkDark = Color(0xffEE3066);
 const Color pinkLight = Color(0xffFFF0FA);
+
+const Color white = Colors.white;
+const Color black = Colors.black;
+const Color grey = Colors.grey;

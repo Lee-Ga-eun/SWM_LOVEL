@@ -14,6 +14,7 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:yoggo/component/bookPage/view/book_page.dart';
+import 'package:yoggo/constants.dart';
 import 'package:yoggo/size_config.dart';
 import 'package:yoggo/widgets/custom_text.dart';
 import 'package:yoggo/widgets/navigation_bar.dart';
@@ -311,7 +312,7 @@ class _CalendarState extends State<Calendar> {
                 height: SizeConfig.defaultSize! * 8.8,
                 decoration: ShapeDecoration(
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 5, color: Color(0xFF9866FF)),
+                    side: BorderSide(width: 5, color: purpleDark),
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ))
@@ -373,7 +374,7 @@ class _CalendarState extends State<Calendar> {
                 height: SizeConfig.defaultSize! * 8.8,
                 decoration: ShapeDecoration(
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 5, color: Color(0xFF9866FF)),
+                    side: BorderSide(width: 5, color: purpleDark),
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ))
@@ -464,6 +465,7 @@ class _CalendarState extends State<Calendar> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           //fontFamily: 'font-basic'.tr(),
+                          fontWeight: FontWeight.w700,
                           fontSize: 2.2 *
                               SizeConfig.defaultSize! *
                               double.parse('font-ratio'.tr()),
@@ -568,7 +570,7 @@ class _CalendarState extends State<Calendar> {
                         borderRadius: BorderRadius.circular(
                             1.4 * SizeConfig.defaultSize!),
                         color: lastPointYMD != formattedTime
-                            ? const Color(0xFFFF8700)
+                            ? orangeDark
                             : Colors.grey,
                       ), // 배경색 설정
 
@@ -577,7 +579,8 @@ class _CalendarState extends State<Calendar> {
                           textAlign: TextAlign.center,
                           '출첵'.tr(),
                           style: TextStyle(
-                              color: Colors.black,
+                              color:
+                                  lastPointYMD != formattedTime ? white : black,
                               fontWeight: FontWeight.w700,
                               fontSize: SizeConfig.defaultSize! * 2),
                         ),
@@ -591,9 +594,8 @@ class _CalendarState extends State<Calendar> {
                       child: SizedBox(
                         width: sw * 0.08,
                         height: sw * 0.08,
-                        child: const CircularProgressIndicator(
-                          color: Color(0xFFF39E09),
-                        ),
+                        child:
+                            const CircularProgressIndicator(color: orangeDark),
                       ))),
               Visibility(
                   visible: wantClaim,
@@ -631,7 +633,7 @@ class _CalendarState extends State<Calendar> {
                       decoration: BoxDecoration(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(15)),
-                        color: Colors.white,
+                        color: white,
                       ),
                       height: 29 * SizeConfig.defaultSize!,
                       width: 32 * SizeConfig.defaultSize!,
@@ -680,7 +682,7 @@ class _CalendarState extends State<Calendar> {
                                     borderRadius: BorderRadius.circular(
                                         1.4 * SizeConfig.defaultSize!),
                                     color: lastPointYMD != formattedTime
-                                        ? const Color(0xFFFF8700)
+                                        ? orangeDark
                                         : Colors.grey,
                                   ), // 배경색 설정
 
@@ -693,15 +695,19 @@ class _CalendarState extends State<Calendar> {
                                           'lib/images/slate1.png',
                                           width: 2 * SizeConfig.defaultSize!,
                                         ),
-                                        Text(
-                                          '출첵-광고',
+                                        CustomText(
+                                          '출첵-광고'.tr(),
                                           style: TextStyle(
-                                            color: Colors.black,
+                                            color: lastPointYMD != formattedTime
+                                                ? white
+                                                : black,
+                                            fontWeight: FontWeight.w700,
+
                                             fontSize:
                                                 SizeConfig.defaultSize! * 2.2,
-                                            fontFamily: 'font-point'.tr(),
+                                            //fontFamily: 'font-point'.tr(),
                                           ),
-                                        ).tr(),
+                                        ),
                                       ],
                                     ),
                                   )),
@@ -733,14 +739,16 @@ class _CalendarState extends State<Calendar> {
                                           }
                                         : null;
                                   },
-                                  child: Text(
-                                    '출첵-일반',
+                                  child: CustomText(
+                                    '출첵-일반'.tr(),
                                     style: TextStyle(
-                                      color: Colors.black,
+                                      color: black,
+                                      fontWeight: FontWeight.w700,
+
                                       fontSize: SizeConfig.defaultSize! * 1.5,
-                                      fontFamily: 'font-claim'.tr(),
+                                      //fontFamily: 'font-claim'.tr(),
                                     ),
-                                  ).tr(),
+                                  ),
                                 ),
                               ),
                             ),

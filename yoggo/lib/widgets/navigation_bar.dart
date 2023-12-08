@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:yoggo/component/calendar.dart';
 import 'package:yoggo/component/home/view/home.dart';
 import 'package:yoggo/component/shop.dart';
+import 'package:yoggo/constants.dart';
 import 'package:yoggo/main.dart';
 import 'package:yoggo/size_config.dart';
+import 'package:yoggo/widgets/custom_text.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
   final AudioPlayer bgmPlayer;
@@ -29,7 +31,6 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   }
 
   void _onTabTapped(int index) {
-    if (_currentIndex == index) return;
     switch (index) {
       case 0:
         Navigator.pushReplacement(
@@ -77,78 +78,137 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 39 * SizeConfig.defaultSize!,
-      height: 7 * SizeConfig.defaultSize!,
-      padding: EdgeInsets.only(
-          top: 0.5 * SizeConfig.defaultSize!,
-          left: 2.5 * SizeConfig.defaultSize!,
-          right: 2.5 * SizeConfig.defaultSize!),
-      decoration: const BoxDecoration(
-        color: Color(0xFFFFFFFF),
-        boxShadow: [
-          BoxShadow(
-            color: Color(0x19000000),
-            blurRadius: 7,
-            offset: Offset(0, -4),
-            spreadRadius: 0,
-          )
-        ],
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(22),
-          topLeft: Radius.circular(22),
+        width: 39 * SizeConfig.defaultSize!,
+        height: 7 * SizeConfig.defaultSize!,
+        padding: EdgeInsets.only(
+            top: 1 * SizeConfig.defaultSize!,
+            left: 2.5 * SizeConfig.defaultSize!,
+            right: 2.5 * SizeConfig.defaultSize!),
+        decoration: const BoxDecoration(
+          color: Color(0xffFFFFFF),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0x19000000),
+              blurRadius: 7,
+              offset: Offset(0, -4),
+              spreadRadius: 0,
+            )
+          ],
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(22),
+            topLeft: Radius.circular(22),
+          ),
         ),
-      ),
-      child: BottomNavigationBar(
-        backgroundColor: Color(0x00ffffff),
-        elevation: 0.0,
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _currentIndex,
-        onTap: _onTabTapped,
-        items: [
-          BottomNavigationBarItem(
-              icon: Column(children: [
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            GestureDetector(
+              onTap: () {
+                if (_currentIndex != 0) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Calendar(
+                              bgmPlayer: widget.bgmPlayer,
+                            )),
+                  );
+                  _currentIndex = 0;
+                }
+              },
+              child: Column(children: [
                 Image.asset('lib/images/calendar.png',
                     width: 2.8 * SizeConfig.defaultSize!),
-                SizedBox(height: 0.6 * SizeConfig.defaultSize!)
+                SizedBox(height: 0.6 * SizeConfig.defaultSize!),
+                CustomText('출석체크',
+                    style: TextStyle(
+                        fontSize: SizeConfig.defaultSize! * 1.2,
+                        color: _currentIndex == 0 ? black : grey))
               ]),
-              label: '출석체크'),
-          BottomNavigationBarItem(
-              icon: Column(children: [
+            ),
+            GestureDetector(
+              onTap: () {
+                if (_currentIndex != 1) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Purchase(
+                              bgmPlayer: widget.bgmPlayer,
+                            )),
+                  );
+                  _currentIndex = 1;
+                }
+              },
+              child: Column(children: [
                 Image.asset('lib/images/shop.png',
                     width: 2.8 * SizeConfig.defaultSize!),
-                SizedBox(height: 0.6 * SizeConfig.defaultSize!)
+                SizedBox(height: 0.6 * SizeConfig.defaultSize!),
+                CustomText('상점',
+                    style: TextStyle(
+                        fontSize: SizeConfig.defaultSize! * 1.2,
+                        color: _currentIndex == 1 ? black : grey))
               ]),
-              label: '상점'),
-          BottomNavigationBarItem(
-              icon: Column(children: [
+            ),
+            GestureDetector(
+              onTap: () {
+                if (_currentIndex != 2) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                  );
+                }
+                _currentIndex = 2;
+              },
+              child: Column(children: [
                 Image.asset('lib/images/home.png',
                     width: 2.8 * SizeConfig.defaultSize!),
-                SizedBox(height: 0.6 * SizeConfig.defaultSize!)
+                SizedBox(height: 0.6 * SizeConfig.defaultSize!),
+                CustomText('홈',
+                    style: TextStyle(
+                        fontSize: SizeConfig.defaultSize! * 1.2,
+                        color: _currentIndex == 2 ? black : grey))
               ]),
-              label: '홈'),
-          BottomNavigationBarItem(
-              icon: Column(children: [
+            ),
+            GestureDetector(
+              onTap: () {
+                if (_currentIndex != 3) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                  );
+                }
+                _currentIndex = 3;
+              },
+              child: Column(children: [
                 Image.asset('lib/images/favorite.png',
                     width: 2.8 * SizeConfig.defaultSize!),
-                SizedBox(height: 0.6 * SizeConfig.defaultSize!)
+                SizedBox(height: 0.6 * SizeConfig.defaultSize!),
+                CustomText('즐겨찾기',
+                    style: TextStyle(
+                        fontSize: SizeConfig.defaultSize! * 1.2,
+                        color: _currentIndex == 3 ? black : grey))
               ]),
-              label: '즐겨찾기'),
-          BottomNavigationBarItem(
-              icon: Column(children: [
+            ),
+            GestureDetector(
+              onTap: () {
+                if (_currentIndex != 4) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                  );
+                  _currentIndex = 4;
+                }
+              },
+              child: Column(children: [
                 Image.asset('lib/images/search.png',
                     width: 2.8 * SizeConfig.defaultSize!),
-                SizedBox(height: 0.6 * SizeConfig.defaultSize!)
+                SizedBox(height: 0.6 * SizeConfig.defaultSize!),
+                CustomText('검색',
+                    style: TextStyle(
+                        fontSize: SizeConfig.defaultSize! * 1.2,
+                        color: _currentIndex == 4 ? black : grey))
               ]),
-              label: '검색'),
-        ],
-        unselectedItemColor: Colors.grey,
-        selectedItemColor: Colors.black,
-        showUnselectedLabels: true,
-        selectedFontSize: SizeConfig.defaultSize! * 1.2,
-        unselectedFontSize: SizeConfig.defaultSize! * 1.2,
-        selectedLabelStyle: TextStyle(fontFamily: 'Suit'),
-        // enableFeedback: false,
-      ),
-    );
+            ),
+          ],
+        ));
   }
 }
