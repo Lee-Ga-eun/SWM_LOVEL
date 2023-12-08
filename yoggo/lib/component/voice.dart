@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:yoggo/component/globalCubit/user/user_state.dart';
 import 'package:yoggo/constants.dart';
 import 'package:yoggo/size_config.dart';
 import 'package:yoggo/widgets/custom_dialog.dart';
@@ -96,7 +97,7 @@ class _VoiceProfileState extends State<VoiceProfile> {
         MediaQuery.of(context).padding.bottom);
 
     final userCubit = context.watch<UserCubit>();
-    final userState = userCubit.state;
+    final UserState userState = userCubit.state;
     SizeConfig().init(context);
     return Scaffold(
       body: Stack(
@@ -148,11 +149,11 @@ class _VoiceProfileState extends State<VoiceProfile> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Image.asset(
-                            'lib/images/icon/human1.png',
+                            'lib/images/icon/${userState.image}.png',
                             height: SizeConfig.defaultSize! * 15,
                           ),
                           Text(
-                            'Name',
+                            userState.userName,
                             style: TextStyle(
                                 color: black,
                                 fontFamily: 'Suit',
