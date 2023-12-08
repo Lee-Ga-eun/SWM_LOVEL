@@ -15,7 +15,7 @@ import 'package:yoggo/component/bookIntro/view/book_intro_onboarding.dart';
 import 'package:yoggo/component/globalCubit/user/user_state.dart';
 import 'package:yoggo/component/home/view/ex_home_onboarding.dart';
 import 'package:yoggo/component/home/viewModel/home_screen_book_model.dart';
-import 'package:yoggo/component/navigation_bar.dart';
+import 'package:yoggo/widgets/navigation_bar.dart';
 // import 'package:yoggo/component/sub.dart';
 // import 'package:yoggo/component/shop.dart';
 import 'package:yoggo/component/shop.dart';
@@ -1861,7 +1861,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                                       lastPointYMD !=
                                                               formattedTime
                                                           ? const Color
-                                                              .fromARGB(
+                                                                  .fromARGB(
                                                               255, 255, 169, 26)
                                                           : Colors.grey,
                                                     ), // 배경색 설정
@@ -2018,7 +2018,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                                                 lastPointYMD !=
                                                                         formattedTime
                                                                     ? const Color
-                                                                        .fromARGB(
+                                                                            .fromARGB(
                                                                         255,
                                                                         255,
                                                                         169,
