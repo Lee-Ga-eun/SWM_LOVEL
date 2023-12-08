@@ -26,3 +26,5 @@ const Color grey = Colors.grey;
 const Color greyLight = Color(0xFFF0F1F2);
 
 late double sizec = SizeConfig.defaultSize!;
+const Color bkground = Color(0xFFFFFAE4);
+

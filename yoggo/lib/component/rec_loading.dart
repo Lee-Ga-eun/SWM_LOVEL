@@ -52,7 +52,7 @@ class _RecLoadingState extends State<RecLoading> {
     String recordName = audioUrl.split('/').last;
 
     final UserCubit userCubit;
-    var url = Uri.parse('${dotenv.get("API_SERVER")}producer/record/v2');
+    var url = Uri.parse('${dotenv.get("API_SERVER")}producer/record/v3');
 
     var request = http.MultipartRequest('POST', url);
     request.headers['Authorization'] = 'Bearer $token';

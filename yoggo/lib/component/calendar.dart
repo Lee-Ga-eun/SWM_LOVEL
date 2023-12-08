@@ -38,7 +38,7 @@ class _CalendarState extends State<Calendar> {
   // 마지막으로 받은 포인트의 일수: lastPointDay --> 1일차, 2일차, 3일차... --> 마지막 기록이 1일차이면 2일차 포인트를 받게 해야한다
   bool openCalendar = true;
   late int availableGetPoint;
-  late List<String> claim;
+  late List<String> claim = ['0', '0', '0', '0', '0', '0', '0'];
   bool wantClaim = false;
   String lastPointYMD = '';
   int lastPointDay = -1;
@@ -446,15 +446,23 @@ class _CalendarState extends State<Calendar> {
           width: 35 * SizeConfig.defaultSize!,
           height: 47.5 * SizeConfig.defaultSize!,
           decoration: BoxDecoration(
-            borderRadius:
-                BorderRadius.all(Radius.circular(SizeConfig.defaultSize!)),
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0x33000000),
+                blurRadius: 10,
+                offset: Offset(0, 0),
+                spreadRadius: 0,
+              )
+            ],
+            borderRadius: BorderRadius.all(
+                Radius.circular(SizeConfig.defaultSize! * 1.4)),
             color: const Color.fromARGB(255, 255, 255, 255).withOpacity(1),
           ),
           child: Stack(
             children: [
               Column(children: [
                 SizedBox(
-                  height: SizeConfig.defaultSize! * 9,
+                  height: SizeConfig.defaultSize! * 6,
                 ),
                 Row(
                   children: [
@@ -465,10 +473,8 @@ class _CalendarState extends State<Calendar> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           //fontFamily: 'font-basic'.tr(),
-                          fontWeight: FontWeight.w700,
-                          fontSize: 2.2 *
-                              SizeConfig.defaultSize! *
-                              double.parse('font-ratio'.tr()),
+                          fontWeight: FontWeight.w600,
+                          fontSize: 2.4 * SizeConfig.defaultSize!,
                         ),
                       ),
                     )
@@ -693,13 +699,13 @@ class _CalendarState extends State<Calendar> {
                                       children: [
                                         Image.asset(
                                           'lib/images/slate1.png',
-                                          width: 2 * SizeConfig.defaultSize!,
+                                          width: 2.5 * SizeConfig.defaultSize!,
                                         ),
                                         CustomText(
                                           '출첵-광고'.tr(),
                                           style: TextStyle(
                                             color: lastPointYMD != formattedTime
-                                                ? white
+                                                ? black
                                                 : black,
                                             fontWeight: FontWeight.w700,
 

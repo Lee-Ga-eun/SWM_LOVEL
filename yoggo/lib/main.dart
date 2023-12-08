@@ -13,9 +13,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yoggo/Repositories/Repository.dart';
 import 'package:yoggo/component/home/view/home.dart';
 import 'package:yoggo/component/home/viewModel/home_screen_cubit.dart';
+import 'package:yoggo/component/onboarding/onboarding_name.dart';
 import 'package:yoggo/firebase_options.dart';
 import 'package:yoggo/models/anonymous.dart';
 import 'package:yoggo/size_config.dart';
+import 'package:yoggo/widgets/custom_text.dart';
 import 'component/globalCubit/user/user_cubit.dart';
 import 'component/globalCubit/user/user_state.dart';
 import 'package:flutter/services.dart';
@@ -132,7 +134,7 @@ class _AppState extends State<App> {
   Future<void>? anonymousLoginFuture;
   String? userToken;
   String? token;
-
+  bool? isFirstTime;
   @override
   void initState() {
     super.initState();
@@ -170,6 +172,7 @@ class _AppState extends State<App> {
       if (response.statusCode == 200) {
         print('token is right');
         token = userToken;
+        isFirstTime = false;
         return;
       } else {
         print('token is invalid');
@@ -181,14 +184,18 @@ class _AppState extends State<App> {
 
   Future<void> anonymousLogin() async {
     try {
-      print('hihi');
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      isFirstTime = prefs.getBool('isFirstTime') ?? true;
+      await prefs.setBool('isFirstTime', false);
+      print(isFirstTime);
+
       final userCredential = await FirebaseAuth.instance.signInAnonymously();
       print("Signed in with temporary account.");
       AnonymousUserModel user = AnonymousUserModel(
         anonymousId: userCredential.user!.uid,
       );
 
-      var url = Uri.parse('${dotenv.get("API_SERVER")}auth/anonymousLogin/v2');
+      var url = Uri.parse('${dotenv.get("API_SERVER")}auth/anonymousLogin/v3');
       var response = await http.post(url,
           headers: {'Content-Type': 'application/json'},
           body: json.encode(user.toJson()));
@@ -276,14 +283,17 @@ class _AppState extends State<App> {
                 {'subscribe': state.purchase, 'record': state.record});
           }
           if (token != null) {
-            return HomeScreen();
+            return (isFirstTime == true) ? OnboardingName() : HomeScreen();
           } else {
             anonymousLoginFuture ??= anonymousLogin();
             return FutureBuilder(
               future: anonymousLoginFuture,
               builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
-                  return HomeScreen();
+                  print(isFirstTime);
+                  return (isFirstTime == true)
+                      ? OnboardingName()
+                      : HomeScreen();
                 } else {
                   return Container(
                       decoration: const BoxDecoration(
@@ -303,10 +313,10 @@ class _AppState extends State<App> {
                           SizedBox(
                             height: SizeConfig.defaultSize! * 2,
                           ),
-                          Text(
+                          CustomText(
                             '로딩1'.tr(),
                             style: TextStyle(
-                                fontFamily: 'font-basic'.tr(),
+                                //fontFamily: 'font-basic'.tr(),
                                 color: Colors.black,
                                 fontSize: SizeConfig.defaultSize! *
                                     2.5 *

@@ -14,7 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yoggo/component/bookIntro/view/book_intro.dart';
 import 'package:yoggo/component/bookIntro/view/book_intro_onboarding.dart';
 import 'package:yoggo/component/globalCubit/user/user_state.dart';
-import 'package:yoggo/component/home/view/ex_home_onboarding.dart';
+import 'package:yoggo/component/home/view/ex-home_onboarding.dart';
 import 'package:yoggo/component/home/viewModel/home_screen_book_model.dart';
 import 'package:yoggo/widgets/navigation_bar.dart';
 // import 'package:yoggo/component/sub.dart';
@@ -185,13 +185,13 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       // Set isFirstTime to false after showing overlay
       if (playingBgm) await bgmPlayer.play(AssetSource('sound/Christmas.wav'));
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => HomeOnboarding(
-                  bgmPlayer: bgmPlayer,
-                )),
-      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //       builder: (context) => HomeOnboarding(
+      //             bgmPlayer: bgmPlayer,
+      //           )),
+      // );
       await prefs.setBool('isFirstTime', false);
     } else {
       if (playingBgm) await bgmPlayer.play(AssetSource('sound/Christmas.wav'));
@@ -218,13 +218,13 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           ),
           backgroundColor: Colors.white.withOpacity(0.9),
           title: Center(
-            child: Text(
-              '앱종료-질문',
+            child: CustomText(
+              '앱종료-질문'.tr(),
               style: TextStyle(
                 fontSize: SizeConfig.defaultSize! * 2.5,
-                fontFamily: 'font-basic'.tr(),
+                //fontFamily: 'font-basic'.tr(),
               ),
-            ).tr(),
+            ),
           ),
           actions: <Widget>[
             Row(
@@ -243,15 +243,14 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                       color: const Color(0xFFFFA91A),
                     ),
                     child: Center(
-                      child: Text(
-                        '답변-부정',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: 'font-basic'.tr(),
-                          fontSize: 2.2 * SizeConfig.defaultSize!,
-                        ),
-                      ).tr(),
-                    ),
+                        child: CustomText(
+                      '답변-부정'.tr(),
+                      style: TextStyle(
+                        color: Colors.black,
+                        //fontFamily: 'font-basic'.tr(),
+                        fontSize: 2.2 * SizeConfig.defaultSize!,
+                      ),
+                    )),
                   ),
                 ),
                 SizedBox(width: SizeConfig.defaultSize! * 4), // 간격 조정
@@ -268,15 +267,14 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                       color: const Color(0xFFFFA91A),
                     ),
                     child: Center(
-                      child: Text(
-                        '답변-긍정',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: 'font-basic'.tr(),
-                          fontSize: 2.2 * SizeConfig.defaultSize!,
-                        ),
-                      ).tr(),
-                    ),
+                        child: CustomText(
+                      '답변-긍정'.tr(),
+                      style: TextStyle(
+                        color: Colors.black,
+                        //fontFamily: 'font-basic'.tr(),
+                        fontSize: 2.2 * SizeConfig.defaultSize!,
+                      ),
+                    )),
                   ),
                 ),
               ],
@@ -335,7 +333,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         MediaQuery.of(context).padding.top -
         MediaQuery.of(context).padding.bottom);
     SizeConfig().init(context);
-
     KeyboardVisibilityController().onChange.listen((bool visible) {
       setState(() {
         isKeyboardVisible = visible;
@@ -378,7 +375,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                           SizedBox(
                             height: SizeConfig.defaultSize! * 2,
                           ),
-                          Text(
+                          CustomText(
                             '로딩2'.tr(),
                             style: TextStyle(
                                 color: Colors.black,
@@ -472,8 +469,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                       ),
                                     ),
                                     Positioned(
-                                      top: SizeConfig.defaultSize! * 0.5,
-                                      right: SizeConfig.defaultSize! * 2,
+                                      top: SizeConfig.defaultSize! * 0.2,
+                                      right: SizeConfig.defaultSize! * 1,
                                       child: userState.record &&
                                               userState.purchase
                                           ? GestureDetector(
@@ -493,12 +490,12 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                                 );
                                               },
                                               child: Image.asset(
-                                                'lib/images/icon/human1.png',
-                                                width: 4.5 *
+                                                'lib/images/icon/${userState.image}.png',
+                                                width: 5.5 *
                                                     SizeConfig
                                                         .defaultSize!, // 이미지의 폭 설정
                                                 height: // 이미지의 높이 설정
-                                                    4.5 *
+                                                    5.5 *
                                                         SizeConfig.defaultSize!,
                                               ),
                                             )
@@ -526,12 +523,12 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                                 );
                                               },
                                               child: Image.asset(
-                                                'lib/images/icon/human1.png',
-                                                width: 4.5 *
+                                                'lib/images/icon/${userState.image}.png',
+                                                width: 5.5 *
                                                     SizeConfig
                                                         .defaultSize!, // 이미지의 폭 설정
                                                 height: // 이미지의 높이 설정
-                                                    4.5 *
+                                                    5.5 *
                                                         SizeConfig.defaultSize!,
                                               ),
                                             ),
@@ -689,6 +686,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                                         0.7),
                                                 CustomText('내 책',
                                                     style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w700,
                                                         fontSize: 1.8 *
                                                             SizeConfig
                                                                 .defaultSize!)),
@@ -818,9 +817,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                                     width: SizeConfig
                                                             .defaultSize! *
                                                         0.7),
-                                                Text('클래식 고전',
+                                                CustomText('클래식 고전',
                                                     style: TextStyle(
-                                                        fontFamily: 'Suit',
+                                                        fontWeight:
+                                                            FontWeight.w700,
                                                         fontSize: 1.8 *
                                                             SizeConfig
                                                                 .defaultSize!))
@@ -960,9 +960,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                                     width: SizeConfig
                                                             .defaultSize! *
                                                         0.7),
-                                                Text('어거스틴 작가 모음전',
+                                                CustomText('어거스틴 작가 모음전',
                                                     style: TextStyle(
-                                                        fontFamily: 'Suit',
+                                                        fontWeight:
+                                                            FontWeight.w700,
                                                         fontSize: 1.8 *
                                                             SizeConfig
                                                                 .defaultSize!))
@@ -1103,8 +1104,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                                     width: SizeConfig
                                                             .defaultSize! *
                                                         0.7),
-                                                Text('LOVEL 오리지널',
+                                                CustomText('LOVEL 오리지널',
                                                     style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w700,
                                                         fontSize: 1.8 *
                                                             SizeConfig
                                                                 .defaultSize!))
@@ -1501,15 +1504,14 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                       SizedBox(
                         height: 3 * SizeConfig.defaultSize!,
                       ),
-                      Text(
-                        '프로필',
+                      CustomText(
+                        '프로필'.tr(),
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 1.8 * SizeConfig.defaultSize!,
-                          fontFamily: 'font-basic'.tr(),
-                          fontWeight: FontWeight.w400,
+                          fontSize: 2 * SizeConfig.defaultSize!,
+                          fontWeight: FontWeight.w700,
                         ),
-                      ).tr(),
+                      ),
                       SizedBox(
                         height: 1 * SizeConfig.defaultSize!,
                       ),
@@ -1633,17 +1635,15 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                                 ),
                                               ),
                                               child: Center(
-                                                child: Text(
-                                                  '프로필-수정',
+                                                child: CustomText(
+                                                  '프로필-수정'.tr(),
                                                   style: TextStyle(
                                                     color: Colors.black,
                                                     fontSize: 1.4 *
                                                         SizeConfig.defaultSize!,
-                                                    fontFamily:
-                                                        'font-basic'.tr(),
-                                                    fontWeight: FontWeight.w400,
+                                                    fontWeight: FontWeight.w700,
                                                   ),
-                                                ).tr(),
+                                                ),
                                               ))),
                                     )
                                   ],
@@ -1694,15 +1694,14 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                               right: 0.5 * SizeConfig.defaultSize!,
                               top: 0.5 * SizeConfig.defaultSize!,
                               bottom: 0.5 * SizeConfig.defaultSize!),
-                          child: Text(
-                            '공지사항',
+                          child: CustomText(
+                            '공지사항'.tr(),
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 1.8 * SizeConfig.defaultSize!,
-                              fontFamily: 'font-basic'.tr(),
-                              fontWeight: FontWeight.w400,
+                              fontSize: 2 * SizeConfig.defaultSize!,
+                              fontWeight: FontWeight.w700,
                             ),
-                          ).tr(),
+                          ),
                         ),
                         onTap: () async {
                           Navigator.push(
@@ -1724,15 +1723,14 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                               right: 0.5 * SizeConfig.defaultSize!,
                               top: 0.5 * SizeConfig.defaultSize!,
                               bottom: 0.5 * SizeConfig.defaultSize!),
-                          child: Text(
-                            '친구초대',
+                          child: CustomText(
+                            '친구초대'.tr(),
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 1.8 * SizeConfig.defaultSize!,
-                              fontFamily: 'font-basic'.tr(),
-                              fontWeight: FontWeight.w400,
+                              fontSize: 2 * SizeConfig.defaultSize!,
+                              fontWeight: FontWeight.w700,
                             ),
-                          ).tr(),
+                          ),
                         ),
                         onTap: () async {
                           _sendInviteFriendsClickEvent(userState.point);
@@ -1754,15 +1752,16 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                               right: 0.5 * SizeConfig.defaultSize!,
                               top: 0.5 * SizeConfig.defaultSize!,
                               bottom: 0.5 * SizeConfig.defaultSize!),
-                          child: Text(
-                            Platform.isAndroid ? '별점-구글플레이' : '별점-앱스토어',
+                          child: CustomText(
+                            Platform.isAndroid
+                                ? '별점-구글플레이'.tr()
+                                : '별점-앱스토어'.tr(),
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 1.8 * SizeConfig.defaultSize!,
-                              fontFamily: 'font-basic'.tr(),
-                              fontWeight: FontWeight.w400,
+                              fontSize: 2 * SizeConfig.defaultSize!,
+                              fontWeight: FontWeight.w700,
                             ),
-                          ).tr(),
+                          ),
                         ),
                         onTap: () async {
                           final InAppReview inAppReview = InAppReview.instance;
@@ -1780,19 +1779,19 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                       GestureDetector(
                         behavior: HitTestBehavior.opaque,
                         child: Padding(
-                            padding: EdgeInsets.only(
-                                right: 0.5 * SizeConfig.defaultSize!,
-                                top: 0.5 * SizeConfig.defaultSize!,
-                                bottom: 0.5 * SizeConfig.defaultSize!),
-                            child: Text(
-                              '리포트'.tr(),
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 1.8 * SizeConfig.defaultSize!,
-                                fontFamily: 'font-basic'.tr(),
-                                fontWeight: FontWeight.w400,
-                              ),
-                            )),
+                          padding: EdgeInsets.only(
+                              right: 0.5 * SizeConfig.defaultSize!,
+                              top: 0.5 * SizeConfig.defaultSize!,
+                              bottom: 0.5 * SizeConfig.defaultSize!),
+                          child: CustomText(
+                            '리포트'.tr(),
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 2 * SizeConfig.defaultSize!,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
                         onTap: () async {
                           _sendErrorReportClickEvent();
                           setState(() {
@@ -1808,13 +1807,12 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                       Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            CustomText(
                               '배경음악'.tr(),
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 1.8 * SizeConfig.defaultSize!,
-                                fontFamily: 'font-basic'.tr(),
-                                fontWeight: FontWeight.w400,
+                                fontSize: 2 * SizeConfig.defaultSize!,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                             Transform.scale(
@@ -2020,11 +2018,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         ),
         SizedBox(
           width: SizeConfig.defaultSize! * 12,
-          child: Text(
+          child: CustomText(
             book.title,
             style: TextStyle(
-              fontFamily: 'GenBkBasR',
-              fontSize: SizeConfig.defaultSize! * 1.5,
+              fontSize: SizeConfig.defaultSize! * 1.4,
             ),
             textAlign: TextAlign.center,
             maxLines: 2,
@@ -2096,11 +2093,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         ),
         SizedBox(
           width: SizeConfig.defaultSize! * 12,
-          child: Text(
+          child: CustomText(
             book.title,
             style: TextStyle(
-              fontFamily: 'GenBkBasR',
-              fontSize: SizeConfig.defaultSize! * 1.5,
+              //fontFamily: 'GenBkBasR',
+              fontSize: SizeConfig.defaultSize! * 1.4,
             ),
             textAlign: TextAlign.center,
             maxLines: 2,

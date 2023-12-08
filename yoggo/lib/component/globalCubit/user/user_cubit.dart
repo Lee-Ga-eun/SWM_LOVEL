@@ -15,6 +15,7 @@ class UserCubit extends Cubit<UserState> {
       : super(UserState(
             userId: 0,
             userName: 'Guest',
+            image: 'human1',
             email: '',
             record: false,
             purchase: false,
@@ -39,9 +40,9 @@ class UserCubit extends Cubit<UserState> {
       if (response.statusCode == 200) {
         // API 응답 데이터 파싱
         final data = json.decode(response.body)[0];
-
+        print(data);
         final userName = data['name'];
-
+        final image = data['image'];
         final email = data['email'];
         final point = data['point'];
         final purchase = data['purchase'] as bool;
@@ -57,6 +58,7 @@ class UserCubit extends Cubit<UserState> {
           emit(UserState(
               userId: userId,
               userName: userName,
+              image: image,
               email: email,
               purchase: purchase,
               record: record,
@@ -74,6 +76,7 @@ class UserCubit extends Cubit<UserState> {
             UserState(
                 userId: userId,
                 userName: userName,
+                image: image,
                 email: email,
                 purchase: purchase,
                 record: record,
@@ -113,6 +116,7 @@ class UserCubit extends Cubit<UserState> {
           userId: 0,
           userName: 'Guest',
           email: '',
+          image: 'human1',
           record: false,
           purchase: false,
           login: false,
@@ -127,6 +131,7 @@ class UserCubit extends Cubit<UserState> {
       emit(UserState(
           userId: state.userId,
           userName: state.userName,
+          image: state.image,
           email: state.email,
           purchase: true,
           record: state.record,
@@ -143,6 +148,7 @@ class UserCubit extends Cubit<UserState> {
           userId: state.userId,
           userName: state.userName,
           email: state.email,
+          image: state.image,
           purchase: true,
           record: state.record,
           login: state.login,
