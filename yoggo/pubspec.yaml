@@ -107,7 +107,7 @@ flutter:
   assets:
     - lib/images/
     - .env
-    - lib/images/icons/
+    - lib/images/icon/
     - assets/scripts/
     - assets/locales/
     - assets/sound/

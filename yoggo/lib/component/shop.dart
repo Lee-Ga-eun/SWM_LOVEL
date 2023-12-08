@@ -331,6 +331,7 @@ class _PurchaseState extends State<Purchase> {
     SizeConfig().init(context);
     return Scaffold(
       bottomNavigationBar: CustomBottomNavigationBar(
+        index: 1,
         bgmPlayer: widget.bgmPlayer,
       ),
       body: Container(
@@ -351,17 +352,31 @@ class _PurchaseState extends State<Purchase> {
                   child: Row(
                     children: [
                       Expanded(
-                        flex: 1,
-                        child: IconButton(
-                          alignment: Alignment.centerLeft,
-                          icon: Icon(Icons.chevron_left,
-                              size: 3 * SizeConfig.defaultSize!),
-                          onPressed: () {
-                            _sendShopXClickEvent(userState.point);
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ),
+                          flex: 1,
+                          child: Row(children: [
+                            SizedBox(
+                                // width: 1.2 * SizeConfig.defaultSize!,
+                                width: 0.05 * sw),
+                            Text(
+                              '보유포인트'.tr(),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'Suit',
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: SizeConfig.defaultSize! * 1.8),
+                              textAlign: TextAlign.left,
+                            ),
+                          ])
+                          // child: IconButton(
+                          //   alignment: Alignment.centerLeft,
+                          //   icon: Icon(Icons.chevron_left,
+                          //       size: 3 * SizeConfig.defaultSize!),
+                          //   onPressed: () {
+                          //     _sendShopXClickEvent(userState.point);
+                          //     Navigator.of(context).pop();
+                          //   },
+                          // ),
+                          ),
                       Expanded(
                         flex: 1,
                         child: Row(
@@ -370,20 +385,24 @@ class _PurchaseState extends State<Purchase> {
                               SizedBox(
                                   width: 2 * SizeConfig.defaultSize!,
                                   child: Image.asset('lib/images/oneCoin.png')),
+                              SizedBox(
+                                width: 0.5 * SizeConfig.defaultSize!,
+                              ),
                               Container(
                                 width: 7 * SizeConfig.defaultSize!,
                                 alignment: Alignment.center,
                                 // decoration: BoxDecoration(color: Colors.blue),
                                 child: Text(
-                                  '${userState.point + 0}',
+                                  '${userState.point}',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: 'Suit',
                                       fontWeight: FontWeight.w700,
                                       fontSize: SizeConfig.defaultSize! * 2),
-                                  textAlign: TextAlign.center,
+                                  textAlign: TextAlign.right,
                                 ),
-                              )
+                              ),
+                              SizedBox(width: 0.03 * sw),
                             ]),
                       )
                     ],

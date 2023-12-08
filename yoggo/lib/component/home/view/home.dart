@@ -471,6 +471,36 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                         ),
                                       ),
                                     ),
+                                    Positioned(
+                                      //left: 20,
+                                      top: SizeConfig.defaultSize! * 0.5,
+                                      right: SizeConfig.defaultSize! * 2,
+                                      child: InkWell(
+                                        onTap: () {
+                                          userCubit.fetchUser();
+                                          _sendHbgVoiceClickEvent();
+                                          bgmPlayer.pause();
+
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  VoiceProfile(
+                                                bgmPlayer: bgmPlayer,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        child: Image.asset(
+                                          'lib/images/icon/human1.png',
+                                          width: 4.5 *
+                                              SizeConfig
+                                                  .defaultSize!, // 이미지의 폭 설정
+                                          height: // 이미지의 높이 설정
+                                              4.5 * SizeConfig.defaultSize!,
+                                        ),
+                                      ),
+                                    ),
                                     //userState.purchase // 구독이면 캘린더 보여주지 않음
                                     // ? Container()
                                     //:
