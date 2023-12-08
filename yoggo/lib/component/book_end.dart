@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yoggo/component/globalCubit/user/user_state.dart';
 import 'package:yoggo/component/home/view/home.dart';
 import 'package:yoggo/component/bookPage/view/book_page.dart';
-import 'package:yoggo/component/rec_info_1.dart';
+import 'package:yoggo/component/rec_info.dart';
 import 'package:yoggo/size_config.dart';
 // import 'package:yoggo/component/shop.dart';
 import 'package:yoggo/component/shop.dart';

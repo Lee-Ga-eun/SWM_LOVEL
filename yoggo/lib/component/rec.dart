@@ -16,6 +16,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/services.dart';
 import 'package:amplitude_flutter/amplitude.dart' as Amp;
 
+import '../constants.dart';
 import 'globalCubit/user/user_cubit.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -169,237 +170,239 @@ class _RecState extends State<Rec> {
   Widget build(BuildContext context) {
     final userCubit = context.watch<UserCubit>();
     final userState = userCubit.state;
+    final sw = (MediaQuery.of(context).size.width -
+        MediaQuery.of(context).padding.left -
+        MediaQuery.of(context).padding.right);
+    final sh = (MediaQuery.of(context).size.height -
+        MediaQuery.of(context).padding.top -
+        MediaQuery.of(context).padding.bottom);
     SizeConfig().init(context);
     return MaterialApp(
         home: Scaffold(
-      body: Stack(
-        children: [
-          Container(
-              decoration: const BoxDecoration(
-                color: Color(0xFFFFFAE4),
-              ),
-              child: SafeArea(
-                  bottom: false,
-                  top: false,
-                  minimum: EdgeInsets.only(
-                      left: 3 * SizeConfig.defaultSize!,
-                      right: 3 * SizeConfig.defaultSize!),
-                  child: Stack(children: [
-                    Column(children: [
-                      Expanded(
-                          // HEADER
-                          flex: 24,
-                          child: Row(children: [
-                            Expanded(
-                                flex: 1,
-                                child: IconButton(
-                                  icon: Icon(Icons.clear,
-                                      size: 3 * SizeConfig.defaultSize!),
-                                  onPressed: () async {
-                                    Navigator.of(context).pop();
-                                  },
-                                )),
-                            Expanded(
-                              flex: 8,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'LOVEL',
-                                    style: TextStyle(
-                                      fontFamily: 'Modak',
-                                      fontSize: SizeConfig.defaultSize! * 5,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                                flex: 1,
-                                child: Container(
-                                    color: const Color.fromARGB(0, 0, 0, 0)))
-                          ])),
-                      Expanded(
-                        // BODY
-                        flex: 62,
-                        child: Container(
-                            // color: Color.fromARGB(250, 0, 100, 0),
-                            child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          // crossAxisAlignment: CrossAxisAlignment.,
-                          children: [
-                            Text(
-                              '녹음-대본',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 2.1 * SizeConfig.defaultSize!,
-                                fontFamily: 'font-thin'.tr(),
-                                fontWeight: FontWeight.w400,
-                              ),
-                              textAlign: TextAlign.center,
-                            ).tr()
-                          ],
-                        )),
+      body: Stack(children: [
+        Container(
+          decoration: const BoxDecoration(
+            color: Color(0xFFFFFAE4),
+          ),
+          child: SafeArea(
+            bottom: false,
+            top: true,
+            // minimum: EdgeInsets.only(left: 7 * SizeConfig.defaultSize!),
+            child: Column(children: [
+              Expanded(
+                flex: 1,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: 1.5 * SizeConfig.defaultSize!,
                       ),
-                      Expanded(
-                        // FOOTER
-                        flex: 24,
-                        child: Row(children: [
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                                // color: Color.fromARGB(250, 0, 100, 0)
-                                ),
-                          ),
-                          Expanded(flex: 3, child: Container()),
-                          Expanded(
-                            flex: 2,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                _buildRecordStopControl(),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            flex: 3,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                _buildText(),
-                              ],
-                            ),
-                          ),
-                          Expanded(flex: 1, child: Container())
-                        ]),
-                      ),
-                    ]),
-                    Visibility(
-                      visible: stopped,
-                      child: SizedBox(
-                        width: SizeConfig.defaultSize! * 200,
-                        child: AlertDialog(
-                          titlePadding: EdgeInsets.only(
-                            top: SizeConfig.defaultSize! * 7,
-                            bottom: SizeConfig.defaultSize! * 2,
-                          ),
-                          actionsPadding: EdgeInsets.only(
-                            left: SizeConfig.defaultSize! * 5,
-                            right: SizeConfig.defaultSize! * 5,
-                            bottom: SizeConfig.defaultSize! * 5,
-                            top: SizeConfig.defaultSize! * 3,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                                SizeConfig.defaultSize! * 3),
-                          ),
-                          backgroundColor: Colors.white.withOpacity(0.9),
-                          title: Center(
-                            child: Text(
-                              '녹음-완료문의',
-                              style: TextStyle(
-                                fontSize: SizeConfig.defaultSize! * 2.5,
-                                fontFamily: 'font-basic'.tr(),
-                              ),
-                            ).tr(),
-                          ),
-                          actions: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    path = ''; // 이 버전을 원하지 않는 경우 path 초기화
-                                    _sendRecRerecClickEvent();
-                                    Navigator.of(context).pop();
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Rec(
-                                                contentId: widget.contentId,
-                                                bgmPlayer: widget.bgmPlayer,
-                                              )),
-                                    );
-                                  },
-                                  child: Container(
-                                    width: SizeConfig.defaultSize! * 24,
-                                    height: SizeConfig.defaultSize! * 4.5,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(
-                                          SizeConfig.defaultSize! * 3),
-                                      color: const Color(0xFFFFA91A),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        '답변-부정',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontFamily: 'font-basic'.tr(),
-                                          fontSize:
-                                              2.2 * SizeConfig.defaultSize!,
-                                        ),
-                                      ).tr(),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                    width:
-                                        SizeConfig.defaultSize! * 4), // 간격 조정
-                                GestureDetector(
-                                  onTap: () {
-                                    // 1초 후에 다음 페이지로 이동
-                                    // if (path != null) {
-                                    //   // 녹음을 해도 괜찮다고 판단했을 경우 백엔드에 보낸다
-                                    //   widget.onStop?.call(path!);
-                                    //   path_copy = path!.split('/').last;
-                                    //   await sendRecord(path, path_copy);
-                                    _sendRecKeepClickEvent();
-                                    // }
-                                    // Future.delayed(const Duration(seconds: 1),
-                                    //     () async {
-                                    //   print(userState.record);
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => RecLoading(
-                                                contentId: widget.contentId,
-                                                onStop: widget.onStop,
-                                                bgmPlayer: widget.bgmPlayer,
-                                                path: path!,
-                                              )),
-                                    );
-                                    // });
-                                  },
-                                  child: Container(
-                                    width: SizeConfig.defaultSize! * 24,
-                                    height: SizeConfig.defaultSize! * 4.5,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(
-                                          SizeConfig.defaultSize! * 3),
-                                      color: const Color(0xFFFFA91A),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        '답변-긍정',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontFamily: 'font-basic'.tr(),
-                                          fontSize:
-                                              2.2 * SizeConfig.defaultSize!,
-                                        ),
-                                      ).tr(),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
+                      InkWell(
+                        onTap: () async {
+                          Navigator.of(context).pop();
+                        },
+                        child: Image.asset(
+                          'lib/images/left.png',
+                          width: 3 * SizeConfig.defaultSize!, // 이미지의 폭 설정
                         ),
                       ),
-                    )
-                  ])))
-        ],
-      ),
+                    ]),
+              ),
+              // SizedBox(
+              //   height: 5 * SizeConfig.defaultSize!,
+              // ),
+              Expanded(
+                flex: 10,
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(
+                            //       top: 5 * SizeConfig.defaultSize!,
+                            //       bottom: 6 * SizeConfig.defaultSize!,
+                            left: 1 * SizeConfig.defaultSize!,
+                            right: 1 * SizeConfig.defaultSize!),
+                        width: 35 * sizec,
+                        height: 45 * sizec,
+                        // height: 16 * sizec,
+                        decoration: ShapeDecoration(
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            side:
+                                BorderSide(width: 1, color: Color(0xFFDDDDDD)),
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(
+                          "녹음대본".tr(),
+                          style: TextStyle(
+                              color: black,
+                              fontFamily: 'Suit',
+                              fontWeight: FontWeight.w400,
+                              fontSize: SizeConfig.defaultSize! * 2),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                    ]),
+              ),
+              Expanded(
+                flex: 2,
+                child: Column(children: [
+                  Column(
+                    children: <Widget>[
+                      _buildRecordStopControl(),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 1 * sizec,
+                  ),
+                  Column(
+                    children: <Widget>[
+                      _buildText(),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 2 * sizec,
+                  )
+                ]),
+              )
+            ]),
+          ),
+        ),
+        Visibility(
+          visible: stopped,
+          child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(SizeConfig.defaultSize!),
+                  ),
+                  color: Color(0x60000000))),
+        ),
+        Visibility(
+            visible: stopped,
+            child: SizedBox(
+              // width: 100 * sizec,
+              child: AlertDialog(
+                shadowColor: Colors.white.withOpacity(0),
+                titlePadding: EdgeInsets.only(
+                  top: SizeConfig.defaultSize! * 2,
+                  // bottom: SizeConfig.defaultSize! * 1,
+                ),
+                actionsPadding: EdgeInsets.only(
+                  left: SizeConfig.defaultSize! * 2,
+                  right: SizeConfig.defaultSize! * 2,
+                  bottom: SizeConfig.defaultSize! * 2,
+                  top: SizeConfig.defaultSize! * 2,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.circular(SizeConfig.defaultSize! * 2.5),
+                ),
+                backgroundColor: Colors.white,
+                title: Center(
+                  child: Text(
+                    '녹음-완료문의'.tr(),
+                    style: TextStyle(
+                      fontSize: SizeConfig.defaultSize! * 2.4,
+                      fontFamily: 'Suit',
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                actions: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          path = ''; // 이 버전을 원하지 않는 경우 path 초기화
+                          _sendRecRerecClickEvent();
+                          Navigator.of(context).pop();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Rec(
+                                      contentId: widget.contentId,
+                                      bgmPlayer: widget.bgmPlayer,
+                                    )),
+                          );
+                        },
+                        child: Container(
+                          width: SizeConfig.defaultSize! * 14,
+                          height: SizeConfig.defaultSize! * 5,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                  SizeConfig.defaultSize! * 1.5),
+                              color: greyLight),
+                          child: Center(
+                            child: Text(
+                              '답변-부정'.tr(),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Suit',
+                                fontWeight: FontWeight.w600,
+                                fontSize: 2 * SizeConfig.defaultSize!,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: SizeConfig.defaultSize! * 1), // 간격 조정
+                      GestureDetector(
+                        onTap: () {
+                          // 1초 후에 다음 페이지로 이동
+                          // if (path != null) {
+                          //   // 녹음을 해도 괜찮다고 판단했을 경우 백엔드에 보낸다
+                          //   widget.onStop?.call(path!);
+                          //   path_copy = path!.split('/').last;
+                          //   await sendRecord(path, path_copy);
+                          _sendRecKeepClickEvent();
+                          // }
+                          // Future.delayed(const Duration(seconds: 1),
+                          //     () async {
+                          //   print(userState.record);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => RecLoading(
+                                      contentId: widget.contentId,
+                                      onStop: widget.onStop,
+                                      bgmPlayer: widget.bgmPlayer,
+                                      path: path!,
+                                    )),
+                          );
+                          // });
+                        },
+                        child: Container(
+                          width: SizeConfig.defaultSize! * 14,
+                          height: SizeConfig.defaultSize! * 5,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                                SizeConfig.defaultSize! * 1.5),
+                            color: orangeDark,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '답변-긍정'.tr(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Suit',
+                                fontWeight: FontWeight.w600,
+                                fontSize: 2 * SizeConfig.defaultSize!,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ))
+      ]),
     ));
   }
 
@@ -493,10 +496,10 @@ class _RecState extends State<Rec> {
     }
 
     return Text(
-      "녹음-대기",
+      "녹음-대기".tr(),
       style: TextStyle(
         fontSize: SizeConfig.defaultSize! * 1.8,
-        fontFamily: 'font-basic'.tr(),
+        fontFamily: 'Suit',
       ),
     ).tr();
   }
@@ -509,7 +512,8 @@ class _RecState extends State<Rec> {
       '$minutes : $seconds',
       style: TextStyle(
           color: Colors.red,
-          fontFamily: 'Oxygen',
+          fontFamily: 'Suit',
+          fontWeight: FontWeight.w500,
           fontSize: 1.8 * SizeConfig.defaultSize!),
     );
   }

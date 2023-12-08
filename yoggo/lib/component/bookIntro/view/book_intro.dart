@@ -9,7 +9,7 @@ import 'package:yoggo/component/bookIntro/viewModel/book_voice_cubit.dart';
 import 'package:yoggo/component/bookIntro/viewModel/book_voice_model.dart';
 import 'package:yoggo/component/home/viewModel/home_screen_cubit.dart';
 import 'package:yoggo/component/shop.dart';
-import 'package:yoggo/component/rec_info_1.dart';
+import 'package:yoggo/component/rec_info.dart';
 
 import '../../../Repositories/Repository.dart';
 import '../../bookPage/view/book_page.dart';
@@ -1356,7 +1356,7 @@ class _BookIntroState extends State<BookIntro> {
                                                                           .clicked
                                                                       ? null
                                                                       : const Color
-                                                                          .fromARGB(
+                                                                              .fromARGB(
                                                                           150,
                                                                           255,
                                                                           255,
@@ -1470,7 +1470,7 @@ class _BookIntroState extends State<BookIntro> {
                                                                           .clicked
                                                                       ? null
                                                                       : const Color
-                                                                          .fromARGB(
+                                                                              .fromARGB(
                                                                           150,
                                                                           255,
                                                                           255,
@@ -1585,8 +1585,7 @@ class _BookIntroState extends State<BookIntro> {
                                                                     color: voiceState[3]
                                                                             .clicked
                                                                         ? null
-                                                                        : const Color
-                                                                            .fromARGB(
+                                                                        : const Color.fromARGB(
                                                                             150,
                                                                             255,
                                                                             255,

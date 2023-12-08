@@ -21,7 +21,7 @@ import 'package:yoggo/widgets/navigation_bar.dart';
 // import 'package:yoggo/component/shop.dart';
 import 'package:yoggo/component/shop.dart';
 
-import 'package:yoggo/component/rec_info_1.dart';
+import 'package:yoggo/component/rec_info.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:yoggo/size_config.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -472,34 +472,69 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                                       ),
                                     ),
                                     Positioned(
-                                      //left: 20,
                                       top: SizeConfig.defaultSize! * 0.5,
                                       right: SizeConfig.defaultSize! * 2,
-                                      child: InkWell(
-                                        onTap: () {
-                                          userCubit.fetchUser();
-                                          _sendHbgVoiceClickEvent();
-                                          bgmPlayer.pause();
+                                      child: userState.record &&
+                                              userState.purchase
+                                          ? GestureDetector(
+                                              onTap: () {
+                                                userCubit.fetchUser();
+                                                _sendHbgVoiceClickEvent();
+                                                bgmPlayer.pause();
 
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  VoiceProfile(
-                                                bgmPlayer: bgmPlayer,
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        VoiceProfile(
+                                                      bgmPlayer: bgmPlayer,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              child: Image.asset(
+                                                'lib/images/icon/human1.png',
+                                                width: 4.5 *
+                                                    SizeConfig
+                                                        .defaultSize!, // 이미지의 폭 설정
+                                                height: // 이미지의 높이 설정
+                                                    4.5 *
+                                                        SizeConfig.defaultSize!,
+                                              ),
+                                            )
+                                          : GestureDetector(
+                                              onTap: () {
+                                                _sendHbgAddVoiceClickEvent();
+                                                userState.purchase
+                                                    ? bgmPlayer.pause()
+                                                    : null;
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        userState.purchase
+                                                            ? RecInfo(
+                                                                contentId: 0,
+                                                                bgmPlayer:
+                                                                    bgmPlayer,
+                                                              )
+                                                            : Purchase(
+                                                                bgmPlayer:
+                                                                    bgmPlayer,
+                                                              ),
+                                                  ),
+                                                );
+                                              },
+                                              child: Image.asset(
+                                                'lib/images/icon/human1.png',
+                                                width: 4.5 *
+                                                    SizeConfig
+                                                        .defaultSize!, // 이미지의 폭 설정
+                                                height: // 이미지의 높이 설정
+                                                    4.5 *
+                                                        SizeConfig.defaultSize!,
                                               ),
                                             ),
-                                          );
-                                        },
-                                        child: Image.asset(
-                                          'lib/images/icon/human1.png',
-                                          width: 4.5 *
-                                              SizeConfig
-                                                  .defaultSize!, // 이미지의 폭 설정
-                                          height: // 이미지의 높이 설정
-                                              4.5 * SizeConfig.defaultSize!,
-                                        ),
-                                      ),
                                     ),
                                     //userState.purchase // 구독이면 캘린더 보여주지 않음
                                     // ? Container()

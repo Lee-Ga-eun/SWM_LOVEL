@@ -4,7 +4,7 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:yoggo/component/rec_info_2.dart';
+import 'package:yoggo/component/rec_info.dart';
 import 'package:yoggo/size_config.dart';
 import 'globalCubit/user/user_cubit.dart';
 import 'package:amplitude_flutter/amplitude.dart';
