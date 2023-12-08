@@ -19,6 +19,8 @@ class CustomText extends StatelessWidget {
     return Text(
       text,
       style: (style != null) ? customTextStyle.merge(style) : customTextStyle,
+      textAlign: textAlign,
+      strutStyle: strutStyle,
     );
   }
 }

@@ -1,14 +1,18 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:yoggo/component/calendar.dart';
 import 'package:yoggo/component/home/view/home.dart';
 import 'package:yoggo/component/shop.dart';
+import 'package:yoggo/main.dart';
 import 'package:yoggo/size_config.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
   final AudioPlayer bgmPlayer;
+  final int index;
 
   const CustomBottomNavigationBar({
     super.key,
+    required this.index,
     required this.bgmPlayer,
   });
   @override
@@ -18,18 +22,20 @@ class CustomBottomNavigationBar extends StatefulWidget {
 
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   int _currentIndex = 2;
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.index;
+  }
 
   void _onTabTapped(int index) {
-    print(index);
-    setState(() {
-      _currentIndex = index;
-    });
+    if (_currentIndex == index) return;
     switch (index) {
       case 0:
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) => Purchase(
+              builder: (context) => Calendar(
                     bgmPlayer: widget.bgmPlayer,
                   )),
         );
@@ -63,14 +69,18 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                   )),
         );
     }
+    setState(() {
+      _currentIndex = index;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 39 * SizeConfig.defaultSize!,
-      height: 6.7 * SizeConfig.defaultSize!,
+      height: 7 * SizeConfig.defaultSize!,
       padding: EdgeInsets.only(
+          top: 0.5 * SizeConfig.defaultSize!,
           left: 2.5 * SizeConfig.defaultSize!,
           right: 2.5 * SizeConfig.defaultSize!),
       decoration: const BoxDecoration(
