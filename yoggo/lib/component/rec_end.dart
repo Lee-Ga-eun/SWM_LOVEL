@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yoggo/Repositories/Repository.dart';
 import 'package:yoggo/component/bookIntro/view/book_intro.dart';
+import '../constants.dart';
 import '../size_config.dart';
 import 'bookIntro/viewModel/book_intro_cubit.dart';
 import 'bookIntro/viewModel/book_voice_cubit.dart';
@@ -79,59 +80,32 @@ class _RecEndState extends State<RecEnd> {
           top: false,
           child: Column(
             children: [
+              Expanded(flex: 1, child: Container()),
               Expanded(
-                flex: SizeConfig.defaultSize!.toInt(),
-                child: Stack(
-                  alignment: Alignment.centerLeft,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'LOVEL',
-                          style: TextStyle(
-                            fontFamily: 'Modak',
-                            fontSize: SizeConfig.defaultSize! * 5,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                flex: SizeConfig.defaultSize!.toInt() * 4,
+                flex: 10,
                 child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        Image.asset(
+                          'lib/images/fanfare.png',
+                          width: SizeConfig.defaultSize! * 10,
+                          alignment: Alignment.topCenter,
+                        ),
+                        SizedBox(
+                          height: 2 * sizec,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset(
-                              'lib/images/congratulate2.png',
-                              width: SizeConfig.defaultSize! * 5,
-                              alignment: Alignment.topCenter,
-                            ),
-                            SizedBox(
-                              width: SizeConfig.defaultSize! * 1.5,
-                            ),
                             Text(
-                              '녹음-축하',
+                              '녹음-축하'.tr(),
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  fontFamily: 'font-basic'.tr(),
+                                  fontFamily: 'Suit',
                                   fontSize: SizeConfig.defaultSize! * 2.5),
-                            ).tr(),
-                            SizedBox(
-                              width: SizeConfig.defaultSize! * 2,
-                            ),
-                            Image.asset(
-                              'lib/images/congratulate1.png',
-                              width: SizeConfig.defaultSize! * 5,
-                              alignment: Alignment.topCenter,
-                            )
+                            ).tr()
                           ],
                         ),
                         SizedBox(
@@ -142,11 +116,11 @@ class _RecEndState extends State<RecEnd> {
                           children: [
                             Center(
                               child: Text(
-                                '녹음-푸쉬알림',
+                                '녹음-푸쉬알림'.tr(),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: SizeConfig.defaultSize! * 2.5,
-                                  fontFamily: 'font-basic'.tr(),
+                                  fontFamily: 'Suit',
                                   color: Colors.black,
                                 ),
                               ).tr(),
@@ -156,95 +130,100 @@ class _RecEndState extends State<RecEnd> {
                         SizedBox(
                           height: SizeConfig.defaultSize! * 4,
                         ),
-                        Padding(
-                            padding: const EdgeInsets.only(),
-                            child: GestureDetector(
-                              onTap: () async {
-                                //   await userCubit.fetchUser();
-                                //if (userState.record) {
-
-                                // OneSignal.shared
-                                //     .promptUserForPushNotificationPermission()
-                                //     .then((accepted) {
-                                //   print("Accepted permission: $accepted");
-                                // });
-                                if (OneSignal.Notifications.permission !=
-                                    true) {
-                                  OneSignal.Notifications.requestPermission(
-                                          true)
-                                      .then((accepted) {
-                                    print("Accepted permission: $accepted");
-                                  });
-                                }
-
-                                Navigator.of(context)
-                                    .popUntil((route) => route.isFirst);
-                                if (widget.contentId == 0) {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => VoiceProfile(
-                                          bgmPlayer: widget.bgmPlayer,
-                                        ),
-                                      ));
-                                } else {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => MultiBlocProvider(
-                                              providers: [
-                                                BlocProvider<BookVoiceCubit>(
-                                                  create: (context) =>
-                                                      BookVoiceCubit(
-                                                          dataRepository)
-                                                        ..loadBookVoiceData(
-                                                            widget.contentId),
-                                                ),
-                                                BlocProvider<BookIntroCubit>(
-                                                  create: (context) =>
-                                                      // BookIntroCubit(),
-                                                      // DataCubit()..loadHomeBookData()
-                                                      BookIntroCubit(
-                                                          dataRepository)
-                                                        ..loadBookIntroData(
-                                                            widget.contentId),
-                                                )
-                                              ],
-                                              child: BookIntro(
-                                                id: widget.contentId,
-                                                title: book!.title,
-                                                thumbUrl: book!.thumbUrl,
-                                                bgmPlayer: widget.bgmPlayer,
-                                              ),
-                                            )),
-                                  );
-                                }
-
-                                //    }
-                              },
-                              child: Container(
-                                  width: SizeConfig.defaultSize! * 24,
-                                  height: SizeConfig.defaultSize! * 4.5,
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFFFFA91A),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(
-                                            SizeConfig.defaultSize! * 3)),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      'OK',
-                                      style: TextStyle(
-                                        fontFamily: 'font-basic'.tr(),
-                                        fontSize: SizeConfig.defaultSize! * 2.3,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  )),
-                            )),
                       ],
                     )),
               ),
+              Expanded(
+                flex: 2,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () async {
+                        //   await userCubit.fetchUser();
+                        //if (userState.record) {
+
+                        // OneSignal.shared
+                        //     .promptUserForPushNotificationPermission()
+                        //     .then((accepted) {
+                        //   print("Accepted permission: $accepted");
+                        // });
+                        if (OneSignal.Notifications.permission != true) {
+                          OneSignal.Notifications.requestPermission(true)
+                              .then((accepted) {
+                            print("Accepted permission: $accepted");
+                          });
+                        }
+
+                        Navigator.of(context)
+                            .popUntil((route) => route.isFirst);
+                        if (widget.contentId == 0) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => VoiceProfile(
+                                  bgmPlayer: widget.bgmPlayer,
+                                ),
+                              ));
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MultiBlocProvider(
+                                      providers: [
+                                        BlocProvider<BookVoiceCubit>(
+                                          create: (context) =>
+                                              BookVoiceCubit(dataRepository)
+                                                ..loadBookVoiceData(
+                                                    widget.contentId),
+                                        ),
+                                        BlocProvider<BookIntroCubit>(
+                                          create: (context) =>
+                                              // BookIntroCubit(),
+                                              // DataCubit()..loadHomeBookData()
+                                              BookIntroCubit(dataRepository)
+                                                ..loadBookIntroData(
+                                                    widget.contentId),
+                                        )
+                                      ],
+                                      child: BookIntro(
+                                        id: widget.contentId,
+                                        title: book!.title,
+                                        thumbUrl: book!.thumbUrl,
+                                        bgmPlayer: widget.bgmPlayer,
+                                      ),
+                                    )),
+                          );
+                        }
+                      },
+                      child: Container(
+                          width: 35 * SizeConfig.defaultSize!,
+                          height: 5.8 * SizeConfig.defaultSize!,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                  1.4 * SizeConfig.defaultSize!),
+                              color: orangeDark),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'OK'.tr(),
+                                style: TextStyle(
+                                  color: white,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: SizeConfig.defaultSize! * 2,
+                                  fontFamily: 'Suit',
+                                ),
+                              ),
+                            ],
+                          )),
+                    ),
+                    SizedBox(
+                      height: 2 * sizec,
+                    )
+                  ],
+                ),
+              )
             ],
           ),
         ),

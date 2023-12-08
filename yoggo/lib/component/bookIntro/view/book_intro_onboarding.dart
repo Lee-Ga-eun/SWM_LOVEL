@@ -8,7 +8,7 @@ import 'package:yoggo/component/bookIntro/viewModel/book_voice_cubit.dart';
 import 'package:yoggo/component/bookIntro/viewModel/book_voice_model.dart';
 import 'package:yoggo/component/home/viewModel/home_screen_cubit.dart';
 import 'package:yoggo/component/shop.dart';
-import 'package:yoggo/component/rec_info_1.dart';
+import 'package:yoggo/component/rec_info.dart';
 import '../../../Repositories/Repository.dart';
 import '../../bookPage/view/book_page.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -558,7 +558,7 @@ class _BookIntroOnboardingState extends State<BookIntroOnboarding> {
                                                                       BlendMode
                                                                           .srcATop,
                                                                   color: const Color
-                                                                      .fromARGB(
+                                                                          .fromARGB(
                                                                       150,
                                                                       255,
                                                                       255,
@@ -619,7 +619,7 @@ class _BookIntroOnboardingState extends State<BookIntroOnboarding> {
                                                                       BlendMode
                                                                           .srcATop,
                                                                   color: const Color
-                                                                      .fromARGB(
+                                                                          .fromARGB(
                                                                       150,
                                                                       255,
                                                                       255,
@@ -682,7 +682,7 @@ class _BookIntroOnboardingState extends State<BookIntroOnboarding> {
                                                                         BlendMode
                                                                             .srcATop,
                                                                     color: const Color
-                                                                        .fromARGB(
+                                                                            .fromARGB(
                                                                         150,
                                                                         255,
                                                                         255,
@@ -785,8 +785,11 @@ class _BookIntroOnboardingState extends State<BookIntroOnboarding> {
                                                             decoration:
                                                                 ShapeDecoration(
                                                               color: const Color
-                                                                  .fromARGB(50,
-                                                                  255, 169, 26),
+                                                                      .fromARGB(
+                                                                  50,
+                                                                  255,
+                                                                  169,
+                                                                  26),
                                                               shape:
                                                                   RoundedRectangleBorder(
                                                                 borderRadius:

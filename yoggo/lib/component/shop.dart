@@ -14,7 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:yoggo/component/home/view/home.dart';
-import 'package:yoggo/component/rec_info_1.dart';
+import 'package:yoggo/component/rec_info.dart';
 import 'package:yoggo/constants.dart';
 import 'package:yoggo/size_config.dart';
 
@@ -337,8 +337,8 @@ class _PurchaseState extends State<Purchase> {
       body: Container(
         decoration: const BoxDecoration(color: Color(0xFFFFFAE4)),
         child: SafeArea(
-          // bottom: false,
-          // top: false,
+          bottom: false,
+          top: true,
           child: Column(
             children: [
               Expanded(
@@ -570,7 +570,7 @@ class _PurchaseState extends State<Purchase> {
                                           fontWeight: FontWeight.w400,
                                           // decoration: TextDecoration.underline,
                                           fontSize:
-                                              SizeConfig.defaultSize! * 1.2,
+                                              SizeConfig.defaultSize! * 1.8,
                                         ),
                                       ),
                                     ),
@@ -899,11 +899,11 @@ class _PurchaseState extends State<Purchase> {
                                         Text(
                                           '베이직설명1'.tr(),
                                           style: TextStyle(
-                                            color: Colors.black,
-                                            fontFamily: 'Suit',
-                                            fontSize:
-                                                SizeConfig.defaultSize! * 1.8,
-                                          ),
+                                              color: Colors.black,
+                                              fontFamily: 'Suit',
+                                              fontSize:
+                                                  SizeConfig.defaultSize! * 1.8,
+                                              fontWeight: FontWeight.w500),
                                         )
                                       ],
                                     )

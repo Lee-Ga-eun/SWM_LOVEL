@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yoggo/size_config.dart';
 
 // custom colors
 const Color orangeDark = Color(0xffFF8700);
@@ -22,3 +23,6 @@ const Color pinkLight = Color(0xffFFF0FA);
 const Color white = Colors.white;
 const Color black = Colors.black;
 const Color grey = Colors.grey;
+const Color greyLight = Color(0xFFF0F1F2);
+
+late double sizec = SizeConfig.defaultSize!;

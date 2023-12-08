@@ -99,18 +99,20 @@
   "완독-목소리": "If you want to read a book in the voice of your parents,",
   "완독-녹음": "Go to Record",
 
+    "목소리듣기": "Preview My Voice",
+
   "목소리-제작중": "We are making your voice!",
   "재녹음": "Re-make your voice",
-  "재녹음-경고": "If you record again, the previous voice will be deleted.\nyou'll need to recreate the books using the new voice\nDo you want to continue?",
+  "재녹음-경고": "If you record again,\nthe previous voice will be deleted.\nDo you want to continue?",
 
   "녹음-축하": "Congratulations on \n completing the RECORDING",
-  "녹음-푸쉬알림": "Your voice is well recorded \n We'll let you know by PUSH when it's done",
+  "녹음-푸쉬알림": "Your voice is well recorded\nWe'll let you know\nby PUSH when it's done",
 
-  "녹음-대본": "In a land not so distant…\nBirds brought joy with their morning song\nClouds would gather, hinting winter wouldn't be long\nBut with every dawn, light made the day bright and strong\nEvery village, near or far, had a tale, a lifelong bond.",
+  "녹음대본": "In a land not so distant…\n\nBirds brought joy\nwith their morning song.\n\nClouds would gather,\nhinting winter wouldn't be long.\n\nBut with every dawn,\nlight made the day\nbright and strong.\n\nEvery village, near or far,\nhad a tale, a lifelong bond.",
   "녹음-완료문의": "Are you sure?",
   "녹음-대기": "Waiting to record",
 
-  "녹음-화면이탈경고": "Do not exit the screen. Your precious voice is being transmitted.\nIf you leave the screen, the process will be erased.",
+  "녹음-화면이탈경고": "Do not exit the screen.\nYour precious voice is being transmitted.\nIf you leave the screen,\nthe process will be erased.",
 
   "녹음-안내": "Now it's your turn to make your voice heard!",
   "녹음-안내-1": "Eliminate\nambient noise\nand focus on\nyour voice",
