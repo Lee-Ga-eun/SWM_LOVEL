@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yoggo/constants.dart';
 import 'package:yoggo/size_config.dart';
+import 'package:yoggo/widgets/custom_dialog.dart';
 import 'globalCubit/user/user_cubit.dart';
 import 'rec_re.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -294,123 +295,31 @@ class _VoiceProfileState extends State<VoiceProfile> {
           ),
           Visibility(
             visible: wantRemake,
-            child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(SizeConfig.defaultSize!),
-                    ),
-                    color: Color(0x60000000))),
-          ),
-          Visibility(
-              visible: wantRemake,
-              child: SizedBox(
-                // width: 100 * sizec,
-                child: AlertDialog(
-                  shadowColor: Colors.white.withOpacity(0),
-                  titlePadding: EdgeInsets.only(
-                    top: SizeConfig.defaultSize! * 2,
-                    // bottom: SizeConfig.defaultSize! * 1,
-                  ),
-                  actionsPadding: EdgeInsets.only(
-                    left: SizeConfig.defaultSize! * 2,
-                    right: SizeConfig.defaultSize! * 2,
-                    bottom: SizeConfig.defaultSize! * 2,
-                    // top: SizeConfig.defaultSize! * 2,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(SizeConfig.defaultSize! * 2.5),
-                  ),
-                  backgroundColor: Colors.white,
-                  title: Center(
-                    child: Text(
-                      '주의하세요!',
-                      style: TextStyle(
-                        fontSize: SizeConfig.defaultSize! * 2.4,
-                        fontFamily: 'Suit',
-                        fontWeight: FontWeight.w600,
-                      ),
+            child: CustomDialog(
+              '주의하세요!'.tr(),
+              '재녹음-경고'.tr(),
+              '답변-긍정-대문자'.tr(),
+              '답변-부정'.tr(),
+              () {
+                _sendVoiceRemakeYesClickEvent();
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RecRe(
+                      bgmPlayer: widget.bgmPlayer,
                     ),
                   ),
-                  content: Text(
-                    '재녹음-경고'.tr(),
-                    style: TextStyle(
-                      fontSize: SizeConfig.defaultSize! * 2,
-                      fontFamily: 'Suit',
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  actions: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            _sendVoiceRemakeYesClickEvent();
-                            Navigator.of(context).pop();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => RecRe(
-                                  bgmPlayer: widget.bgmPlayer,
-                                ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            width: SizeConfig.defaultSize! * 13.5,
-                            height: SizeConfig.defaultSize! * 5,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                    SizeConfig.defaultSize! * 1.5),
-                                color: greyLight),
-                            child: Center(
-                              child: Text(
-                                '답변-긍정-대문자'.tr(),
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontFamily: 'Suit',
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 2 * SizeConfig.defaultSize!,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: SizeConfig.defaultSize! * 1), // 간격 조정
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _sendVoiceRemakeNoClickEvent();
-                              wantRemake = false;
-                            });
-                          },
-                          child: Container(
-                            width: SizeConfig.defaultSize! * 13.5,
-                            height: SizeConfig.defaultSize! * 5,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                  SizeConfig.defaultSize! * 1.5),
-                              color: orangeDark,
-                            ),
-                            child: Center(
-                              child: Text(
-                                '답변-부정'.tr(),
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'Suit',
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 2 * SizeConfig.defaultSize!,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ))
+                );
+              },
+              () {
+                setState(() {
+                  _sendVoiceRemakeNoClickEvent();
+                  wantRemake = false;
+                });
+              },
+            ),
+          )
         ],
       ),
     );
